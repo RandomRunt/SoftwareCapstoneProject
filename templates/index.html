@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-    <head>
-        <meta charset="utf-8">
-        <title>Page</title>
-    </head>
-    <body>
-        <h1>Title</h1>
-        <hr>
-        <p><a href="/test">test</a> </p>
+{%  extends "base.html" %}
+{%  block page_title  %}Home{% endblock %}
+{% block page_content %}
+<h1> home</h1>
 
-    </body>
-</html>
+<p><a href="/test">another test</a> </p>
+
+{%  endblock %}
