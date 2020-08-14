@@ -16,7 +16,7 @@ def search():
 
 @app.route('/test')
 def test():
-    return render_template('another test.html')
+    return 'no'
 
 
 if __name__ == '__main__':
