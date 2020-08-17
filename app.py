@@ -7,39 +7,37 @@ client_id = 'client_209b71146a72afa869bbf9bc385deefa'
 client_secret = 'secret_31598885c06ef62ddb59f51b84bfba76'
 scopes = 'api_agencies_read api_listings_read'
 auth_url = 'https://auth.domain.com.au/v1/connect/token'
-search_parameters = {
-  "listingType": "Sale",
-  "locations": [
-    {
-      "state": "NSW",
-      "suburb": "Hurstville",
-      "postcode": 2220,
-      "includeSurroundingSuburbs": True
-    }
-  ]
-}
+
+# specific property id
+property_id = "RF-8884-AK"
+
 
 app = Flask(__name__)
 
 @app.route('/')
 @app.route('/index')
 def index():
-    response = requests.post(auth_url, data={
-        'client_id': client_id,
-        'client_secret': client_secret,
-        'grant_type': 'client_credentials',
-        'scope': scopes,
-        'Content-Type': 'text/json'
-    })
-    json_response = response.json()
-    access_token = json_response['access_token']
-    print(access_token)
-    auth = {'Authorization': 'Bearer ' + access_token}
-    url = "https://api.domain.com.au/v1/listings/residential/_search"
-    request = requests.post(url, data=search_parameters, headers=auth)
-    print(request)
-    details = request.json()
-    print(details)
+    access_token = json.loads(requests.post(
+        auth_url,
+        data={
+            "grant_type": "client_credentials",
+            "scope": [" ".join([
+                "api_properties_read",
+                "api_demographics_read",
+                "api_addresslocators_read",
+                "api_suburbperformance_read",
+                "api_locations_read", ])
+            ]
+        },
+        auth=(client_id, client_secret)
+    ).content)
+    print(access_token["access_token"])
+    response = requests.request(
+        "GET",
+        "https://api.domain.com.au/v1/properties/"+property_id,
+        headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
+    )
+    print(response.json())
     return render_template('index.html')
 
 
