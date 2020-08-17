@@ -5,7 +5,7 @@ import json
 # Domain API variables
 client_id = 'client_209b71146a72afa869bbf9bc385deefa'
 client_secret = 'secret_31598885c06ef62ddb59f51b84bfba76'
-scopes = 'api_agencies_read api_listings_read'
+scopes = 'api_properties_read'
 auth_url = 'https://auth.domain.com.au/v1/connect/token'
 search_parameters = {
   "listingType": "Sale",
@@ -35,8 +35,8 @@ def index():
     access_token = json_response['access_token']
     print(access_token)
     auth = {'Authorization': 'Bearer ' + access_token}
-    url = "https://api.domain.com.au/v1/listings/residential/_search"
-    request = requests.post(url, data=search_parameters, headers=auth)
+    url = "https://api.domain.com.au/v1/properties/RF-8884-AK"
+    request = requests.get(url, headers=auth)
     print(request)
     details = request.json()
     print(details)
