@@ -5,7 +5,6 @@ import json
 # Domain API variables
 client_id = 'client_209b71146a72afa869bbf9bc385deefa'
 client_secret = 'secret_31598885c06ef62ddb59f51b84bfba76'
-scopes = 'api_agencies_read api_listings_read'
 auth_url = 'https://auth.domain.com.au/v1/connect/token'
 
 # specific property id
@@ -44,11 +43,6 @@ def index():
 @app.route('/search')
 def search():
     return 'nice'
-
-
-@app.route('/test')
-def test():
-    return 'no'
 
 
 if __name__ == '__main__':
