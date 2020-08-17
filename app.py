@@ -1,12 +1,15 @@
 from flask import Flask, render_template
+import propertyRetrieval
+import json
 
 app = Flask(__name__)
-
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    suburb = "Hurstville"
+    getProperty = propertyRetrieval.get_property_info()
+    return getProperty,render_template('index.html')
 
 
 @app.route('/search')
