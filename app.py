@@ -48,10 +48,5 @@ def search():
     return 'nice'
 
 
-@app.route('/test')
-def test():
-    return 'no'
-
-
 if __name__ == '__main__':
     app.run()
