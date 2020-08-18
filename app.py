@@ -6,6 +6,7 @@ import json
 client_id = 'client_209b71146a72afa869bbf9bc385deefa'
 client_secret = 'secret_31598885c06ef62ddb59f51b84bfba76'
 auth_url = 'https://auth.domain.com.au/v1/connect/token'
+endpoint_url = 'https://api.domain.com.au/v1/'
 
 # specific property id
 property_id = "RF-8884-AK"
@@ -33,7 +34,7 @@ def index():
     print(access_token["access_token"])
     response = requests.request(
         "GET",
-        "https://api.domain.com.au/v1/properties/"+property_id,
+        endpoint_url + "property/" + property_id,
         headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
     )
     print(response.json())
