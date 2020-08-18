@@ -12,10 +12,12 @@ def createTable():
     conn.close()
 
 
-def addProperty(property_id, address, price, coordinate, domain_id):
+def addProperty(property_id, address, price, coordinate, domain_id, property_type, bedrooms, bathrooms, car_spaces):
     conn = sqlite3.connect('properties.db')
     c = conn.cursor()
     c.execute("INSERT INTO property_ids (property_id, address, price, coordinate, domain_id) VALUES (?, ?)",
               (property_id, address, price, coordinate, domain_id))
+    c.execute("INSERT INTO property_features (property_type, bedrooms, bathrooms, car_spaces) VALUES (?, ?)",
+              (property_type, bedrooms, bathrooms, car_spaces))
     conn.commit()
     conn.close()
