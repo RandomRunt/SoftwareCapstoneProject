@@ -6,7 +6,8 @@ def createTable():
     c = conn.cursor()
     c.execute('''CREATE TABLE property_ids(property_id text, address text, price integer, coordinate text, 
     domain_id text)''')
-    c.execute('''CREATE TABLE property_features(type text, )''')
+    c.execute('''CREATE TABLE property_features(property_type text, bedrooms integer, bathrooms integer, car_spaces 
+    integer, )''')
     conn.commit()
     conn.close()
 
