@@ -35,7 +35,7 @@ def index():
     print(access_token["access_token"])
     response = requests.request(
         "GET",
-        endpoint_url + "property/" + property_id,
+        endpoint_url + "properties/" + property_id,
         headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
     )
     print(response.json())
