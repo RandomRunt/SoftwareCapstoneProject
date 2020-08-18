@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/combine/npm/chart.js@2.9.3,npm/chart.js@2.9.3/dist/Chart.bundle.min.js">    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.bundle.min.js"></script>
+</head>
+
+<body>
+    <canvas id="myChart" width="400" height="400"></canvas>
+    <canvas id="ourChart" width="400" height="400"></canvas>
+</body>
+
+<script>
+    var foo = {{jsdict|tojson}}
+    arr = [['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul','Aug'],[12, 19, 3, 5, 2, 3,5 ,6]]
+    var ctx = document.getElementById('myChart');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: arr[0],
+            datasets: [{
+                label: '# of Votes',
+                data: arr[1],
+                borderWidth: 1
+            }]
+        },
+    });
+</script>

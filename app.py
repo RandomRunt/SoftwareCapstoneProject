@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from dataclasses import dataclass
 import requests
 import json
 
@@ -44,6 +45,12 @@ def index():
 @app.route('/search')
 def search():
     return 'nice'
+
+
+@app.route('/test')
+def test():
+    dict = {"A":1,"B":2,"C":3,"D":4}
+    return render_template('charttest.html', jsdict=dict)
 
 
 if __name__ == '__main__':
