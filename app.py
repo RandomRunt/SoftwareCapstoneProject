@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from dataclasses import dataclass
 
 app = Flask(__name__)
 
@@ -16,7 +17,8 @@ def search():
 
 @app.route('/test')
 def test():
-    return 'no'
+    dict = {"A":1,"B":2,"C":3,"D":4}
+    return render_template('charttest.html', jsdict=dict)
 
 
 if __name__ == '__main__':
