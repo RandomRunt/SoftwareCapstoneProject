@@ -1,7 +1,5 @@
 from flask import Flask, render_template
-from dataclasses import dataclass
-import requests
-import json
+import requests, json
 
 # Domain API variables
 client_id = 'client_209b71146a72afa869bbf9bc385deefa'
@@ -45,11 +43,13 @@ def index():
 def search():
     return 'nice'
 
-
+#Testing charting library
 @app.route('/test')
 def test():
-    dict = {"A":1,"B":2,"C":3,"D":4}
-    return render_template('charttest.html', jsdict=dict)
+    adict = {"type": "line", "title":"test"}
+    ddict = {"A":120,"B":130,"C":139,"D":162}
+    send = [adict,ddict]
+    return render_template('charttest.html', nchart=send)
 
 
 if __name__ == '__main__':

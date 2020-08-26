@@ -7,23 +7,25 @@
 </head>
 
 <body>
-    <canvas id="myChart" width="400" height="400"></canvas>
-    <canvas id="ourChart" width="400" height="400"></canvas>
+    <div style="position: relative; height:600px; width:600px">
+    <canvas id="myChart" width="600" height="600"></canvas>
+    </div>
 </body>
 
 <script>
-    var foo = {{jsdict|tojson}}
-    arr = [['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul','Aug'],[12, 19, 3, 5, 2, 3,5 ,6]]
+    var foo = {{nchart|tojson}};
     var ctx = document.getElementById('myChart');
+
     var myChart = new Chart(ctx, {
-        type: 'line',
+        type: foo[0].type,
         data: {
-            labels: arr[0],
+            labels: Object.keys(foo[1]),
             datasets: [{
-                label: '# of Votes',
-                data: arr[1],
+                label: foo[0].title,
+                data: Object.values(foo[1]),
                 borderWidth: 1
             }]
         },
+        
     });
 </script>
