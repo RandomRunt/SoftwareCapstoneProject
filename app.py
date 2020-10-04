@@ -1,11 +1,11 @@
 from flask import Flask, render_template
-import requests
-import json
+import requests, json
 
 # Domain API variables
 client_id = 'client_209b71146a72afa869bbf9bc385deefa'
 client_secret = 'secret_31598885c06ef62ddb59f51b84bfba76'
 auth_url = 'https://auth.domain.com.au/v1/connect/token'
+endpoint_url = 'https://api.domain.com.au/v1/'
 
 # specific property id
 property_id = "NT-7996-GP"
@@ -33,7 +33,7 @@ def index():
     print(access_token["access_token"])
     response = requests.request(
         "GET",
-        "https://api.domain.com.au/v1/properties/"+property_id,
+        endpoint_url + "properties/" + property_id,
         headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
     )
     print(response.json())
@@ -43,6 +43,14 @@ def index():
 @app.route('/search')
 def search():
     return 'nice'
+
+#Testing charting library
+@app.route('/test')
+def test():
+    adict = {"type": "line", "title":"test"}
+    ddict = {"A":120,"B":130,"C":139,"D":162}
+    send = [adict,ddict]
+    return render_template('charttest.html', nchart=send)
 
 
 if __name__ == '__main__':
