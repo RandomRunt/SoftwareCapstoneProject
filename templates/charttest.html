@@ -14,21 +14,16 @@
 </body>
 
 <script>
-    var foo = {{nchart|tojson}};
+    const chartdata = {{nchart|tojson}}
+
     var ctx = document.getElementById('myChart');
     var myChart = new Chart(ctx, {
-        type: foo[0].type,
-        labels: foo[1],
+        type: chartdata[0].type,
+        
         data: {
-            labels: foo[1],
-            datasets: foo[2]
+            labels: chartdata[1],
+            datasets: chartdata[2]
         },
-        options: {
-            scales: {
-                yAxes: [{
-                    stacked: false
-                }]
-            }
-        },
+        
     });
 </script>

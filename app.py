@@ -40,6 +40,10 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/home')
+def home():
+    render_template("home.html")
+
 @app.route('/search')
 def search():
     return 'nice'
@@ -49,7 +53,7 @@ def search():
 def test():
     adict = {"type": "line", "title":"test"}
     labels = ["A","B","C","D","E","F"]
-    data = [{"label":"1","data":[120,130,139,162,153,149],},{"label":"2","data":[238,254,279,289,291,305],}]
+    data = [{"label":"1","data":[120,130,139,162,153,149],},{"label":"2","data":[238,254,279,289,291,305]}]
     send = [adict,labels,data]
     return render_template('charttest.html', nchart=send)
 
