@@ -48,8 +48,9 @@ def search():
 @app.route('/test')
 def test():
     adict = {"type": "line", "title":"test"}
-    ddict = {"A":120,"B":130,"C":139,"D":162}
-    send = [adict,ddict]
+    labels = ["A","B","C","D","E","F"]
+    data = [{"label":"1","data":[120,130,139,162,153,149],},{"label":"2","data":[238,254,279,289,291,305],}]
+    send = [adict,labels,data]
     return render_template('charttest.html', nchart=send)
 
 

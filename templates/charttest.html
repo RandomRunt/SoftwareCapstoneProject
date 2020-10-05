@@ -4,6 +4,7 @@
     <script src="https://cdn.jsdelivr.net/combine/npm/chart.js@2.9.3,npm/chart.js@2.9.3/dist/Chart.bundle.min.js">    </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.bundle.min.js"></script>
+    <script src="/static/chartgen.js"></script>
 </head>
 
 <body>
@@ -15,17 +16,19 @@
 <script>
     var foo = {{nchart|tojson}};
     var ctx = document.getElementById('myChart');
-
     var myChart = new Chart(ctx, {
         type: foo[0].type,
+        labels: foo[1],
         data: {
-            labels: Object.keys(foo[1]),
-            datasets: [{
-                label: foo[0].title,
-                data: Object.values(foo[1]),
-                borderWidth: 1
-            }]
+            labels: foo[1],
+            datasets: foo[2]
         },
-        
+        options: {
+            scales: {
+                yAxes: [{
+                    stacked: false
+                }]
+            }
+        },
     });
 </script>
