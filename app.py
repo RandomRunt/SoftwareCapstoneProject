@@ -16,9 +16,9 @@ property_id = "NT-7996-GP"
 
 app = Flask(__name__)
 
+
 class suburb_inputs(Form):
     suburb_input = StringField('Full Name:', validators=[validators.required()])
-
 
 
 @app.route('/')
@@ -55,7 +55,7 @@ def home():
 
 @app.route('/suburb_search', methods=['GET', 'POST'])
 def suburb_search():
-    suburb = "Sydney"
+    suburb = "sydney"
     form = suburb_inputs(request.form)
     message_name = ''
 
@@ -64,9 +64,8 @@ def suburb_search():
     suburb_check = data_base.findSuburb(suburb)
 
     if not suburb_check:
-
-
-
+        print('blah')
+        message_name = 'please enter a message'
     else:
         suburb_id = suburb_check[0]
         age_0_to_4 = suburb_check[1]
@@ -91,6 +90,7 @@ def search():
 
 @app.route("/house")
 def house():
+
     return render_template("generichouse.html")
 
 #Testing charting library
