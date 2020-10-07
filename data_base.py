@@ -25,14 +25,15 @@ def addProperty(property_id, address, price, coordinate, domain_id, property_typ
     conn.commit()
     conn.close()
 
+
 def addSuburb(suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_to_59, age_60_plus, postcode, state,
-              properties_sold, clearance_rate, median_sale, total_sale)
+              properties_sold, clearance_rate, median_sale, total_sale):
     conn = sqlite3.connect('properties.db')
     c = conn.cursor()
-    c.execute("INSERT INTO suburbs (suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_to_59, age_60_plus, "
-              "postcode, state, properties_sold, clearance_rate, median_sale, total_sale) VALUES (?, ?)",
-              (suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_to_59, age_60_plus, postcode, state,
-              properties_sold, clearance_rate, median_sale, total_sale))
+    c.execute(
+        "INSERT INTO suburbs (suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_to_59, age_60_plus, "
+        "postcode, state, properties_sold, clearance_rate, median_sale, total_sale) VALUES (?, ?)",
+        (suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_to_59, age_60_plus, postcode, state,
+         properties_sold, clearance_rate, median_sale, total_sale))
     conn.commit()
     conn.close()
-
