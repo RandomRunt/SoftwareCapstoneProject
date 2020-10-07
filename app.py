@@ -108,6 +108,9 @@ def suburb_search():
 def search():
     return 'nice'
 
+@app.route("/house")
+def house():
+    return render_template("generichouse.html")
 
 #Testing charting library
 @app.route('/test')
