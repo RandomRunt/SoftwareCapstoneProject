@@ -78,9 +78,12 @@ def suburb_search():
         )
         print(response_1.json())
 
+        
+
         response = requests.request(
             "GET",
-            endpoint_url + "addressLocators?searchLevel=Suburb&suburb=" + suburb + "state=NSW",
+            endpoint_url + "addressLocators?searchLevel=Address&streetNumber=" + street_num + "&streetName=" +
+            street_name + "&streetType=Street&suburb=" + suburb + "&state=" + state + "&postcode=" + postcode,
             headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
         )
         print(response.json())
