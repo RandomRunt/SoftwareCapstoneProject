@@ -1,7 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import requests, json
 from flask_bootstrap import Bootstrap
 import data_base
+from wtforms import Form, validators, StringField
 
 # Domain API variables
 client_id = 'client_209b71146a72afa869bbf9bc385deefa'
@@ -15,6 +16,11 @@ property_id = "NT-7996-GP"
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
+
+
+class suburb_inputs(Form):
+    suburb_input = StringField('Full Name:', validators=[validators.required()])
+
 
 if __name__ == '__main__':
     app.run()
@@ -54,7 +60,17 @@ def home():
 
 @app.route('/suburb_search', methods=['GET', 'POST'])
 def suburb_search():
-    
+    suburb = ""
+    form = suburb_inputs(request.form)
+    if request.method == 'POST':
+        suburb = request.form['suburb_input']
+    suburb_check = data_base.findSuburb(suburb)
+
+    if suburb_check == none:
+        print('oo')
+    else:
+        print("yeet")
+
     render_template("suburb.html")
 
 
