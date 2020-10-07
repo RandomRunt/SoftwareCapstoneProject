@@ -1,5 +1,6 @@
 import sqlite3
 
+
 def createTable():
     conn = sqlite3.connect('properties.db')
     c = conn.cursor()
