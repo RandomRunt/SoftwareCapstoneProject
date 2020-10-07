@@ -57,6 +57,7 @@ def suburb_search():
 def search():
     return 'nice'
 
+
 #Testing charting library
 @app.route('/test')
 def test():
@@ -66,6 +67,10 @@ def test():
     send = [adict,labels,data]
     return render_template('charttest.html', nchart=send)
 
+
+@app.route('/about')
+def about():
+    render_template('about.html')
 
 if __name__ == '__main__':
     app.run()

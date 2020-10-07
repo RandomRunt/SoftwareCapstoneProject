@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% extends 'bootstrap/base.html' %}
 
 <head>
     <script src="https://cdn.jsdelivr.net/combine/npm/chart.js@2.9.3,npm/chart.js@2.9.3/dist/Chart.bundle.min.js"></script>
@@ -10,12 +10,15 @@
 
 <body>
     <header>
-        <nav>
-            <div class="containter-fluid">
-                <ul>
-                    <!--<a class="navbar-brand" href = "/">  <img src =  style="width: 40px;" alt="Taxi's-R-US"></a> -->
-                    <li class="nav-item {{'active' if active_page == 'home' else ''}}"><a class="nav-link" href="/" style="font-size: 110%">Home</a></li>
-                    <!-- ADD More things here-->
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/">PropertyPerpetrators</a>
+                </div>
+                <ul class="nav nav-pills">
+                    <li class="nav-link"}}><a href="/">Home Page</a></li>
+                    <li class="nav-link"}}><a href="/about">about</a></li>
+                    <!--add extra pages here-->
                 </ul>
             </div>
         </nav>
@@ -26,3 +29,4 @@
     </div>
     {% endblock %}
 </body>
+
