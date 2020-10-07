@@ -66,7 +66,7 @@ def suburb_search():
         suburb = request.form['suburb_input']
     suburb_check = data_base.findSuburb(suburb)
 
-    if suburb_check == none:
+    if suburb_check == 'none':
         print('oo')
     else:
         print("yeet")
