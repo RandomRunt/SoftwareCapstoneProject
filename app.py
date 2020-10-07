@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import requests, json
+from flask_bootstrap import Bootstrap
 import database_for_suburbs
 
 # Domain API variables
@@ -13,6 +14,7 @@ property_id = "NT-7996-GP"
 
 
 app = Flask(__name__)
+bootstrap = Bootstrap(app)
 
 
 @app.route('/')

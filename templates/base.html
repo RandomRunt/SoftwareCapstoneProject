@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
+
 <body>
-    <header>
+    {% block navbar %}
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -22,11 +23,13 @@
                 </ul>
             </div>
         </nav>
-    </header>
+
+    {% endblock %}
+
     {% block content %}
-    <div class="container-fluid">
-        {% block page_content %} {% endblock %}
-    </div>
+        <div class="container-fluid">
+            {% block page_content %} {% endblock %}
+        </div>
     {% endblock %}
 </body>
 
