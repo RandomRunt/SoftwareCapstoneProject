@@ -70,8 +70,20 @@ def suburb_search():
 
     if not suburb_check:
         message_name = 'Please enter a valid suburb'
-        
+
     else:
+        suburb_id = suburb_check[0]
+        age_0_to_4 = suburb_check[1]
+        age_5_to_19 = suburb_check[2]
+        age_20_to_39 = suburb_check[3]
+        age_40_to_59 = suburb_check[4]
+        age_60_plus = suburb_check[5]
+        postcode = suburb_check[6]
+        state = suburb_check[7]
+        properties_sold = suburb_check[8]
+        clearance_rate = suburb_check[9]
+        median_sale = suburb_check[10]
+        total_sale = suburb_check[11]
         print("yeet")
 
     return render_template("suburb.html", message_name=message_name, form=form)
