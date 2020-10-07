@@ -67,7 +67,8 @@ def suburb_search():
     suburb_check = data_base.findSuburb(suburb)
 
     if suburb_check == 'none':
-        print('oo')
+        print('test')
+
     else:
         print("yeet")
 
