@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import requests, json
+import urllib.request
 
 import data_base
 from wtforms import Form, validators, StringField
@@ -59,7 +60,7 @@ def home():
 
 @app.route('/suburb_search', methods=['GET', 'POST'])
 def suburb_search():
-    suburb = "Sydney"
+    suburb = "Bankstown"
     form = suburb_inputs(request.form)
     message_name = ''
 
@@ -68,17 +69,20 @@ def suburb_search():
     suburb_check = data_base.findSuburb(suburb)
 
     if not suburb_check:
-        print('blah')
-        message_name = 'please enter a message'
+        message_name = 'please enter a Sydney suburb'
 
         response_1 = requests.request(
             "GET",
-            endpoint_url + "salesResults/" + suburb + "/listings",
+            endpoint_url + "salesResults/Sydney/listings",
             headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
         )
-        print(response_1.json())
-
-        
+        sales_result = response_1.json()
+        for row in sales_result:
+            if row.get('suburb') == suburb:
+                street_num = row.get('streetNumber')
+                street_name = row.get('streetName')
+                state = row.get('state')
+                postcode = row.get('postcode')
 
         response = requests.request(
             "GET",
