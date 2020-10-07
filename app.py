@@ -18,7 +18,6 @@ app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
 
-
 class suburb_inputs(Form):
     suburb_input = StringField('Full Name:', validators=[validators.required()])
 
@@ -69,13 +68,14 @@ def suburb_search():
     suburb_check = data_base.findSuburb(suburb)
 
     if suburb_check == 'none':
-        print('test')
-        message_name = 'Please enter a valid suburb'
-
+        if suburb == "":
+            message_name = 'Please enter a valid suburb'
+        else:
+            
     else:
         print("yeet")
 
-    return render_template("suburb.html", message_name=message_name)
+    return render_template("suburb.html", message_name=message_name, form=form)
 
 
 @app.route('/search')
