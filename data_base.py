@@ -40,7 +40,7 @@ def addSuburb(suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_t
 
 
 def findSuburb(suburb):
-    conn = sqlite3.connect('example.db')
+    conn = sqlite3.connect('properties.db')
     c = conn.cursor()
     flag = 0
     for row in c.execute('SELECT * FROM suburbs WHERE suburb=?', (suburb,)):
