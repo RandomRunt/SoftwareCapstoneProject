@@ -13,7 +13,6 @@ endpoint_url = 'https://api.domain.com.au/v1/'
 # specific property id
 property_id = "NT-7996-GP"
 
-
 app = Flask(__name__)
 
 
@@ -21,10 +20,7 @@ class suburb_inputs(Form):
     suburb_input = StringField('Full Name:', validators=[validators.required()])
 
 
-@app.route('/')
-@app.route('/index')
-def index():
-    access_token = json.loads(requests.post(
+access_token = json.loads(requests.post(
         auth_url,
         data={
             "grant_type": "client_credentials",
@@ -33,12 +29,20 @@ def index():
                 "api_demographics_read",
                 "api_addresslocators_read",
                 "api_suburbperformance_read",
-                "api_locations_read", ])
+                "api_salesresults_read",
+                "api_locations_read"
+                ])
             ]
         },
         auth=(client_id, client_secret)
     ).content)
-    print(access_token["access_token"])
+print(access_token["access_token"])
+
+
+@app.route('/')
+@app.route('/index')
+def index():
+
     response = requests.request(
         "GET",
         endpoint_url + "properties/" + property_id,
@@ -55,7 +59,7 @@ def home():
 
 @app.route('/suburb_search', methods=['GET', 'POST'])
 def suburb_search():
-    suburb = "sydney"
+    suburb = "Sydney"
     form = suburb_inputs(request.form)
     message_name = ''
 
@@ -67,12 +71,19 @@ def suburb_search():
         print('blah')
         message_name = 'please enter a message'
 
+        response_1 = requests.request(
+            "GET",
+            endpoint_url + "salesResults/" + suburb + "/listings",
+            headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
+        )
+        print(response_1.json())
 
         response = requests.request(
             "GET",
-            endpoint_url + "properties/" + property_id
+            endpoint_url + "addressLocators?searchLevel=Suburb&suburb=" + suburb + "state=NSW",
+            headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
         )
-        print(response)
+        print(response.json())
 
     else:
         suburb_id = suburb_check[0]
@@ -92,22 +103,20 @@ def suburb_search():
     return render_template("suburb.html", message_name=message_name, form=form)
 
 
-@app.route('/search')
-def search():
-    return 'nice'
-
 @app.route("/house")
 def house():
 
     return render_template("generichouse.html")
 
-#Testing charting library
+
+# Testing charting library
 @app.route('/test')
 def test():
-    adict = {"type": "line", "title":"test"}
-    labels = ["A","B","C","D","E","F"]
-    data = [{"label":"1","data":[120,130,139,162,153,149],},{"label":"2","data":[238,254,279,289,291,305]}]
-    send = [adict,labels,data]
+    adict = {"type": "line", "title": "test"}
+    labels = ["A", "B", "C", "D", "E", "F"]
+    data = [{"label": "1", "data": [120, 130, 139, 162, 153, 149], },
+            {"label": "2", "data": [238, 254, 279, 289, 291, 305]}]
+    send = [adict, labels, data]
     return render_template('charttest.html', nchart=send)
 
 
