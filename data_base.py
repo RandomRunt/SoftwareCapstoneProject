@@ -8,6 +8,8 @@ def createTable():
     domain_id text)''')
     c.execute('''CREATE TABLE property_features(property_type text, bedrooms integer, bathrooms integer, car_spaces 
     integer, )''')
+    c.execute('''CREATE TABLE suburb(property_type text, bedrooms integer, bathrooms integer, car_spaces 
+        integer, )''')
     conn.commit()
     conn.close()
 
