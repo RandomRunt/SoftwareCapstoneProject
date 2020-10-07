@@ -77,6 +77,7 @@ def suburb_search():
             headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
         )
         sales_result = response_1.json()
+
         for row in sales_result:
             if row.get('suburb') == suburb:
                 street_num = row.get('streetNumber')
@@ -90,7 +91,17 @@ def suburb_search():
             street_name + "&streetType=Street&suburb=" + suburb + "&state=" + state + "&postcode=" + postcode,
             headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
         )
-        print(response.json())
+        properties = response.json()[0]
+        suburb_levels = properties.get('ids')[2]
+        suburb_id = suburb_levels.get('id')
+
+        response_2 = requests.request(
+            "GET",
+            endpoint_url + "demographics?level=Suburb&id=" + str(suburb_id) + "&types=AgeGroupOfPopulation",
+            headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
+        )
+        age_demographics = (response_2.json().get('demographics'))[0]
+        print(age_demographics)
 
     else:
         suburb_id = suburb_check[0]
