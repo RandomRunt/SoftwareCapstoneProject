@@ -71,6 +71,26 @@ def suburb_search():
     if not suburb_check:
         message_name = 'Please enter a valid suburb'
 
+        access_token = json.loads(requests.post(
+            auth_url,
+            data={
+                "grant_type": "client_credentials",
+                "scope": [" ".join([
+                    "api_properties_read",
+                    "api_demographics_read",
+                    "api_addresslocators_read",
+                    "api_suburbperformance_read",
+                    "api_locations_read", ])
+                ]
+            },
+            auth=(client_id, client_secret)
+        ).content)
+        response = requests.request(
+            "GET",
+            endpoint_url + "properties/" + property_id,
+            headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
+        )
+        print(response.json())
     else:
         suburb_id = suburb_check[0]
         age_0_to_4 = suburb_check[1]
