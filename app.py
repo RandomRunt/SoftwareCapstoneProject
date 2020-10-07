@@ -70,7 +70,7 @@ def suburb_search():
 
     if not suburb_check:
         message_name = 'Please enter a valid suburb'
-        print('no')
+        
     else:
         print("yeet")
 
