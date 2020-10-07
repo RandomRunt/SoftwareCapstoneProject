@@ -45,6 +45,13 @@ def index():
 def home():
     render_template("home.html")
 
+
+@app.route('/suburb_search', methods=['GET', 'POST'])
+def suburb_search():
+
+    render_template("suburb.html")
+
+
 @app.route('/search')
 def search():
     return 'nice'
