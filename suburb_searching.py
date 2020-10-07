@@ -1,8 +1,5 @@
-from flask import Flask, render_template, request
-import requests, json
-from flask_bootstrap import Bootstrap
-import data_base
-from wtforms import Form, validators, StringField
+import requests, json, data_base
+
 
 # Domain API variables
 client_id = 'client_209b71146a72afa869bbf9bc385deefa'
@@ -36,3 +33,4 @@ response = requests.request(
 )
 
 print(response)
+
