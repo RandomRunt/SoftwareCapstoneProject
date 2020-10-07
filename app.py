@@ -66,6 +66,14 @@ def suburb_search():
     if not suburb_check:
         print('blah')
         message_name = 'please enter a message'
+
+
+        response = requests.request(
+            "GET",
+            endpoint_url + "properties/" + property_id
+        )
+        print(response)
+
     else:
         suburb_id = suburb_check[0]
         age_0_to_4 = suburb_check[1]
@@ -111,6 +119,7 @@ def about():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html')
+
 
 if __name__ == '__main__':
     app.run()
