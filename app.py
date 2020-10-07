@@ -63,15 +63,14 @@ def suburb_search():
     suburb = ""
     form = suburb_inputs(request.form)
     message_name = ''
+
     if request.method == 'POST':
         suburb = request.form['suburb_input']
     suburb_check = data_base.findSuburb(suburb)
 
-    if suburb_check == 'none':
-        if suburb == "":
-            message_name = 'Please enter a valid suburb'
-        else:
-            
+    if not suburb_check:
+        message_name = 'Please enter a valid suburb'
+        print('no')
     else:
         print("yeet")
 
