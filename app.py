@@ -16,6 +16,9 @@ property_id = "NT-7996-GP"
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
 
+if __name__ == '__main__':
+    app.run()
+
 
 @app.route('/')
 @app.route('/index')
@@ -72,7 +75,9 @@ def test():
 
 @app.route('/about')
 def about():
-    render_template('about.html')
+    return render_template('about.html')
 
-if __name__ == '__main__':
-    app.run()
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html')

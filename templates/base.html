@@ -1,6 +1,10 @@
 {% extends 'bootstrap/base.html' %}
 
-<head>
+{% block title %}
+{% block page_title %}{%endblock %}- PropertyPerpetrators
+{% endblock %}
+
+{#<head>
     <script src="https://cdn.jsdelivr.net/combine/npm/chart.js@2.9.3,npm/chart.js@2.9.3/dist/Chart.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.bundle.min.js"></script>
@@ -9,7 +13,7 @@
 </head>
 
 
-<body>
+<body>#}
     {% block navbar %}
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -31,5 +35,5 @@
             {% block page_content %} {% endblock %}
         </div>
     {% endblock %}
-</body>
+{#</body>#}
 
