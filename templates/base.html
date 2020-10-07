@@ -1,10 +1,7 @@
-{% extends 'bootstrap/base.html' %}
+<!DOCTYPE html>
 
-{% block title %}
-{% block page_title %}{%endblock %}- PropertyPerpetrators
-{% endblock %}
-
-{#<head>
+<head>
+    <title>{% block title %} {% block page_title %}{% endblock %} - Property Perpetrators{% endblock %}</title>
     <script src="https://cdn.jsdelivr.net/combine/npm/chart.js@2.9.3,npm/chart.js@2.9.3/dist/Chart.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.bundle.min.js"></script>
@@ -13,28 +10,25 @@
 </head>
 
 
-<body>#}
-    {% block navbar %}
-        <nav class="navbar navbar-default">
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <div class="container-fluid">
-                <div class="navbar-header">
+                <ul class="navbar-nav mr-auto">
                     <a class="navbar-brand" href="/">PropertyPerpetrators</a>
-                </div>
-                <ul class="nav nav-pills">
-                    <li class="nav-link"}}><a href="/">Home Page</a></li>
-                    <li class="nav-link"><a href="/suburb_search">Suburb Search</a> </li>
-                    <li class="nav-link"}}><a href="/about">about</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/">Home Page</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/suburb_search">Suburb Search</a> </li>
+                    <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
                     <!--add extra pages here-->
                 </ul>
             </div>
         </nav>
+    </header>
 
-    {% endblock %}
 
     {% block content %}
-        <div class="container-fluid">
-            {% block page_content %} {% endblock %}
-        </div>
+    <div class="container-fluid">
+        {% block page_content %} {% endblock %}
+    </div>
     {% endblock %}
-{#</body>#}
-
+    {#</body>#}

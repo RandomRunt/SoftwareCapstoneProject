@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import requests, json
-from flask_bootstrap import Bootstrap
+
 import data_base
 from wtforms import Form, validators, StringField
 
@@ -15,15 +15,10 @@ property_id = "NT-7996-GP"
 
 
 app = Flask(__name__)
-bootstrap = Bootstrap(app)
-
 
 class suburb_inputs(Form):
     suburb_input = StringField('Full Name:', validators=[validators.required()])
 
-
-if __name__ == '__main__':
-    app.run()
 
 
 @app.route('/')
@@ -132,3 +127,6 @@ def about():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html')
+
+if __name__ == '__main__':
+    app.run()
