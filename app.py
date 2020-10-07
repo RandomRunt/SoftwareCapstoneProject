@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 import requests, json
 from flask_bootstrap import Bootstrap
-import database_for_suburbs
+
 
 # Domain API variables
 client_id = 'client_209b71146a72afa869bbf9bc385deefa'
