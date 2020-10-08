@@ -16,6 +16,22 @@
             {% if message_name %}
                 <p style="color: red">{{ message_name }}</p>
             {% endif %}
+        <hr>
+        <h2>{{ suburb }}</h2>
+        <p>Population: {{ population }} </p>
+        <p>Postcode: {{ postcode }}</p>
+        <p>State: {{ state }}</p>
+        <h3>Demographics</h3>
+        <p>Age 0 to 4: {{ age_0_to_4 }} </p>
+        <p>Age 5 to 19: {{ age_5_to_19 }} </p>
+        <p>Age 20 to 39: {{ age_20_to_39 }} </p>
+        <p>Age 40 to 59: {{ age_40_to_59 }} </p>
+        <p>Age 60+: {{ age_60_plus }} </p>
+        <h3>Sales Results</h3>
+        <p>Properties sold: {{ properties_sold }}</p>
+        <p>Clearance rate: {{ clearance_rate }}</p>
+        <p>Median sale price: {{ median_sale }}</p>
+        <p>Total sales: {{ total_sale }}</p>
 
         </form>
         <hr>
