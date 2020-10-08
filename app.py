@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 import requests, json
 import urllib.request
 
-import data_base
+import data_base, house_searching
 from wtforms import Form, validators, StringField
 
 # Domain API variables
@@ -38,7 +38,6 @@ access_token = json.loads(requests.post(
     auth=(client_id, client_secret)
 ).content)
 print(access_token["access_token"])
-
 
 @app.route('/')
 @app.route('/index')
@@ -114,7 +113,7 @@ def suburb_search():
             print(response_4.json())
 
             if str(response_4.json()) == "{'message': '[]'}":
-                message_name = 'We do not have information on ' + suburb +\
+                message_name = 'We do not have information on ' + suburb + \
                                ' at the moment, please enter another Sydney suburb'
             else:
                 properties = response_4.json()[0]
@@ -176,9 +175,36 @@ def suburb_search():
                            population=population)
 
 
-@app.route("/house")
+@app.route("/house", methods=['GET', 'POST'])
 def house():
-    return render_template("generichouse.html")
+    street_name = ""
+    street_num = ""
+    suburb = ""
+
+    form = house_searching.address_inputs(request.form)
+
+    if request.method == 'POST':
+        street_name = request.form['street_Name']
+        street_num = request.form['street_Num']
+        suburb = request.form['suburb']
+
+        response = requests.request(
+            "GET",
+            endpoint_url + "properties/_suggest?terms=" + street_num + "+" + street_name + "+St%2C+" + suburb +
+            "&channel=All",
+            headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
+        )
+        full_address = response.json()[0]
+        addressComponents = full_address.get('addressComponents')
+        street_type = addressComponents.get('streetTypeLong')
+        state = addressComponents.get('state')
+
+        data_base.addProperty(property_id, street_name, street_num, suburb, street_type, state, lower_price,
+                              upper_price, mid_price, image, lat_coordinate, long_coordinate, property_type, bedrooms,
+                              bathrooms, car_spaces)
+
+    return render_template("generichouse.html", street_name=street_name, street_num=street_num, suburb=suburb,
+                           form=form)
 
 
 # Testing charting library
