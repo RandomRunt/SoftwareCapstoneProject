@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block page_title %} Searching for property {% endblock %}
+{% block page_content %}
+
+<head>
+    <style>
+        p {
+            font-size: 14pt;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <br>
+        <form method="POST" list-style-type: none>
+
+            <h3>Enter a suburb: {{ form.suburb }}</h3>
+
+            <div class="slidecontainer">
+                <br>
+                <input type="range" min="0" max="13" name="Price" />
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3">
+                    {{ form.property_type.label(size=20) }}
+                    {{ form.property_type() }}
+                </div>
+
+                <div class="col-lg-3">
+                    {{ form.bedrooms.label(size=20) }}
+                    {{ form.bedrooms() }}
+                </div>
+
+                <div class="col-lg-3">
+                    {{ form.bathrooms.label(size=20) }}
+                    {{ form.bathrooms() }}
+                </div>
+
+                <div class="col-lg-3">
+                    {{ form.parking.label(size=20) }}
+                    {{ form.parking() }}
+                </div>
+            </div>
+
+            <input class="btn" type="submit" value="submit">
+        </form>
+        <!--<select class="property" type="text"  name="property_type" placeholder="Select a player">-->
+
+        </select>
+        <!-- modify this div class and add any about information-->
+
+
+    </div>
+</body>
+{% endblock %}
