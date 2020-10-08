@@ -14,14 +14,16 @@ def createTable():
 
 
 def addProperty(property_id, street_name, street_num, suburb, street_type, state, lower_price, upper_price, mid_price,
-                image, lat_coordinate, long_coordinate, property_type, bedrooms, bathrooms, car_spaces, areaSize):
+                image, lat_coordinate, long_coordinate, property_type, bedrooms, bathrooms, car_spaces, areaSize,
+                postcode):
     conn = sqlite3.connect('properties.db')
     c = conn.cursor()
     c.execute("INSERT INTO properties_data_base (property_id, street_name, street_num, suburb, street_type, state, "
               "lower_price, upper_price, mid_price, image, lat_coordinate, long_coordinate, property_type, bedrooms, "
-              "bathrooms, car_spaces, areaSize) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-              (property_id, street_name, street_num, suburb, street_type, state, lower_price, upper_price, mid_price,
-               image, lat_coordinate, long_coordinate, property_type, bedrooms, bathrooms, car_spaces, areaSize))
+              "bathrooms, car_spaces, areaSize, postcode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+              , (property_id, street_name, street_num, suburb, street_type, state, lower_price, upper_price, mid_price,
+                 image, lat_coordinate, long_coordinate, property_type, bedrooms, bathrooms, car_spaces, areaSize,
+                 postcode))
 
     conn.commit()
     conn.close()
@@ -55,7 +57,7 @@ def findProperty(property_id):
     conn = sqlite3.connect('properties.db')
     c = conn.cursor()
     property = []
-    for row in c.execute('SELECT * FROM properties_data_base WHERE suburb=?', (property_id,)):
+    for row in c.execute('SELECT * FROM properties_data_base WHERE property_id=?', (property_id,)):
         property.append(row)
     return property
     conn.close()
