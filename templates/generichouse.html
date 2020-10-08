@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% block page_title %}Home{% endblock %}
 {% block page_content %}
+    <br>
 <h1>House Address</h1>
 
 <div style="margin-left: auto; margin-right: auto;">
     <div>
-
+        <br>
         <form action="" method="POST">
             {{ form.street_Num.label }}
             {{ form.street_Num }}
@@ -16,8 +17,35 @@
             {{ form.suburb.label }}
             {{ form.suburb }}
             <input class="btn" type="submit" value="submit">
+            {% if message_name %}
+                <p style="color: red">{{ message_name }}</p>
+            {% endif %}
         </form>
 
+        <HR>
+        <h2>{{ street_num }} {{ street_name }} {{ street_type }}</h2>
+        <h3>{{ suburb }} {{ state }} {{ postcode }}</h3>
+
+
+        <div class="row">
+            <div class="col-lg-8">
+                <img alt="image of house" src={{ images_of_house }} style="width:100%">
+            </div>
+
+            <div class="col-lg-3">
+                <p>Bathrooms: {{ bathrooms }} </p>
+                <p>Bedrooms {{ bedrooms }} </p>
+                <p>Car spaces: {{ car_spaces }} </p>
+                <p>Area: {{ areaSize }} square meters </p>
+                <br>
+                <p>Low price: ${{ lower_price }} </p>
+                <p>Mid price: ${{ mid_price }} </p>
+                <p>High price: ${{ upper_price }} </p>
+            </div>
+        </div>
+    </div>
+
+        <br>
     <div style="display: inline-block; height:500px; width: 45%;"  >
         <img style = "height:500px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Lyman_Trumbull_House.jpg/1200px-Lyman_Trumbull_House.jpg">
     </div>
