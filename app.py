@@ -11,9 +11,6 @@ client_secret = 'secret_31598885c06ef62ddb59f51b84bfba76'
 auth_url = 'https://auth.domain.com.au/v1/connect/token'
 endpoint_url = 'https://api.domain.com.au/v1/'
 
-# specific property id
-
-
 app = Flask(__name__)
 
 
@@ -29,6 +26,7 @@ access_token = json.loads(requests.post(
             "api_properties_read",
             "api_demographics_read",
             "api_addresslocators_read",
+            "api_properties_read",
             "api_suburbperformance_read",
             "api_salesresults_read",
             "api_locations_read"
@@ -209,11 +207,34 @@ def house():
             headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
         )
 
+        # BLAH BLAH ENTER CODE HERE ONCE IT WORKS
         print(response)
 
-    # data_base.addProperty(property_id, street_name, street_num, suburb, street_type, state, lower_price,
-    #                      upper_price, mid_price, image, lat_coordinate, long_coordinate, property_type, bedrooms,
-    #                     bathrooms, car_spaces)
+        response = requests.request(
+            "GET",
+            endpoint_url + "properties/" + property_id,
+            headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
+        )
+
+        house = response.json()
+        coordinate = house.get('addressCoordinate')
+        lat_coordinate = coordinate.get('lat')
+        long_coordinate = coordinate.get('long')
+        areaSize = house.get('areaSize')
+        property_type = house.get('propertyCategory')
+        bedrooms = house.get('bedrooms')
+        bathrooms = house.get('bathrooms')
+        car_spaces = house.get('car_spaces')
+        images = house.get('photos')
+        if images == '[]':
+            image = 'none'
+        else:
+            image1 = images[0]
+            image = image1.get('fullUrl')
+
+        data_base.addProperty(property_id, street_name, street_num, suburb, street_type, state, lower_price,
+                              upper_price, mid_price, image, lat_coordinate, long_coordinate, property_type, bedrooms,
+                              bathrooms, car_spaces, areaSize)
 
     return render_template("generichouse.html", street_name=street_name, street_num=street_num, suburb=suburb,
                            form=form)

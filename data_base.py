@@ -14,14 +14,14 @@ def createTable():
 
 
 def addProperty(property_id, street_name, street_num, suburb, street_type, state, lower_price, upper_price, mid_price,
-                image, lat_coordinate, long_coordinate, property_type, bedrooms, bathrooms, car_spaces):
+                image, lat_coordinate, long_coordinate, property_type, bedrooms, bathrooms, car_spaces, areaSize):
     conn = sqlite3.connect('properties.db')
     c = conn.cursor()
     c.execute("INSERT INTO properties_data_base (property_id, street_name, street_num, suburb, street_type, state, "
               "lower_price, upper_price, mid_price, image, lat_coordinate, long_coordinate, property_type, bedrooms, "
-              "bathrooms, car_spaces) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+              "bathrooms, car_spaces, areaSize) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
               (property_id, street_name, street_num, suburb, street_type, state, lower_price, upper_price, mid_price,
-               image, lat_coordinate, long_coordinate, property_type, bedrooms, bathrooms, car_spaces))
+               image, lat_coordinate, long_coordinate, property_type, bedrooms, bathrooms, car_spaces, areaSize))
 
     conn.commit()
     conn.close()
