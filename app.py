@@ -212,9 +212,9 @@ def house():
         property_id = full_address.get('id')
         addressComponents = full_address.get('addressComponents')
 
-        street_name = addressComponents.get('')
-        street_num = request.form['street_Num']
-        suburb
+        street_name = addressComponents.get('streetName')
+        street_num = addressComponents.get('streetNumber')
+        suburb = addressComponents.get('suburb')
 
         street_type = addressComponents.get('streetTypeLong')
         postcode = addressComponents.get('postcode')
