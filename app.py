@@ -180,13 +180,28 @@ def house():
     street_name = ""
     street_num = ""
     suburb = ""
+    property_id = ""
+    street_type = ""
+    state = ""
+    lower_price = ""
+    upper_price = ""
+    mid_price = ""
+    image = ""
+    lat_coordinate = ""
+    long_coordinate = ""
+    property_type = ""
+    bedrooms = ""
+    bathrooms = ""
+    car_spaces = ""
+    areaSize = ""
 
     form = house_searching.address_inputs(request.form)
-
     if request.method == 'POST':
         street_name = request.form['street_Name']
         street_num = request.form['street_Num']
         suburb = request.form['suburb']
+
+
 
         response = requests.request(
             "GET",
@@ -200,41 +215,46 @@ def house():
         street_type = addressComponents.get('streetTypeLong')
         state = addressComponents.get('state')
         print(property_id)
+        data_base_test = data_base.findProperty(property_id)
 
-        response = requests.request(
-            "GET",
-            endpoint_url + "properties/" + property_id + "/priceEstimate",
-            headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
-        )
+        if not data_base_test:
+            response = requests.request(
+                "GET",
+                endpoint_url + "properties/" + property_id + "/priceEstimate",
+                headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
+            )
 
-        # BLAH BLAH ENTER CODE HERE ONCE IT WORKS
-        print(response)
+            # BLAH BLAH ENTER CODE HERE ONCE IT WORKS
+            print(response)
 
-        response = requests.request(
-            "GET",
-            endpoint_url + "properties/" + property_id,
-            headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
-        )
+            response = requests.request(
+                "GET",
+                endpoint_url + "properties/" + property_id,
+                headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
+            )
 
-        house = response.json()
-        coordinate = house.get('addressCoordinate')
-        lat_coordinate = coordinate.get('lat')
-        long_coordinate = coordinate.get('long')
-        areaSize = house.get('areaSize')
-        property_type = house.get('propertyCategory')
-        bedrooms = house.get('bedrooms')
-        bathrooms = house.get('bathrooms')
-        car_spaces = house.get('car_spaces')
-        images = house.get('photos')
-        if images == '[]':
-            image = 'none'
+            house = response.json()
+            coordinate = house.get('addressCoordinate')
+            lat_coordinate = coordinate.get('lat')
+            long_coordinate = coordinate.get('lon')
+            areaSize = house.get('areaSize')
+            property_type = house.get('propertyCategory')
+            bedrooms = house.get('bedrooms')
+            bathrooms = house.get('bathrooms')
+            car_spaces = house.get('carSpaces')
+            images = house.get('photos')
+            if str(images) == '[]':
+                image = 'none'
+            else:
+                image1 = images[0]
+                image = image1.get('fullUrl')
+
+            data_base.addProperty(property_id, street_name, street_num, suburb, street_type, state, lower_price,
+                                  upper_price, mid_price, image, lat_coordinate, long_coordinate, property_type, bedrooms,
+                                  bathrooms, car_spaces, areaSize)
         else:
-            image1 = images[0]
-            image = image1.get('fullUrl')
-
-        data_base.addProperty(property_id, street_name, street_num, suburb, street_type, state, lower_price,
-                              upper_price, mid_price, image, lat_coordinate, long_coordinate, property_type, bedrooms,
-                              bathrooms, car_spaces, areaSize)
+            property = data_base_test[0]
+            print(property)
 
     return render_template("generichouse.html", street_name=street_name, street_num=street_num, suburb=suburb,
                            form=form)
