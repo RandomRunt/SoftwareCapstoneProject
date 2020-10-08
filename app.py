@@ -12,7 +12,7 @@ auth_url = 'https://auth.domain.com.au/v1/connect/token'
 endpoint_url = 'https://api.domain.com.au/v1/'
 
 # specific property id
-property_id = "NT-7996-GP"
+
 
 app = Flask(__name__)
 
@@ -39,9 +39,11 @@ access_token = json.loads(requests.post(
 ).content)
 print(access_token["access_token"])
 
+
 @app.route('/')
 @app.route('/index')
 def index():
+    property_id = "XJ-5205-DL"
     response = requests.request(
         "GET",
         endpoint_url + "properties/" + property_id,
@@ -199,20 +201,19 @@ def house():
         addressComponents = full_address.get('addressComponents')
         street_type = addressComponents.get('streetTypeLong')
         state = addressComponents.get('state')
-        print(property_id, street_type, state)
+        print(property_id)
 
-        response_1 = requests.request(
+        response = requests.request(
             "GET",
-            endpoint_url + "properties/" + property_id + "/priceEstimate ",
+            endpoint_url + "properties/" + property_id + "/priceEstimate",
             headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
         )
-        prices = response_1.json()
-        print(prices)
 
+        print(response)
 
-       # data_base.addProperty(property_id, street_name, street_num, suburb, street_type, state, lower_price,
-        #                      upper_price, mid_price, image, lat_coordinate, long_coordinate, property_type, bedrooms,
-         #                     bathrooms, car_spaces)
+    # data_base.addProperty(property_id, street_name, street_num, suburb, street_type, state, lower_price,
+    #                      upper_price, mid_price, image, lat_coordinate, long_coordinate, property_type, bedrooms,
+    #                     bathrooms, car_spaces)
 
     return render_template("generichouse.html", street_name=street_name, street_num=street_num, suburb=suburb,
                            form=form)
