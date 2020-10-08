@@ -1,20 +1,24 @@
 {% extends 'base.html' %}
 {% block page_title %} Suburb Search {% endblock %}
 {% block page_content %}
-    <head>
-        <style>
-            p{font-size: 14pt;}
-        </style>
-    </head>
-    <body>
-        <div class = "container-fluid">
+
+<head>
+    <style>
+        p {
+            font-size: 14pt;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
         <h1>Search for Suburb</h1>
         <form action="" method="POST">
             {{ form.suburb_input.label }}
             {{ form.suburb_input }}
             <input class="btn" type="submit" value="submit">
             {% if message_name %}
-                <p style="color: red">{{ message_name }}</p>
+            <p style="color: red">{{ message_name }}</p>
             {% endif %}
         </form>
         <hr>
@@ -36,6 +40,6 @@
 
 
         <hr>
-        </div>
-    </body>
+    </div>
+</body>
 {% endblock %}
