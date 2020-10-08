@@ -10,9 +10,6 @@ client_secret = 'secret_31598885c06ef62ddb59f51b84bfba76'
 auth_url = 'https://auth.domain.com.au/v1/connect/token'
 endpoint_url = 'https://api.domain.com.au/v1/'
 
-# specific property id
-property_id = "NT-7996-GP"
-
 app = Flask(__name__)
 
 
@@ -30,6 +27,7 @@ access_token = json.loads(requests.post(
             "api_properties_read",
             "api_demographics_read",
             "api_addresslocators_read",
+            "api_properties_read",
             "api_suburbperformance_read",
             "api_salesresults_read",
             "api_locations_read"
@@ -40,9 +38,11 @@ access_token = json.loads(requests.post(
 ).content)
 print(access_token["access_token"])
 
+
 @app.route('/')
 @app.route('/index')
 def index():
+    property_id = "XJ-5205-DL"
     response = requests.request(
         "GET",
         endpoint_url + "properties/" + property_id,
@@ -182,17 +182,31 @@ def suburb_search():
 
 @app.route("/house", methods=['GET', 'POST'])
 def house():
+    message_name = ''
     street_name = ""
     street_num = ""
     suburb = ""
+    property_id = ""
+    street_type = ""
+    state = ""
+    lower_price = "-"
+    upper_price = "-"
+    mid_price = "-"
+    image = ""
+    lat_coordinate = ""
+    long_coordinate = ""
+    property_type = ""
+    bedrooms = ""
+    bathrooms = ""
+    car_spaces = ""
+    areaSize = ""
+    postcode = ""
 
     form = house_searching.address_inputs(request.form)
-
     if request.method == 'POST':
         street_name = request.form['street_Name']
         street_num = request.form['street_Num']
         suburb = request.form['suburb']
-
         response = requests.request(
             "GET",
             endpoint_url + "properties/_suggest?terms=" + street_num + "+" + street_name + "+St%2C+" + suburb +
@@ -202,25 +216,83 @@ def house():
         full_address = response.json()[0]
         property_id = full_address.get('id')
         addressComponents = full_address.get('addressComponents')
+
+        street_name = addressComponents.get('streetName')
+        street_num = addressComponents.get('streetNumber')
+        suburb = addressComponents.get('suburb')
+
         street_type = addressComponents.get('streetTypeLong')
+        postcode = addressComponents.get('postcode')
         state = addressComponents.get('state')
-        print(property_id, street_type, state)
+        print(property_id)
+        if property_id == "":
+            message_name = "Please enter a valid property"
+        else:
+            house_searching.suburb_grab(suburb, street_num, street_name, postcode, state)
+            data_base_test = data_base.findProperty(property_id)
 
-        response_1 = requests.request(
-            "GET",
-            endpoint_url + "properties/" + property_id + "/priceEstimate ",
-            headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
-        )
-        prices = response_1.json()
-        print(prices)
+            if not data_base_test:
+                response = requests.request(
+                    "GET",
+                    endpoint_url + "properties/" + property_id + "/priceEstimate",
+                    headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
+                )
 
+                # BLAH BLAH ENTER CODE HERE ONCE IT WORKS
+                print(response)
 
-       # data_base.addProperty(property_id, street_name, street_num, suburb, street_type, state, lower_price,
-        #                      upper_price, mid_price, image, lat_coordinate, long_coordinate, property_type, bedrooms,
-         #                     bathrooms, car_spaces)
+                response = requests.request(
+                    "GET",
+                    endpoint_url + "properties/" + property_id,
+                    headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
+                )
+
+                house = response.json()
+                coordinate = house.get('addressCoordinate')
+                lat_coordinate = coordinate.get('lat')
+                long_coordinate = coordinate.get('lon')
+                areaSize = house.get('areaSize')
+                property_type = house.get('propertyCategory')
+                bedrooms = house.get('bedrooms')
+                bathrooms = house.get('bathrooms')
+                car_spaces = house.get('carSpaces')
+                images = house.get('photos')
+                if str(images) == '[]':
+                    image = 'https://thumbs.dreamstime.com/b/blur-house-background-vintage-style-44768012.jpg'
+                else:
+                    image1 = images[0]
+                    image = image1.get('fullUrl')
+
+                data_base.addProperty(property_id, street_name, street_num, suburb, street_type, state, lower_price,
+                                      upper_price, mid_price, image, lat_coordinate, long_coordinate, property_type,
+                                      bedrooms, bathrooms, car_spaces, areaSize, postcode)
+            else:
+                property = data_base_test[0]
+                print(property)
+                street_name = property[1]
+                street_num = property[2]
+                suburb = property[3]
+                street_type = property[4]
+                state = property[5]
+                lower_price = property[6]
+                upper_price = property[7]
+                mid_price = property[8]
+                image = property[9]
+                lat_coordinate = property[10]
+                long_coordinate = property[11]
+                property_type = property[12]
+                bedrooms = property[13]
+                bathrooms = property[14]
+                car_spaces = property[15]
+                areaSize = property[16]
+                postcode = property[17]
 
     return render_template("generichouse.html", street_name=street_name, street_num=street_num, suburb=suburb,
-                           form=form)
+                           form=form, street_type=street_type, state=state, lower_price=lower_price,
+                           upper_price=upper_price, mid_price=mid_price, images_of_house=image,
+                           lat_coordinate=lat_coordinate, long_coordinate=long_coordinate, property_type=property_type,
+                           bedrooms=bedrooms, bathrooms=bathrooms, car_spaces=car_spaces, areaSize=areaSize, postcode=
+                           postcode, message_name=message_name)
 
 
 # Testing charting library
