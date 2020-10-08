@@ -195,13 +195,24 @@ def house():
             headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
         )
         full_address = response.json()[0]
+        property_id = full_address.get('id')
         addressComponents = full_address.get('addressComponents')
         street_type = addressComponents.get('streetTypeLong')
         state = addressComponents.get('state')
+        print(property_id, street_type, state)
 
-        data_base.addProperty(property_id, street_name, street_num, suburb, street_type, state, lower_price,
-                              upper_price, mid_price, image, lat_coordinate, long_coordinate, property_type, bedrooms,
-                              bathrooms, car_spaces)
+        response_1 = requests.request(
+            "GET",
+            endpoint_url + "properties/" + property_id + "/priceEstimate ",
+            headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
+        )
+        prices = response_1.json()
+        print(prices)
+
+
+       # data_base.addProperty(property_id, street_name, street_num, suburb, street_type, state, lower_price,
+        #                      upper_price, mid_price, image, lat_coordinate, long_coordinate, property_type, bedrooms,
+         #                     bathrooms, car_spaces)
 
     return render_template("generichouse.html", street_name=street_name, street_num=street_num, suburb=suburb,
                            form=form)
