@@ -223,6 +223,7 @@ def house():
         if property_id == "":
             message_name = "Please enter a valid property"
         else:
+            house_searching.suburb_grab(suburb, street_num, street_name, postcode, state)
             data_base_test = data_base.findProperty(property_id)
 
             if not data_base_test:
