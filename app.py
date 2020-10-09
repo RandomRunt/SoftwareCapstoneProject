@@ -153,126 +153,20 @@ def index():
     return render_template('index.html')
 
 
-
 @app.route("/suburb_search")
 def search_suburb():
     render_template("suburb_search.html")
-
-
-@app.route('/suburb_search', methods=['GET', 'POST'])
-def suburb_search():
-    suburbian = ""
-    form = suburb_inputs(request.form)
-    message_name = ''
-    return render_template("suburb_search.html")
 
 
 @app.route('/home')
 def home():
     render_template("home.html")
 
+
 @app.route('/suburb/<suburb>')
 def suburb_search(suburb):
     print(suburb)
     suburb_check = data_base.findSuburb(suburb)
-    if not suburb_check:
-        response_1 = requests.request(
-            "GET",
-            endpoint_url + "salesResults/Sydney/listings",
-            headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
-        )
-        print(response_1)
-        sales_result = response_1.json()
-        street_num = ''
-        street_name = ''
-        postcode = '-'
-        state = '-'
-
-        for row in sales_result:
-            if row.get('suburb') == suburb:
-                street_num = row.get('streetNumber')
-                street_name = row.get('streetName')
-                state = 'NSW'
-                street_type = row.get('streetType')
-                postcode = row.get('postcode')
-                suburb = row.get('suburb')
-                print(street_num, street_name, state, postcode, street_type, suburb)
-
-        if street_num == '':
-            message_name = 'Please enter a valid Sydney suburb'
-            pass
-        else:
-            response_4 = requests.request(
-                "GET",
-                endpoint_url + "addressLocators?searchLevel=Address&streetNumber=" + street_num + "&streetName="
-                + street_name + "&streetType=Rd&suburb=" + suburb + "&state=NSW&postcode=" + postcode,
-                headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
-            )
-            print(response_4.json())
-
-            if str(response_4.json()) == "{'message': '[]'}":
-                print('o')
-                #message_name = 'We do not have information on ' + suburb + \
-                 #              ' at the moment, please enter another Sydney suburb'
-            else:
-                properties = response_4.json()[0]
-                suburb_levels = properties.get('ids')[2]
-                suburb_id = suburb_levels.get('id')
-
-                response_2 = requests.request(
-                    "GET",
-                    endpoint_url + "demographics?level=Suburb&id=" + str(suburb_id) + "&types=AgeGroupOfPopulation",
-                    headers={'Authorization': 'Bearer ' + access_token["access_token"],
-                             'Content-Type': 'application/json'}
-                )
-                age_demographics = (response_2.json().get('demographics'))[0]
-                indepth = age_demographics.get('items')
-
-                age_0_to_4 = indepth[0].get('value')
-                age_5_to_19 = indepth[2].get('value')
-                age_20_to_39 = indepth[4].get('value')
-                age_40_to_59 = indepth[3].get('value')
-                age_60_plus = indepth[1].get('value')
-                population = age_demographics.get('total')
-
-                response_3 = requests.request(
-                    "GET",
-                    endpoint_url + "salesResults/Sydney",
-                    headers={'Authorization': 'Bearer ' + access_token["access_token"],
-                             'Content-Type': 'application/json'}
-                )
-                properties_sold = response_3.json().get("numberSold")
-                total_sale = response_3.json().get("totalSales")
-                median_sale = response_3.json().get("median")
-                clearance_rate = response_3.json().get("adjClearanceRate")
-                print('done')
-
-                data_base.addSuburb(suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_to_59, age_60_plus,
-                                    postcode, state, properties_sold, clearance_rate, median_sale, total_sale,
-                                    population)
-
-
-    else:
-        suburb_info = suburb_check[0]
-        age_0_to_4 = suburb_info[1]
-        age_5_to_19 = suburb_info[2]
-        age_20_to_39 = suburb_info[3]
-        age_40_to_59 = suburb_info[4]
-        age_60_plus = suburb_info[5]
-        postcode = suburb_info[6]
-        state = suburb_info[7]
-        properties_sold = suburb_info[8]
-        clearance_rate = suburb_info[9]
-        median_sale = suburb_info[10]
-        total_sale = suburb_info[11]
-        population = suburb_info[12]
-        print("yeet")
-
-    return render_template("suburb.html", suburb=suburb, message_name=message_name, form=form, age_0_to_4=age_0_to_4,
-                           age_5_to_19=age_5_to_19, age_20_to_39=age_20_to_39, age_40_to_59=age_40_to_59,
-                           age_60_plus=age_60_plus, postcode=postcode, state=state, properties_sold=properties_sold,
-                           clearance_rate=clearance_rate, median_sale=median_sale, total_sale=total_sale,
-                           population=population)
     
     suburb_info = suburb_check[0]
     age_0_to_4 = suburb_info[1]
@@ -289,7 +183,6 @@ def suburb_search(suburb):
     population = suburb_info[12]
 
     return render_template("suburb.html", suburb=suburb, suburb_info=suburb_info)
-
 
 
 @app.route("/house", methods=['GET', 'POST'])
