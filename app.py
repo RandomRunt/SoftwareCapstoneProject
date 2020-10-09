@@ -162,35 +162,6 @@ def search_suburb():
 def home():
     render_template("home.html")
 
-
-@app.route("/search_suburb")
-def search_suburb():
-    render_template("suburb_search.html")
-
-
-@app.route('/suburb_search', methods=['GET', 'POST'])
-def suburb_search():
-    suburb = ""
-    form = suburb_inputs(request.form)
-    message_name = ''
-
-    age_0_to_4 = '-'
-    age_5_to_19 = '-'
-    age_20_to_39 = '-'
-    age_40_to_59 = '-'
-    age_60_plus = '-'
-    postcode = '-'
-    state = '-'
-    properties_sold = '-'
-    clearance_rate = '-'
-    median_sale = '-'
-    total_sale = '-'
-    population = '-'
-
-    if request.method == 'POST':
-        suburb = request.form['suburb_input']
-
-
 @app.route('/suburb/<suburb>')
 def suburb_search(suburb):
     print(suburb)
