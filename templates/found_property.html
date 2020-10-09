@@ -14,13 +14,26 @@
     <div class="container-fluid">
         <br>
         <form method="POST" list-style-type: none>
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3>Enter a suburb: {{ form.suburb }}</h3>
+                </div>
+                <div class="col-lg-4">
 
-            <h3>Enter a suburb: {{ form.suburb }}</h3>
-
+                    <h3>Select a state</h3><select name="stateDropdown" placeholder="Select a state">
+                        <option disabled selected>Select a state</option>
+                            {% for state in states %}
+                                <option value= "{{state}}" SELECTED>{{state}}</option>"
+                            {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <h3>Price</h3>
             <div class="slidecontainer">
                 <br>
-                <input type="range" min="0" max="13" name="Price" />
+                <input type="range" min="0" max="13" name="Price" style = "width: 700px;"/>
             </div>
+        <br>
 
             <div class="row">
                 <div class="col-lg-3">
@@ -46,6 +59,7 @@
 
             <input class="btn" type="submit" value="submit">
         </form>
+    <br>
         <!--<select class="property" type="text"  name="property_type" placeholder="Select a player">-->
 
         </select>

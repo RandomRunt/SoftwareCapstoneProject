@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
-from wtforms import Form, validators, StringField, SelectMultipleField, widgets, DecimalField
+from wtforms import Form, validators, StringField, SelectMultipleField, widgets, DecimalField, RadioField
 from wtforms.validators import ValidationError, DataRequired
 from wtforms.widgets import ListWidget, CheckboxInput
 
@@ -31,6 +31,8 @@ access_token = json.loads(requests.post(
     auth=(client_id, client_secret)
 ).content)
 
+states = ['NSW', 'VIC', 'WA', 'SA', 'NT', 'CBR', 'QLD', 'TAS']
+
 
 class MultiCheckboxField(SelectMultipleField):
     widget = widgets.ListWidget(prefix_label=False)
@@ -40,15 +42,16 @@ class MultiCheckboxField(SelectMultipleField):
 class feature_inputs(Form):
     suburb = StringField('Enter a suburb: ', validators=[validators.required()])
 
-    property_type = MultiCheckboxField('Property type: ', choices=[(1, 'House'), (2, 'Apartment'), (3, 'Townhouse'),
-                                                                   (4, 'Land'), (5, 'Retirement')],
+    property_type = MultiCheckboxField('Property type: ', choices=[('House', 'House'), ('NewApartments', 'Apartment'),
+                                                                   ('Townhouse', 'Townhouse'), ('Land', 'Land'),
+                                                                   ('Retirement', 'Retirement')],
                                        validators=[DataRequired()])
-    bedrooms = MultiCheckboxField('Bedrooms: ', choices=[(1, '1+'), (2, '2+'), (3, '3+'), (4, '4+'), (5, '5+')],
-                                  validators=[DataRequired()])
-    parking = MultiCheckboxField('Parking: ', choices=[(1, '1+'), (2, '2+'), (3, '3+'), (4, '4+'), (5, '5+')],
-                                 validators=[DataRequired()])
-    bathrooms = MultiCheckboxField('Bathrooms: ', choices=[(1, '1+'), (2, '2+'), (3, '3+'), (4, '4+'), (5, '5+')],
-                                   validators=[DataRequired()])
+    bedrooms = RadioField('Bedrooms: ', choices=[(1, '1+'), (2, '2+'), (3, '3+'), (4, '4+'), (5, '5+')],
+                          validators=[validators.required()])
+    parking = RadioField('Parking: ', choices=[(1, '1+'), (2, '2+'), (3, '3+'), (4, '4+'), (5, '5+')],
+                         validators=[validators.required()])
+    bathrooms = RadioField('Bathrooms: ', choices=[(1, '1+'), (2, '2+'), (3, '3+'), (4, '4+'), (5, '5+')],
+                           validators=[validators.required()])
 
 
 class address_inputs(Form):

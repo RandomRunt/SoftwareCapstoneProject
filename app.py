@@ -34,7 +34,7 @@ suburblist = ["Abbotsbury", "Abbotsford", "Acacia Gardens", "Agnes Banks", "Aird
               "Bungarribee", "Burraneer", "Burwood", "Burwood Heights", "Busby", "Cabarita", "Cabramatta",
               "Cabramatta West", "Caddens", "Cambridge Gardens", "Cambridge Park", "Camden", "Camden South", "Camellia",
               "Cammeray", "Campbelltown", "Camperdown", "Campsie", "Canada Bay", "Canley Heights", "Canley Vale",
-              "Canoelands", "Canterbury", "Caringbah", "Caringbah South", "Carlingford", "Carlton", "Carnes Hill",
+              "Canoelands", "Canterbury", "Caringbah", "Caringbah South", "Carlton", "Carnes Hill",
               "Carramar", "Carss Park", "Cartwright", "Castle Cove", "Castle Hill", "Castlecrag", "Castlereagh",
               "Casula", "Catherine Field", "Cattai", "Cawdor", "Cecil Hills", "Cecil Park", "Centennial Park",
               "Central Business District", "Chatswood", "Chatswood West", "Cheltenham", "Cherrybrook", "Chester Hill",
@@ -46,7 +46,7 @@ suburblist = ["Abbotsbury", "Abbotsford", "Acacia Gardens", "Agnes Banks", "Aird
               "Croydon", "Croydon Park", "Cumberland Reach", "Curl Curl", "Currans Hill", "Currawong Beach",
               "Daceyville", "Dangar Island", "Darling Point", "Darlinghurst", "Darlington", "Davidson", "Dawes Point",
               "Dean Park", "Dee Why", "Denham Court", "Denistone", "Denistone East", "Denistone West", "Dharruk",
-              "Dolans Bay", "Dolls Point", "Doonside", "Double Bay", "Dover Heights", "Drummoyne", "Duffys Forest",
+              "Dolans Bay", "Dolls Point", "Double Bay", "Dover Heights", "Drummoyne", "Duffys Forest",
               "Dulwich Hill", "Dundas", "Dundas Valley", "Dural", "Eagle Vale", "Earlwood", "East Gordon", "East Hills",
               "East Killara", "East Kurrajong", "East Lindfield", "East Ryde", "Eastern Creek", "Eastgardens",
               "Eastlakes", "Eastwood", "Ebenezer", "Edensor Park", "Edgecliff", "Edmondson Park", "Elanora Heights",
@@ -143,13 +143,13 @@ print(access_token["access_token"])
 @app.route('/')
 @app.route('/index')
 def index():
-    property_id = "XJ-5205-DL"
-    response = requests.request(
-        "GET",
-        endpoint_url + "properties/" + property_id,
-        headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
-    )
-    print(response.json())
+    #property_id = "XJ-5205-DL"
+    #response = requests.request(
+    #    "GET",
+    #    endpoint_url + "properties/" + property_id,
+    #    headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
+    #)
+    #print(response.json())
     return render_template('index.html')
 
 
@@ -165,7 +165,7 @@ def search_suburb():
 
 @app.route('/suburb_search', methods=['GET', 'POST'])
 def suburb_search():
-    suburb = ""
+    suburbian = ""
     form = suburb_inputs(request.form)
     message_name = ''
 
@@ -183,81 +183,88 @@ def suburb_search():
     population = '-'
 
     if request.method == 'POST':
-        suburb = request.form['suburb_input']
+        suburbian = request.form['suburb_input']
 
-    print(suburb)
-    suburb_check = data_base.findSuburb(suburb)
-
-    if not suburb_check:
-        response_1 = requests.request(
-            "GET",
-            endpoint_url + "salesResults/Sydney/listings",
-            headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
-        )
-        sales_result = response_1.json()
-        street_num = ''
-        street_name = ''
-
-        for row in sales_result:
-            if row.get('suburb') == suburb:
-                street_num = row.get('streetNumber')
-                street_name = row.get('streetName')
-                state = row.get('state').upper()
-                street_type = row.get('streetType')
-                postcode = row.get('postcode')
-                suburb = row.get('suburb')
-                print(street_num, street_name, state, postcode, street_type, suburb)
-
-        if postcode == '-':
-            message_name = 'Please enter a valid Sydney suburb'
-        else:
-            response_4 = requests.request(
+    for suburb in suburblist:
+        print(suburb)
+        suburb_check = data_base.findSuburb(suburb)
+        if not suburb_check:
+            response_1 = requests.request(
                 "GET",
-                endpoint_url + "addressLocators?searchLevel=Address&streetNumber=" + street_num + "&streetName="
-                + street_name + "&streetType=Rd&suburb=" + suburb + "&state=NSW&postcode=" + postcode,
+                endpoint_url + "salesResults/Sydney/listings",
                 headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
             )
-            print(response_4.json())
+            print(response_1)
+            sales_result = response_1.json()
+            street_num = ''
+            street_name = ''
+            postcode = '-'
+            state = '-'
 
-            if str(response_4.json()) == "{'message': '[]'}":
-                message_name = 'We do not have information on ' + suburb + \
-                               ' at the moment, please enter another Sydney suburb'
+            for row in sales_result:
+                if row.get('suburb') == suburb:
+                    street_num = row.get('streetNumber')
+                    street_name = row.get('streetName')
+                    state = 'NSW'
+                    street_type = row.get('streetType')
+                    postcode = row.get('postcode')
+                    suburb = row.get('suburb')
+                    print(street_num, street_name, state, postcode, street_type, suburb)
+
+            if street_num == '':
+                message_name = 'Please enter a valid Sydney suburb'
+                pass
             else:
-                properties = response_4.json()[0]
-                suburb_levels = properties.get('ids')[2]
-                suburb_id = suburb_levels.get('id')
-
-                response_2 = requests.request(
+                response_4 = requests.request(
                     "GET",
-                    endpoint_url + "demographics?level=Suburb&id=" + str(suburb_id) + "&types=AgeGroupOfPopulation",
-                    headers={'Authorization': 'Bearer ' + access_token["access_token"],
-                             'Content-Type': 'application/json'}
+                    endpoint_url + "addressLocators?searchLevel=Address&streetNumber=" + street_num + "&streetName="
+                    + street_name + "&streetType=Rd&suburb=" + suburb + "&state=NSW&postcode=" + postcode,
+                    headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
                 )
-                age_demographics = (response_2.json().get('demographics'))[0]
-                indepth = age_demographics.get('items')
+                print(response_4.json())
 
-                age_0_to_4 = indepth[0].get('value')
-                age_5_to_19 = indepth[2].get('value')
-                age_20_to_39 = indepth[4].get('value')
-                age_40_to_59 = indepth[3].get('value')
-                age_60_plus = indepth[1].get('value')
-                population = age_demographics.get('total')
+                if str(response_4.json()) == "{'message': '[]'}":
+                    print('o')
+                    #message_name = 'We do not have information on ' + suburb + \
+                     #              ' at the moment, please enter another Sydney suburb'
+                else:
+                    properties = response_4.json()[0]
+                    suburb_levels = properties.get('ids')[2]
+                    suburb_id = suburb_levels.get('id')
 
-                response_3 = requests.request(
-                    "GET",
-                    endpoint_url + "salesResults/Sydney",
-                    headers={'Authorization': 'Bearer ' + access_token["access_token"],
-                             'Content-Type': 'application/json'}
-                )
-                properties_sold = response_3.json().get("numberSold")
-                total_sale = response_3.json().get("totalSales")
-                median_sale = response_3.json().get("median")
-                clearance_rate = response_3.json().get("adjClearanceRate")
-                print('done')
+                    response_2 = requests.request(
+                        "GET",
+                        endpoint_url + "demographics?level=Suburb&id=" + str(suburb_id) + "&types=AgeGroupOfPopulation",
+                        headers={'Authorization': 'Bearer ' + access_token["access_token"],
+                                 'Content-Type': 'application/json'}
+                    )
+                    age_demographics = (response_2.json().get('demographics'))[0]
+                    indepth = age_demographics.get('items')
 
-                data_base.addSuburb(suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_to_59, age_60_plus,
-                                    postcode, state, properties_sold, clearance_rate, median_sale, total_sale,
-                                    population)
+                    age_0_to_4 = indepth[0].get('value')
+                    age_5_to_19 = indepth[2].get('value')
+                    age_20_to_39 = indepth[4].get('value')
+                    age_40_to_59 = indepth[3].get('value')
+                    age_60_plus = indepth[1].get('value')
+                    population = age_demographics.get('total')
+
+                    response_3 = requests.request(
+                        "GET",
+                        endpoint_url + "salesResults/Sydney",
+                        headers={'Authorization': 'Bearer ' + access_token["access_token"],
+                                 'Content-Type': 'application/json'}
+                    )
+                    properties_sold = response_3.json().get("numberSold")
+                    total_sale = response_3.json().get("totalSales")
+                    median_sale = response_3.json().get("median")
+                    clearance_rate = response_3.json().get("adjClearanceRate")
+                    print('done')
+
+                    data_base.addSuburb(suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_to_59, age_60_plus,
+                                        postcode, state, properties_sold, clearance_rate, median_sale, total_sale,
+                                        population)
+        else:
+            print('next')
 
     else:
         suburb_info = suburb_check[0]
@@ -311,7 +318,7 @@ def house():
         suburb = request.form['suburb']
         response = requests.request(
             "GET",
-            endpoint_url + "properties/_suggest?terms=" + street_num + "+" + street_name + "+St%2C+" + suburb +
+            endpoint_url + "properties/_suggest?terms=" + street_num + "+" + street_name + "+St%1C+" + suburb +
             "&channel=All",
             headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
         )
@@ -352,6 +359,7 @@ def house():
                 )
 
                 house = response.json()
+                print(house)
                 coordinate = house.get('addressCoordinate')
                 lat_coordinate = coordinate.get('lat')
                 long_coordinate = coordinate.get('lon')
@@ -402,25 +410,42 @@ def house():
 @app.route("/find_property", methods=['GET', 'POST'])
 def find():
     message = ""
+
     properties = 0
+    house_dict = {"listingType": "Sale", }
+    location_dict = {}
     form = house_searching.feature_inputs()
+    states = house_searching.states[::-1]
     if request.method == "POST":
-        house_found = request.form['property_type']
+        suburb = request.form['suburb']
+        house_found = request.form.getlist('property_type')
         bedrooms = request.form['bedrooms']
         bathrooms = request.form['bathrooms']
         parking = request.form['parking']
-        print(house_found)
+        state = request.form.getlist('stateDropdown')
+        house_dict['propertyTypes'] = house_found
+        house_dict['minBedrooms'] = bedrooms
+        house_dict['minBathrooms'] = bathrooms
+        house_dict['minCarspaces'] = parking
+        location_dict['state'] = state[0]
+        location_dict['region'] = ""
+        location_dict["area"] = ""
+        location_dict["suburb"] = suburb
+        location_dict["postCode"] = ""
+        location_dict["postCode"] = ""
+        house_dict["includeSurroundingSuburbs"] = 'false'
+
+        print(house_dict)
+
         response = requests.request(
             "POST",
-            endpoint_url + 'listings/residential/_search'
-                           '{"listingType":"Sale","propertyTypes":["House","NewApartments"],"minBedrooms":3,'
-                           '"minBathrooms":2,"minCarspaces":1,"locations":[{"state":"NSW","region":"","area":"",'
-                           '"suburb":"Newtown","postCode":"","includeSurroundingSuburbs":false}]}',
+            endpoint_url + 'listings/residential/_search' + str(house_dict),
             headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
         )
-        print(response.json())
 
-    return render_template('found_property.html', form=form)
+        print(response)
+
+    return render_template('found_property.html', form=form, states=states)
 
 
 # Testing charting library
