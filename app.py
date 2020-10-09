@@ -152,16 +152,9 @@ def index():
     #print(response.json())
     return render_template('index.html')
 
-
 @app.route("/suburb_search")
 def search_suburb():
     return render_template("suburb_search.html")
-
-
-@app.route('/home')
-def home():
-    render_template("home.html")
-
 
 @app.route('/suburb/<suburb>')
 def suburb_search(suburb):
@@ -349,7 +342,7 @@ def find():
 def test():
     adict = {"type": "line", "title": "test"}
     labels = ["A", "B", "C", "D", "E", "F"]
-    data = [{"label": "1", "data": [120, 130, 139, 162, 153, 149], },
+    data = [{"label": "1", "data": [120, 130, 139, 162, 153, 149],},
             {"label": "2", "data": [238, 254, 279, 289, 291, 305]}]
     send = [adict, labels, data]
     return render_template('charttest.html', nchart=send)
