@@ -52,6 +52,16 @@ def findSuburb(suburb):
     return houses_in_suburbs
     conn.close()
 
+def checkSuburb():
+    conn = sqlite3.connect("properties.db")
+    cur  = conn.cursor()
+    suburbs = []
+    for suburb in cur.execute("SELECT suburb FROM suburbs"):
+        suburbs.append(suburb)
+    return suburbs
+    conn.close()
+    
+
 
 def findProperty(property_id):
     conn = sqlite3.connect('properties.db')

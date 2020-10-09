@@ -52,37 +52,12 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/home')
-def home():
-    render_template("home.html")
-
-@app.route("/search_suburb")
+@app.route("/suburb_search")
 def search_suburb():
-    render_template("suburb_search.html")
+    return render_template("suburb_search.html")
 
-
-@app.route('/suburb_search', methods=['GET', 'POST'])
-def suburb_search():
-    suburb = ""
-    form = suburb_inputs(request.form)
-    message_name = ''
-    
-    age_0_to_4 = '-'
-    age_5_to_19 = '-'
-    age_20_to_39 = '-'
-    age_40_to_59 = '-'
-    age_60_plus = '-'
-    postcode = '-'
-    state = '-'
-    properties_sold = '-'
-    clearance_rate = '-'
-    median_sale = '-'
-    total_sale = '-'
-    population = '-'
-
-    if request.method == 'POST':
-        suburb = request.form['suburb_input']
-
+@app.route('/suburb/<suburb>')
+def suburb_search(suburb):
     print(suburb)
     suburb_check = data_base.findSuburb(suburb)
 
@@ -105,9 +80,9 @@ def suburb_search():
                 postcode = row.get('postcode')
                 suburb = row.get('suburb')
                 print(street_num, street_name, state, postcode, street_type, suburb)
-
         if postcode == '-':
             message_name = 'Please enter a valid Sydney suburb'
+        
         else:
             response_4 = requests.request(
                 "GET",
@@ -173,7 +148,7 @@ def suburb_search():
         population = suburb_info[12]
         print("yeet")
 
-    return render_template("suburb.html", suburb=suburb, message_name=message_name, form=form, age_0_to_4=age_0_to_4,
+    return render_template("suburb.html", suburb=suburb, age_0_to_4=age_0_to_4,
                            age_5_to_19=age_5_to_19, age_20_to_39=age_20_to_39, age_40_to_59=age_40_to_59,
                            age_60_plus=age_60_plus, postcode=postcode, state=state, properties_sold=properties_sold,
                            clearance_rate=clearance_rate, median_sale=median_sale, total_sale=total_sale,

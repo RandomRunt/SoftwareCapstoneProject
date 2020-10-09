@@ -1,0 +1,13 @@
+{% extends 'base.html'  %}
+{% block page_title %} Suburb_Search {% endblock %}
+{% block page_content %}
+<h1>Thank you for your feedback.</h1>
+<h4>Redirecting you to the results page.</h4>
+<script>
+    function timer() {
+        window.location.href = "/";
+    }
+    window.onload = setTimeout(timer, 500);
+</script>
+
+{% endblock %}
