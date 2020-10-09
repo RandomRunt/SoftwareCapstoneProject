@@ -156,7 +156,6 @@ def index():
 
 @app.route("/suburb_search")
 def search_suburb():
-<<<<<<< HEAD
     render_template("suburb_search.html")
 
 
@@ -165,9 +164,8 @@ def suburb_search():
     suburbian = ""
     form = suburb_inputs(request.form)
     message_name = ''
-=======
     return render_template("suburb_search.html")
->>>>>>> c374fad403b1125f2febb7035f847f2ef45cc72b
+
 
 @app.route('/home')
 def home():
@@ -177,7 +175,6 @@ def home():
 def suburb_search(suburb):
     print(suburb)
     suburb_check = data_base.findSuburb(suburb)
-<<<<<<< HEAD
     if not suburb_check:
         response_1 = requests.request(
             "GET",
@@ -276,7 +273,6 @@ def suburb_search(suburb):
                            age_60_plus=age_60_plus, postcode=postcode, state=state, properties_sold=properties_sold,
                            clearance_rate=clearance_rate, median_sale=median_sale, total_sale=total_sale,
                            population=population)
-=======
     
     suburb_info = suburb_check[0]
     age_0_to_4 = suburb_info[1]
@@ -293,7 +289,7 @@ def suburb_search(suburb):
     population = suburb_info[12]
 
     return render_template("suburb.html", suburb=suburb, suburb_info=suburb_info)
->>>>>>> c374fad403b1125f2febb7035f847f2ef45cc72b
+
 
 
 @app.route("/house", methods=['GET', 'POST'])
