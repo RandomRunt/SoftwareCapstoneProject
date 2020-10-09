@@ -16,7 +16,7 @@
 
             {{ form.suburb.label }}
             {{ form.suburb }}
-            <input class="btn" type="submit" value="submit">
+            <input class="btn btn-primary" type="submit" value="submit">
             {% if message_name %}
                 <p style="color: red">{{ message_name }}</p>
             {% endif %}
@@ -29,7 +29,7 @@
 
         <div class="row">
             <div class="col-lg-8">
-                <img alt="image of house" src={{ images_of_house }} style="width:100%">
+                <img alt="image of house" src= {{ images_of_house }} style="width:100%">
             </div>
 
             <div class="col-lg-3">
@@ -46,9 +46,8 @@
             </div>
         </div>
     </div>
-
-        <br>
-    {#<div style="display: inline-block; height:500px; width: 45%;"  >
+    <!-- 
+        <div style="display: inline-block; height:500px; width: 45%;"  >
         <img style = "height:500px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Lyman_Trumbull_House.jpg/1200px-Lyman_Trumbull_House.jpg">
     </div>
     <div style="display: inline-block">
@@ -61,7 +60,7 @@
             Blah.<br>
             Blah.<br>
         </p>
-    </div>#}
+    </div> -->
 </div>
 
 {% endblock %}
