@@ -1,5 +1,9 @@
 from flask import Flask, render_template, request
-from wtforms import Form, validators, StringField
+from flask_wtf import FlaskForm
+from wtforms import Form, validators, StringField, SelectMultipleField, widgets, DecimalField
+from wtforms.validators import ValidationError, DataRequired
+from wtforms.widgets import ListWidget, CheckboxInput
+
 import data_base
 import requests, json
 
@@ -8,7 +12,6 @@ client_id = 'client_209b71146a72afa869bbf9bc385deefa'
 client_secret = 'secret_31598885c06ef62ddb59f51b84bfba76'
 auth_url = 'https://auth.domain.com.au/v1/connect/token'
 endpoint_url = 'https://api.domain.com.au/v1/'
-
 
 access_token = json.loads(requests.post(
     auth_url,
@@ -27,6 +30,25 @@ access_token = json.loads(requests.post(
     },
     auth=(client_id, client_secret)
 ).content)
+
+
+class MultiCheckboxField(SelectMultipleField):
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
+
+
+class feature_inputs(Form):
+    suburb = StringField('Enter a suburb: ', validators=[validators.required()])
+
+    property_type = MultiCheckboxField('Property type: ', choices=[(1, 'House'), (2, 'Apartment'), (3, 'Townhouse'),
+                                                                   (4, 'Land'), (5, 'Retirement')],
+                                       validators=[DataRequired()])
+    bedrooms = MultiCheckboxField('Bedrooms: ', choices=[(1, '1+'), (2, '2+'), (3, '3+'), (4, '4+'), (5, '5+')],
+                                  validators=[DataRequired()])
+    parking = MultiCheckboxField('Parking: ', choices=[(1, '1+'), (2, '2+'), (3, '3+'), (4, '4+'), (5, '5+')],
+                                 validators=[DataRequired()])
+    bathrooms = MultiCheckboxField('Bathrooms: ', choices=[(1, '1+'), (2, '2+'), (3, '3+'), (4, '4+'), (5, '5+')],
+                                   validators=[DataRequired()])
 
 
 class address_inputs(Form):

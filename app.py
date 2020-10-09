@@ -16,8 +16,107 @@ app = Flask(__name__)
 class suburb_inputs(Form):
     suburb_input = StringField('Enter a Sydney Suburb:', validators=[validators.required()])
 
-#Other constants
-suburblist= ["Abbotsbury", "Abbotsford", "Acacia Gardens", "Agnes Banks", "Airds", "Alexandria", "Alfords Point", "Allambie Heights", "Allawah", "Ambarvale", "Annandale", "Annangrove", "Arcadia", "Arncliffe", "Arndell Park", "Artarmon", "Ashbury", "Ashcroft", "Ashfield", "Asquith", "Auburn", "Austral", "Avalon Beach", "Badgerys Creek", "Balgowlah", "Balgowlah Heights", "Balmain", "Balmain East", "Bangor", "Banksia", "Banksmeadow", "Bankstown", "Bankstown Aerodrome", "Barangaroo", "Barden Ridge", "Bardia", "Bardwell Park", "Bardwell Valley", "Bass Hill", "Baulkham Hills", "Bayview", "Beacon Hill", "Beaconsfield", "Beaumont Hills", "Beecroft", "Belfield", "Bella Vista", "Bellevue Hill", "Belmore", "Belrose", "Berala", "Berkshire Park", "Berowra", "Berowra Creek", "Berowra Heights", "Berowra Waters", "Berrilee", "Beverley Park", "Beverly Hills", "Bexley", "Bexley North", "Bickley Vale", "Bidwill", "Bilgola Beach", "Bilgola Plateau", "Birchgrove", "Birrong", "Blackett", "Blacktown", "Blair Athol", "Blairmount", "Blakehurst", "Bligh Park", "Bondi", "Bondi Beach", "Bondi Junction", "Bonnet Bay", "Bonnyrigg", "Bonnyrigg Heights", "Bossley Park", "Botany", "Bow Bowing", "Box Hill", "Bradbury", "Breakfast Point", "Brighton Le Sands", "Bringelly", "Bronte", "Brooklyn", "Brookvale", "Bundeena", "Bungarribee", "Burraneer", "Burwood", "Burwood Heights", "Busby", "Cabarita", "Cabramatta", "Cabramatta West", "Caddens", "Cambridge Gardens", "Cambridge Park", "Camden", "Camden South", "Camellia", "Cammeray", "Campbelltown", "Camperdown", "Campsie", "Canada Bay", "Canley Heights", "Canley Vale", "Canoelands", "Canterbury", "Caringbah", "Caringbah South", "Carlingford", "Carlton", "Carnes Hill", "Carramar", "Carss Park", "Cartwright", "Castle Cove", "Castle Hill", "Castlecrag", "Castlereagh", "Casula", "Catherine Field", "Cattai", "Cawdor", "Cecil Hills", "Cecil Park", "Centennial Park", "Central Business District", "Chatswood", "Chatswood West", "Cheltenham", "Cherrybrook", "Chester Hill", "Chifley", "Chippendale", "Chipping Norton", "Chiswick", "Chullora", "Church Point", "Claremont Meadows", "Clarendon", "Clareville", "Claymore", "Clemton Park", "Clontarf", "Clovelly", "Clyde", "Coasters Retreat", "Cobbitty", "Colebee", "Collaroy", "Collaroy Plateau", "Colyton", "Como", "Concord", "Concord West", "Condell Park", "Connells Point", "Constitution Hill", "Coogee", "Cornwallis", "Cottage Point", "Cowan", "Cranebrook", "Cremorne", "Cremorne Point", "Cromer", "Cronulla", "Crows Nest", "Croydon", "Croydon Park", "Cumberland Reach", "Curl Curl", "Currans Hill", "Currawong Beach", "Daceyville", "Dangar Island", "Darling Point", "Darlinghurst", "Darlington", "Davidson", "Dawes Point", "Dean Park", "Dee Why", "Denham Court", "Denistone", "Denistone East", "Denistone West", "Dharruk", "Dolans Bay", "Dolls Point", "Doonside", "Double Bay", "Dover Heights", "Drummoyne", "Duffys Forest", "Dulwich Hill", "Dundas", "Dundas Valley", "Dural", "Eagle Vale", "Earlwood", "East Gordon", "East Hills", "East Killara", "East Kurrajong", "East Lindfield", "East Ryde", "Eastern Creek", "Eastgardens", "Eastlakes", "Eastwood", "Ebenezer", "Edensor Park", "Edgecliff", "Edmondson Park", "Elanora Heights", "Elderslie", "Elizabeth Bay", "Elizabeth Hills", "Ellis Lane", "Elvina Bay", "Emerton", "Emu Heights", "Emu Plains", "Enfield", "Engadine", "Englorie Park", "Enmore", "Epping", "Ermington", "Erskine Park", "Erskineville", "Eschol Park", "Eveleigh", "Fairfield", "Fairfield East", "Fairfield Heights", "Fairfield West", "Fairlight", "Fiddletown", "Five Dock", "Flemington", "Forest Glen", "Forest Lodge", "Forestville", "Freemans Reach", "Frenchs Forest", "Freshwater", "Galston", "Georges Hall", "Gilead", "Girraween", "Gladesville", "Glebe", "Gledswood Hills", "Glen Alpine", "Glendenning", "Glenfield", "Glenhaven", "Glenmore Park", "Glenorie", "Glenwood", "Glossodia", "Gordon", "Granville", "Grasmere", "Grays Point", "Great Mackerel Beach", "Green Valley", "Greenacre", "Greendale", "Greenfield Park", "Greenhills Beach", "Greenwich", "Gregory Hills", "Greystanes", "Grose Vale", "Grose Wold", "Guildford", "Guildford West", "Gymea", "Gymea Bay", "Haberfield", "Hammondville", "Harrington Park", "Harris Park", "Hassall Grove", "Haymarket", "Heathcote", "Hebersham", "Heckenberg", "Henley", "Hillsdale", "Hinchinbrook", "Hobartville", "Holroyd", "Holsworthy", "Homebush", "Homebush West", "Horningsea Park", "Hornsby", "Hornsby Heights", "Horsley Park", "Hoxton Park", "Hunters Hill", "Huntingwood", "Huntleys Cove", "Huntleys Point", "Hurlstone Park", "Hurstville", "Hurstville Grove", "Illawong", "Ingleburn", "Ingleside", "Jamisontown", "Jannali", "Jordan Springs", "Kangaroo Point", "Kareela", "Kearns", "Kellyville", "Kellyville Ridge", "Kemps Creek", "Kensington", "Kenthurst", "Kentlyn", "Killara", "Killarney Heights", "Kings Langley", "Kings Park", "Kingsford", "Kingsgrove", "Kingswood", "Kingswood Park", "Kirkham", "Kirrawee", "Kirribilli", "Kogarah", "Kogarah Bay", "Ku-Ring-Gai Chase", "Kurmond", "Kurnell", "Kurraba Point", "Kurrajong", "Kurrajong Hills", "Kyeemagh", "Kyle Bay", "La Perouse", "Lakemba", "Lalor Park", "Lane  Cove", "Lane Cove North", "Lane  Cove West", "Lansdowne", "Lansvale", "Laughtondale", "Lavender Bay", "Leets Vale", "Leichhardt", "Len Waters Estate", "Leonay", "Leppington", "Lethbridge Park", "Leumeah", "Lewisham", "Liberty Grove", "Lidcombe", "Lilli Pilli", "Lilyfield", "Lindfield", "Linley Point", "Little Bay", "Liverpool", "Llandilo", "Loftus", "Londonderry", "Long Point", "Longueville", "Lovett Bay", "Lower Portland", "Lucas Heights", "Luddenham", "Lugarno", "Lurnea", "Macquarie Fields", "Macquarie Links", "Macquarie Park", "Maianbar", "Malabar", "Manly", "Manly Vale", "Maraylya", "Marayong", "Maroota", "Maroubra", "Marrickville", "Marsden Park", "Marsfield", "Mascot", "Matraville", "Mays Hill", "McCarrs Creek", "McGraths Hill", "McMahons Point", "Meadowbank", "Melrose Park", "Menai", "Menangle Park", "Merrylands", "Merrylands West", "Middle Cove", "Middle Dural", "Middleton Grange", "Miller", "Millers Point", "Milperra", "Milsons Passage", "Milsons Point", "Minchinbury", "Minto", "Minto Heights", "Miranda", "Mona Vale", "Monterey", "Moore Park", "Moorebank", "Morning Bay", "Mortdale", "Mortlake", "Mosman", "Mount Annan", "Mount Colah", "Mount Druitt", "Mount Ku-Ring-Gai", "Mount Lewis", "Mount Pritchard", "Mount Vernon", "Mulgoa", "Mulgrave", "Narellan Vale", "Naremburn", "Narrabeen", "Narraweena", "Narwee", "Nelson", "Neutral Bay", "Newington", "Newport", "Newtown", "Normanhurst", "North Balgowlah", "North Bondi", "North Curl Curl", "North Epping", "North Kellyville", "North Manly", "North Narrabeen", "North Parramatta", "North Richmond", "North Rocks", "North Ryde", "North St Ives", "North St Marys", "North Strathfield", "North Sydney", "North Turramurra", "North Willoughby", "North Wahroonga", "Northbridge", "Northmead", "Northwood", "Norwest", "Oakhurst", "Oakville", "Oatlands", "Oatley", "Old Guildford", "Old Toongabbie", "Oran Park", "Orchard Hills", "Oxford Falls", "Oxley Park", "Oyster Bay", "Paddington", "Padstow", "Padstow Heights", "Pagewood", "Palm Beach", "Panania", "Parklea", "Parramatta", "Peakhurst", "Peakhurst Heights", "Pemulwuy", "Pendle Hill", "Pennant Hills", "Penrith", "Penshurst", "Petersham", "Phillip Bay", "Picnic Point", "Pitt Town", "Pitt Town Bottoms", "Pleasure Point", "Plumpton", "Point Piper", "Port Botany", "Port Hacking", "Potts Hill", "Potts Point", "Prairiewood", "Prestons", "Prospect", "Punchbowl", "Putney", "Pymble", "Pyrmont", "Quakers Hill", "Queens Park", "Queenscliff", "Raby", "Ramsgate", "Ramsgate Beach", "Randwick", "Redfern", "Regents Park", "Regentville", "Revesby", "Revesby Heights", "Rhodes", "Richmond", "Richmond Lowlands", "Riverstone", "Riverview", "Riverwood", "Rockdale", "Rodd Point", "Rookwood", "Rooty Hill", "Ropes Crossing", "Rose Bay", "Rosebery", "Rosehill", "Roselands", "Rosemeadow", "Roseville", "Roseville Chase", "Rossmore", "Rouse Hill", "Royal National Park", "Rozelle", "Ruse", "Rushcutters Bay", "Russell Lea", "Rydalmere", "Ryde", "Sackville", "Sackville North", "Sadleir", "Sandringham", "Sandy Point", "Sans Souci", "Scheyville", "Schofields", "Scotland Island", "Seaforth", "Sefton", "Seven Hills", "Shalvey", "Shanes Park", "Silverwater", "Singletons Mill", "Smeaton Grange", "Smithfield", "South Coogee", "South Granville", "South Hurstville", "South Maroota", "South Penrith", "South Turramurra", "South Wentworthville", "South Windsor", "Spring Farm", "St Andrews", "St Clair", "St Helens Park", "St Ives", "St Ives Chase", "St Johns Park", "St Leonards", "St Marys", "St Peters", "Stanhope Gardens", "Stanmore", "Strathfield", "Strathfield South", "Summer Hill", "Surry Hills", "Sutherland", "Sydenham", "Sydney Olympic Park", "Sylvania", "Sylvania Waters", "Tamarama", "Taren Point", "Telopea", "Tempe", "Tennyson", "Tennyson Point", "Terrey Hills", "The Ponds", "The Rocks", "The Slopes", "Thornleigh", "Toongabbie", "Tregear", "Turramurra", "Turrella", "Ultimo", "Varroville", "Vaucluse", "Villawood", "Vineyard", "Voyager Point", "Wahroonga", "Waitara", "Wakeley", "Wallacia", "Wareemba", "Warrawee", "Warriewood", "Warwick Farm", "Waterfall", "Waterloo", "Watsons Bay", "Wattle Grove", "Waverley", "Waverton", "Wedderburn", "Wentworth Point", "Wentworthville", "Werrington", "Werrington County", "Werrington Downs", "West Hoxton", "West Killara", "West Lindfield", "West Pennant Hills", "West Pymble", "West Ryde", "Westleigh", "Westmead", "Wetherill Park", "Whalan", "Whale Beach", "Wheeler Heights", "Wilberforce", "Wiley Park", "Willmot", "Willoughby", "Willoughby East", "Windsor", "Windsor Downs", "Winston Hills", "Wisemans Ferry", "Wolli Creek", "Wollstonecraft", "Woodbine", "Woodcroft", "Woodpark", "Woollahra", "Woolloomooloo", "Woolooware", "Woolwich", "Woronora", "Woronora Heights", "Yagoona", "Yarramundi", "Yarrawarrah", "Yennora", "Yowie Bay", "Zetland"]
+
+# Other constants
+suburblist = ["Abbotsbury", "Abbotsford", "Acacia Gardens", "Agnes Banks", "Airds", "Alexandria", "Alfords Point",
+              "Allambie Heights", "Allawah", "Ambarvale", "Annandale", "Annangrove", "Arcadia", "Arncliffe",
+              "Arndell Park", "Artarmon", "Ashbury", "Ashcroft", "Ashfield", "Asquith", "Auburn", "Austral",
+              "Avalon Beach", "Badgerys Creek", "Balgowlah", "Balgowlah Heights", "Balmain", "Balmain East", "Bangor",
+              "Banksia", "Banksmeadow", "Bankstown", "Bankstown Aerodrome", "Barangaroo", "Barden Ridge", "Bardia",
+              "Bardwell Park", "Bardwell Valley", "Bass Hill", "Baulkham Hills", "Bayview", "Beacon Hill",
+              "Beaconsfield", "Beaumont Hills", "Beecroft", "Belfield", "Bella Vista", "Bellevue Hill", "Belmore",
+              "Belrose", "Berala", "Berkshire Park", "Berowra", "Berowra Creek", "Berowra Heights", "Berowra Waters",
+              "Berrilee", "Beverley Park", "Beverly Hills", "Bexley", "Bexley North", "Bickley Vale", "Bidwill",
+              "Bilgola Beach", "Bilgola Plateau", "Birchgrove", "Birrong", "Blackett", "Blacktown", "Blair Athol",
+              "Blairmount", "Blakehurst", "Bligh Park", "Bondi", "Bondi Beach", "Bondi Junction", "Bonnet Bay",
+              "Bonnyrigg", "Bonnyrigg Heights", "Bossley Park", "Botany", "Bow Bowing", "Box Hill", "Bradbury",
+              "Breakfast Point", "Brighton Le Sands", "Bringelly", "Bronte", "Brooklyn", "Brookvale", "Bundeena",
+              "Bungarribee", "Burraneer", "Burwood", "Burwood Heights", "Busby", "Cabarita", "Cabramatta",
+              "Cabramatta West", "Caddens", "Cambridge Gardens", "Cambridge Park", "Camden", "Camden South", "Camellia",
+              "Cammeray", "Campbelltown", "Camperdown", "Campsie", "Canada Bay", "Canley Heights", "Canley Vale",
+              "Canoelands", "Canterbury", "Caringbah", "Caringbah South", "Carlingford", "Carlton", "Carnes Hill",
+              "Carramar", "Carss Park", "Cartwright", "Castle Cove", "Castle Hill", "Castlecrag", "Castlereagh",
+              "Casula", "Catherine Field", "Cattai", "Cawdor", "Cecil Hills", "Cecil Park", "Centennial Park",
+              "Central Business District", "Chatswood", "Chatswood West", "Cheltenham", "Cherrybrook", "Chester Hill",
+              "Chifley", "Chippendale", "Chipping Norton", "Chiswick", "Chullora", "Church Point", "Claremont Meadows",
+              "Clarendon", "Clareville", "Claymore", "Clemton Park", "Clontarf", "Clovelly", "Clyde",
+              "Coasters Retreat", "Cobbitty", "Colebee", "Collaroy", "Collaroy Plateau", "Colyton", "Como", "Concord",
+              "Concord West", "Condell Park", "Connells Point", "Constitution Hill", "Coogee", "Cornwallis",
+              "Cottage Point", "Cowan", "Cranebrook", "Cremorne", "Cremorne Point", "Cromer", "Cronulla", "Crows Nest",
+              "Croydon", "Croydon Park", "Cumberland Reach", "Curl Curl", "Currans Hill", "Currawong Beach",
+              "Daceyville", "Dangar Island", "Darling Point", "Darlinghurst", "Darlington", "Davidson", "Dawes Point",
+              "Dean Park", "Dee Why", "Denham Court", "Denistone", "Denistone East", "Denistone West", "Dharruk",
+              "Dolans Bay", "Dolls Point", "Doonside", "Double Bay", "Dover Heights", "Drummoyne", "Duffys Forest",
+              "Dulwich Hill", "Dundas", "Dundas Valley", "Dural", "Eagle Vale", "Earlwood", "East Gordon", "East Hills",
+              "East Killara", "East Kurrajong", "East Lindfield", "East Ryde", "Eastern Creek", "Eastgardens",
+              "Eastlakes", "Eastwood", "Ebenezer", "Edensor Park", "Edgecliff", "Edmondson Park", "Elanora Heights",
+              "Elderslie", "Elizabeth Bay", "Elizabeth Hills", "Ellis Lane", "Elvina Bay", "Emerton", "Emu Heights",
+              "Emu Plains", "Enfield", "Engadine", "Englorie Park", "Enmore", "Epping", "Ermington", "Erskine Park",
+              "Erskineville", "Eschol Park", "Eveleigh", "Fairfield", "Fairfield East", "Fairfield Heights",
+              "Fairfield West", "Fairlight", "Fiddletown", "Five Dock", "Flemington", "Forest Glen", "Forest Lodge",
+              "Forestville", "Freemans Reach", "Frenchs Forest", "Freshwater", "Galston", "Georges Hall", "Gilead",
+              "Girraween", "Gladesville", "Glebe", "Gledswood Hills", "Glen Alpine", "Glendenning", "Glenfield",
+              "Glenhaven", "Glenmore Park", "Glenorie", "Glenwood", "Glossodia", "Gordon", "Granville", "Grasmere",
+              "Grays Point", "Great Mackerel Beach", "Green Valley", "Greenacre", "Greendale", "Greenfield Park",
+              "Greenhills Beach", "Greenwich", "Gregory Hills", "Greystanes", "Grose Vale", "Grose Wold", "Guildford",
+              "Guildford West", "Gymea", "Gymea Bay", "Haberfield", "Hammondville", "Harrington Park", "Harris Park",
+              "Hassall Grove", "Haymarket", "Heathcote", "Hebersham", "Heckenberg", "Henley", "Hillsdale",
+              "Hinchinbrook", "Hobartville", "Holroyd", "Holsworthy", "Homebush", "Homebush West", "Horningsea Park",
+              "Hornsby", "Hornsby Heights", "Horsley Park", "Hoxton Park", "Hunters Hill", "Huntingwood",
+              "Huntleys Cove", "Huntleys Point", "Hurlstone Park", "Hurstville", "Hurstville Grove", "Illawong",
+              "Ingleburn", "Ingleside", "Jamisontown", "Jannali", "Jordan Springs", "Kangaroo Point", "Kareela",
+              "Kearns", "Kellyville", "Kellyville Ridge", "Kemps Creek", "Kensington", "Kenthurst", "Kentlyn",
+              "Killara", "Killarney Heights", "Kings Langley", "Kings Park", "Kingsford", "Kingsgrove", "Kingswood",
+              "Kingswood Park", "Kirkham", "Kirrawee", "Kirribilli", "Kogarah", "Kogarah Bay", "Ku-Ring-Gai Chase",
+              "Kurmond", "Kurnell", "Kurraba Point", "Kurrajong", "Kurrajong Hills", "Kyeemagh", "Kyle Bay",
+              "La Perouse", "Lakemba", "Lalor Park", "Lane  Cove", "Lane Cove North", "Lane  Cove West", "Lansdowne",
+              "Lansvale", "Laughtondale", "Lavender Bay", "Leets Vale", "Leichhardt", "Len Waters Estate", "Leonay",
+              "Leppington", "Lethbridge Park", "Leumeah", "Lewisham", "Liberty Grove", "Lidcombe", "Lilli Pilli",
+              "Lilyfield", "Lindfield", "Linley Point", "Little Bay", "Liverpool", "Llandilo", "Loftus", "Londonderry",
+              "Long Point", "Longueville", "Lovett Bay", "Lower Portland", "Lucas Heights", "Luddenham", "Lugarno",
+              "Lurnea", "Macquarie Fields", "Macquarie Links", "Macquarie Park", "Maianbar", "Malabar", "Manly",
+              "Manly Vale", "Maraylya", "Marayong", "Maroota", "Maroubra", "Marrickville", "Marsden Park", "Marsfield",
+              "Mascot", "Matraville", "Mays Hill", "McCarrs Creek", "McGraths Hill", "McMahons Point", "Meadowbank",
+              "Melrose Park", "Menai", "Menangle Park", "Merrylands", "Merrylands West", "Middle Cove", "Middle Dural",
+              "Middleton Grange", "Miller", "Millers Point", "Milperra", "Milsons Passage", "Milsons Point",
+              "Minchinbury", "Minto", "Minto Heights", "Miranda", "Mona Vale", "Monterey", "Moore Park", "Moorebank",
+              "Morning Bay", "Mortdale", "Mortlake", "Mosman", "Mount Annan", "Mount Colah", "Mount Druitt",
+              "Mount Ku-Ring-Gai", "Mount Lewis", "Mount Pritchard", "Mount Vernon", "Mulgoa", "Mulgrave",
+              "Narellan Vale", "Naremburn", "Narrabeen", "Narraweena", "Narwee", "Nelson", "Neutral Bay", "Newington",
+              "Newport", "Newtown", "Normanhurst", "North Balgowlah", "North Bondi", "North Curl Curl", "North Epping",
+              "North Kellyville", "North Manly", "North Narrabeen", "North Parramatta", "North Richmond", "North Rocks",
+              "North Ryde", "North St Ives", "North St Marys", "North Strathfield", "North Sydney", "North Turramurra",
+              "North Willoughby", "North Wahroonga", "Northbridge", "Northmead", "Northwood", "Norwest", "Oakhurst",
+              "Oakville", "Oatlands", "Oatley", "Old Guildford", "Old Toongabbie", "Oran Park", "Orchard Hills",
+              "Oxford Falls", "Oxley Park", "Oyster Bay", "Paddington", "Padstow", "Padstow Heights", "Pagewood",
+              "Palm Beach", "Panania", "Parklea", "Parramatta", "Peakhurst", "Peakhurst Heights", "Pemulwuy",
+              "Pendle Hill", "Pennant Hills", "Penrith", "Penshurst", "Petersham", "Phillip Bay", "Picnic Point",
+              "Pitt Town", "Pitt Town Bottoms", "Pleasure Point", "Plumpton", "Point Piper", "Port Botany",
+              "Port Hacking", "Potts Hill", "Potts Point", "Prairiewood", "Prestons", "Prospect", "Punchbowl", "Putney",
+              "Pymble", "Pyrmont", "Quakers Hill", "Queens Park", "Queenscliff", "Raby", "Ramsgate", "Ramsgate Beach",
+              "Randwick", "Redfern", "Regents Park", "Regentville", "Revesby", "Revesby Heights", "Rhodes", "Richmond",
+              "Richmond Lowlands", "Riverstone", "Riverview", "Riverwood", "Rockdale", "Rodd Point", "Rookwood",
+              "Rooty Hill", "Ropes Crossing", "Rose Bay", "Rosebery", "Rosehill", "Roselands", "Rosemeadow",
+              "Roseville", "Roseville Chase", "Rossmore", "Rouse Hill", "Royal National Park", "Rozelle", "Ruse",
+              "Rushcutters Bay", "Russell Lea", "Rydalmere", "Ryde", "Sackville", "Sackville North", "Sadleir",
+              "Sandringham", "Sandy Point", "Sans Souci", "Scheyville", "Schofields", "Scotland Island", "Seaforth",
+              "Sefton", "Seven Hills", "Shalvey", "Shanes Park", "Silverwater", "Singletons Mill", "Smeaton Grange",
+              "Smithfield", "South Coogee", "South Granville", "South Hurstville", "South Maroota", "South Penrith",
+              "South Turramurra", "South Wentworthville", "South Windsor", "Spring Farm", "St Andrews", "St Clair",
+              "St Helens Park", "St Ives", "St Ives Chase", "St Johns Park", "St Leonards", "St Marys", "St Peters",
+              "Stanhope Gardens", "Stanmore", "Strathfield", "Strathfield South", "Summer Hill", "Surry Hills",
+              "Sutherland", "Sydenham", "Sydney Olympic Park", "Sylvania", "Sylvania Waters", "Tamarama", "Taren Point",
+              "Telopea", "Tempe", "Tennyson", "Tennyson Point", "Terrey Hills", "The Ponds", "The Rocks", "The Slopes",
+              "Thornleigh", "Toongabbie", "Tregear", "Turramurra", "Turrella", "Ultimo", "Varroville", "Vaucluse",
+              "Villawood", "Vineyard", "Voyager Point", "Wahroonga", "Waitara", "Wakeley", "Wallacia", "Wareemba",
+              "Warrawee", "Warriewood", "Warwick Farm", "Waterfall", "Waterloo", "Watsons Bay", "Wattle Grove",
+              "Waverley", "Waverton", "Wedderburn", "Wentworth Point", "Wentworthville", "Werrington",
+              "Werrington County", "Werrington Downs", "West Hoxton", "West Killara", "West Lindfield",
+              "West Pennant Hills", "West Pymble", "West Ryde", "Westleigh", "Westmead", "Wetherill Park", "Whalan",
+              "Whale Beach", "Wheeler Heights", "Wilberforce", "Wiley Park", "Willmot", "Willoughby", "Willoughby East",
+              "Windsor", "Windsor Downs", "Winston Hills", "Wisemans Ferry", "Wolli Creek", "Wollstonecraft",
+              "Woodbine", "Woodcroft", "Woodpark", "Woollahra", "Woolloomooloo", "Woolooware", "Woolwich", "Woronora",
+              "Woronora Heights", "Yagoona", "Yarramundi", "Yarrawarrah", "Yennora", "Yowie Bay", "Zetland"]
 
 access_token = json.loads(requests.post(
     auth_url,
@@ -30,6 +129,8 @@ access_token = json.loads(requests.post(
             "api_properties_read",
             "api_suburbperformance_read",
             "api_salesresults_read",
+            "api_listings_write",
+            "api_listings_read",
             "api_locations_read"
         ])
         ]
@@ -52,9 +153,43 @@ def index():
     return render_template('index.html')
 
 
+
 @app.route("/suburb_search")
 def search_suburb():
     return render_template("suburb_search.html")
+
+@app.route('/home')
+def home():
+    render_template("home.html")
+
+
+@app.route("/search_suburb")
+def search_suburb():
+    render_template("suburb_search.html")
+
+
+@app.route('/suburb_search', methods=['GET', 'POST'])
+def suburb_search():
+    suburb = ""
+    form = suburb_inputs(request.form)
+    message_name = ''
+
+    age_0_to_4 = '-'
+    age_5_to_19 = '-'
+    age_20_to_39 = '-'
+    age_40_to_59 = '-'
+    age_60_plus = '-'
+    postcode = '-'
+    state = '-'
+    properties_sold = '-'
+    clearance_rate = '-'
+    median_sale = '-'
+    total_sale = '-'
+    population = '-'
+
+    if request.method == 'POST':
+        suburb = request.form['suburb_input']
+
 
 @app.route('/suburb/<suburb>')
 def suburb_search(suburb):
@@ -210,7 +345,8 @@ def house():
                 response = requests.request(
                     "GET",
                     endpoint_url + "properties/" + property_id + "/priceEstimate",
-                    headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
+                    headers={'Authorization': 'Bearer ' + access_token["access_token"],
+                             'Content-Type': 'application/json'}
                 )
 
                 # BLAH BLAH ENTER CODE HERE ONCE IT WORKS
@@ -219,7 +355,8 @@ def house():
                 response = requests.request(
                     "GET",
                     endpoint_url + "properties/" + property_id,
-                    headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
+                    headers={'Authorization': 'Bearer ' + access_token["access_token"],
+                             'Content-Type': 'application/json'}
                 )
 
                 house = response.json()
@@ -268,6 +405,30 @@ def house():
                            lat_coordinate=lat_coordinate, long_coordinate=long_coordinate, property_type=property_type,
                            bedrooms=bedrooms, bathrooms=bathrooms, car_spaces=car_spaces, areaSize=areaSize, postcode=
                            postcode, message_name=message_name)
+
+
+@app.route("/find_property", methods=['GET', 'POST'])
+def find():
+    message = ""
+    properties = 0
+    form = house_searching.feature_inputs()
+    if request.method == "POST":
+        house_found = request.form['property_type']
+        bedrooms = request.form['bedrooms']
+        bathrooms = request.form['bathrooms']
+        parking = request.form['parking']
+        print(house_found)
+        response = requests.request(
+            "POST",
+            endpoint_url + 'listings/residential/_search'
+                           '{"listingType":"Sale","propertyTypes":["House","NewApartments"],"minBedrooms":3,'
+                           '"minBathrooms":2,"minCarspaces":1,"locations":[{"state":"NSW","region":"","area":"",'
+                           '"suburb":"Newtown","postCode":"","includeSurroundingSuburbs":false}]}',
+            headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
+        )
+        print(response.json())
+
+    return render_template('found_property.html', form=form)
 
 
 # Testing charting library
