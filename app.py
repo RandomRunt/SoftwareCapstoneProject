@@ -143,24 +143,11 @@ print(access_token["access_token"])
 @app.route('/')
 @app.route('/index')
 def index():
-    property_id = "XJ-5205-DL"
-    response = requests.request(
-        "GET",
-        endpoint_url + "properties/" + property_id,
-        headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
-    )
-    print(response.json())
     return render_template('index.html')
-
-
 
 @app.route("/suburb_search")
 def search_suburb():
     return render_template("suburb_search.html")
-
-@app.route('/home')
-def home():
-    render_template("home.html")
 
 @app.route('/suburb/<suburb>')
 def suburb_search(suburb):
@@ -307,6 +294,7 @@ def find():
     properties = 0
     form = house_searching.feature_inputs()
     if request.method == "POST":
+        suburb = request.form["suburb"]
         house_found = request.form['property_type']
         bedrooms = request.form['bedrooms']
         bathrooms = request.form['bathrooms']
@@ -314,12 +302,13 @@ def find():
         print(house_found)
         response = requests.request(
             "POST",
-            endpoint_url + 'listings/residential/_search'
-                           '{"listingType":"Sale","propertyTypes":["House","NewApartments"],"minBedrooms":3,'
-                           '"minBathrooms":2,"minCarspaces":1,"locations":[{"state":"NSW","region":"","area":"",'
-                           '"suburb":"Newtown","postCode":"","includeSurroundingSuburbs":false}]}',
+            endpoint_url + 'listings/residential/_search'+
+                           '{"listingType":"Sale","propertyTypes":["House","NewApartments"],"minBedrooms":'+bedrooms+','+
+                           '"minBathrooms":'+bathrooms+',"minCarspaces":'+parking+',"locations":[{"state":"NSW","region":"","area":"",'+
+                           '"suburb":"'+suburb+'","postCode":"","includeSurroundingSuburbs":true}]}',
             headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
         )
+        print(response)
         print(response.json())
 
     return render_template('found_property.html', form=form)
@@ -330,7 +319,7 @@ def find():
 def test():
     adict = {"type": "line", "title": "test"}
     labels = ["A", "B", "C", "D", "E", "F"]
-    data = [{"label": "1", "data": [120, 130, 139, 162, 153, 149], },
+    data = [{"label": "1", "data": [120, 130, 139, 162, 153, 149],},
             {"label": "2", "data": [238, 254, 279, 289, 291, 305]}]
     send = [adict, labels, data]
     return render_template('charttest.html', nchart=send)

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block page_title %}Home{% endblock %}
+{% block page_title %}House Search{% endblock %}
 {% block page_content %}
     <br>
 <h1>House Address</h1>
@@ -16,13 +16,13 @@
 
             {{ form.suburb.label }}
             {{ form.suburb }}
-            <input class="btn btn-primary" type="submit" value="submit">
+            <input class="btn btn-primary" type="submit" value="Submit">
             {% if message_name %}
                 <p style="color: red">{{ message_name }}</p>
             {% endif %}
         </form>
 
-        <HR>
+        <hr>
         <h2>{{ street_num }} {{ street_name }} {{ street_type }}</h2>
         <h3>{{ suburb }} {{ state }} {{ postcode }}</h3>
 
