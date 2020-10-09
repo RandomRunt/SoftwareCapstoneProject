@@ -155,7 +155,7 @@ def index():
 
 @app.route("/suburb_search")
 def search_suburb():
-    render_template("suburb_search.html")
+    return render_template("suburb_search.html")
 
 
 @app.route('/home')
