@@ -5,8 +5,8 @@ import data_base, house_searching
 from wtforms import Form, validators, StringField
 
 # Domain API variables
-client_id = 'client_209b71146a72afa869bbf9bc385deefa'
-client_secret = 'secret_31598885c06ef62ddb59f51b84bfba76'
+client_id = 'client_0fad4b17db857db49713b047f639a138'
+client_secret = 'secret_df5fd0b77edd1c173aa1f5e6f9b11c2b'
 auth_url = 'https://auth.domain.com.au/v1/connect/token'
 endpoint_url = 'https://api.domain.com.au/v1/'
 
@@ -152,9 +152,11 @@ def index():
     #print(response.json())
     return render_template('index.html')
 
+
 @app.route("/suburb_search")
 def search_suburb():
     return render_template("suburb_search.html")
+
 
 @app.route('/suburb/<suburb>')
 def suburb_search(suburb):
