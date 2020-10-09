@@ -1,27 +1,48 @@
 {% extends "base.html" %}
 {% block page_title %}Home{% endblock %}
 {% block page_content %}
-<div>
-    <div class="col-lg">
-        <h2>Search for address</h2>
+<head>
+    <style>
+        p {
+            font-size: 16pt;
+        }
+        button{
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
 
-        <br>
-        <hr>
-        <h2>Address searching</h2>
+        }
+        a{
+            color: black;
+            font-size: 16pt;
+        }
+    </style>
+</head>
 
-        <p>enter info here</p>
-        <hr>
-        <h2>Searching for properties</h2>
+<body>
+    <div>
+        <div class="col-lg-12">
+            <h2>Search for address</h2>
 
-        <p>enter info here</p>
-        <hr>
-        <h2>Suburb Search</h2>
+            <br>
+            <hr>
+            <h2>Address searching</h2>
+            <p>enter info here</p>
+            <button><a href="/house">Search for address</a> </button>
+            <hr>
 
-        <p>enter info here</p>
-        <hr>
+            <h2>Searching for properties</h2>
+            <p>enter info here</p>
+            <div style="position: center>"
+                <button><a href="/find_property">Search for specific properties</a> </button>
+            </div>
+            <hr>
 
+            <h2>Suburb Search</h2>
+            <p>enter info here</p>
+            <button><a href="/suburb_search">Search for suburb</a> </button>
 
-
-
-</div>
+        </div>
+    </div>
+</body>
 {% endblock %}
