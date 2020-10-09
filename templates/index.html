@@ -3,44 +3,91 @@
 {% block page_content %}
 <head>
     <style>
+        h2{
+            padding-top: 10px;
+            padding-bottom: 15px;
+        }
         p {
             font-size: 16pt;
+            padding-bottom: 15px;
         }
-        button{
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
 
+        button{
+            padding: 10px 100px;
+            background-color: white;
+            width: 500px;
         }
+
+        button:hover{
+            background-color: white;
+            padding: 12px 102px;
+            box-shadow: 3px 3px 6px black;
+            width: 504px;
+        }
+
         a{
             color: black;
             font-size: 16pt;
+            margin: auto;
+        }
+
+        .arrow {
+            border: solid black;
+            border-width: 0 3px 3px 0;
+            display: inline-block;
+            padding: 3px;
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+        }
+
+        .bando{
+            background-image: url("https://www.onkaparingacity.com/files/assets/public/maslin-beach.jpg?w=1200");
+            background-repeat: no-repeat;
+            height: 450px;
+            background-size: cover;
         }
     </style>
 </head>
 
 <body>
-    <div>
+    <div class="container-fluid">
         <div class="col-lg-12">
+            <br>
             <h2>Search for address</h2>
+
+        <div class = "bando">
+        </div>
 
             <br>
             <hr>
             <h2>Address searching</h2>
-            <p>enter info here</p>
-            <button><a href="/house">Search for address</a> </button>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ullamcorper sem eget massa vestibulum,
+                et consectetur eros porttitor. Proin elit ante, aliquet at facilisis nec, tristique vulputate metus.
+                Sed luctus sit amet quam ac lacinia. Nulla dignissim tortor ullamcorper suscipit rhoncus. Vivamus
+                suscipit mauris in leo euismod lacinia sed id dui. Etiam arcu enim, ultricies vitae volutpat eget,
+                luctus ac tellus. Curabitur dictum interdum finibus. Curabitur gravida scelerisque mauris nec pulvinar.
+                Nullam placerat quam a nisl ultrices venenatis. Aliquam condimentum leo auctor mauris sollicitudin, nec
+                consequat elit aliquet. Aliquam risus turpis, tincidunt at consectetur quis, vehicula id quam.
+                Morbi et porta massa, sed placerat purus. Curabitur eget gravida quam, ac posuere dui. Maecenas sodales
+                lorem est, non bibendum mauris tincidunt ut.</p>
+            <div class="row align-items-center">
+                <a href="/house"><button>Search for address<i class="arrow right"></i></button></a>
+            </div>
             <hr>
 
             <h2>Searching for properties</h2>
             <p>enter info here</p>
-            <div style="position: center>"
-                <button><a href="/find_property">Search for specific properties</a> </button>
+            <div class="row align-items-center">
+                <a href="/find_property"><button>Search for specific properties<i class="arrow right"></i></button></a>
             </div>
             <hr>
 
             <h2>Suburb Search</h2>
             <p>enter info here</p>
-            <button><a href="/suburb_search">Search for suburb</a> </button>
+            <div class="row align-items-center">
+                <a href="/suburb_search"><button>Search for suburb<i class="arrow right"></i></button></a>
+            </div>
+            <br>
 
         </div>
     </div>
