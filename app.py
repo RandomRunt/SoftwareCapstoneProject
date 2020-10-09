@@ -153,10 +153,13 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/home')
+def home():
+    render_template("home.html")
 
-@app.route("/suburb_search")
+
+@app.route("/search_suburb")
 def search_suburb():
-<<<<<<< HEAD
     render_template("suburb_search.html")
 
 
@@ -165,19 +168,25 @@ def suburb_search():
     suburbian = ""
     form = suburb_inputs(request.form)
     message_name = ''
-=======
-    return render_template("suburb_search.html")
->>>>>>> c374fad403b1125f2febb7035f847f2ef45cc72b
 
-@app.route('/home')
-def home():
-    render_template("home.html")
+    age_0_to_4 = '-'
+    age_5_to_19 = '-'
+    age_20_to_39 = '-'
+    age_40_to_59 = '-'
+    age_60_plus = '-'
+    postcode = '-'
+    state = '-'
+    properties_sold = '-'
+    clearance_rate = '-'
+    median_sale = '-'
+    total_sale = '-'
+    population = '-'
 
-@app.route('/suburb/<suburb>')
-def suburb_search(suburb):
+    if request.method == 'POST':
+        suburb = request.form['suburb_input']
+
     print(suburb)
     suburb_check = data_base.findSuburb(suburb)
-<<<<<<< HEAD
     if not suburb_check:
         response_1 = requests.request(
             "GET",
@@ -276,24 +285,6 @@ def suburb_search(suburb):
                            age_60_plus=age_60_plus, postcode=postcode, state=state, properties_sold=properties_sold,
                            clearance_rate=clearance_rate, median_sale=median_sale, total_sale=total_sale,
                            population=population)
-=======
-    
-    suburb_info = suburb_check[0]
-    age_0_to_4 = suburb_info[1]
-    age_5_to_19 = suburb_info[2]
-    age_20_to_39 = suburb_info[3]
-    age_40_to_59 = suburb_info[4]
-    age_60_plus = suburb_info[5]
-    postcode = suburb_info[6]
-    state = suburb_info[7]
-    properties_sold = suburb_info[8]
-    clearance_rate = suburb_info[9]
-    median_sale = suburb_info[10]
-    total_sale = suburb_info[11]
-    population = suburb_info[12]
-
-    return render_template("suburb.html", suburb=suburb, suburb_info=suburb_info)
->>>>>>> c374fad403b1125f2febb7035f847f2ef45cc72b
 
 
 @app.route("/house", methods=['GET', 'POST'])
