@@ -354,6 +354,15 @@ def test():
 def about():
     return render_template('about.html')
 
+@app.route('/login', methods=['GET','POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] != 'username' or request.form['password'] != 'password':
+            error = 'The username or password is invalid.'
+        else:
+            return redirect(url_for('home'))
+    return render_template('login.html', error=error)
 
 @app.errorhandler(404)
 def page_not_found(e):
