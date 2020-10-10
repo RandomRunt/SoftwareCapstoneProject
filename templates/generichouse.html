@@ -29,30 +29,32 @@
         </form>
 
         <hr>
-        <h2>{{ street_num }} {{ street_name }} {{ street_type }}</h2>
-        <h3>{{ suburb }} {{ state }} {{ postcode }}</h3>
+        <div style="margin-left: auto; margin-right: auto;", class="col-lg-12">
+        <h2>{{ property[2] }} {{ property[1] }} {{ property[4] }}</h2>
+            <h3>{{ property[3] }} {{ property[5] }} {{ property[17] }}</h3>
+            <div class="row">
+                <div class="col-lg-8">
+                    <img alt="image of house" src= {{ property[9] }} style="width:100%">
+                </div>
 
-
-        <div class="row">
-            <div class="col-lg-8">
-                <img alt="image of house" src= {{ images_of_house }} style="width:100%">
-            </div>
-
-            <div class="col-lg-3">
-                <H3>Features</H3>
-                <p>Bathrooms: {{ bathrooms }} </p>
-                <p>Bedrooms: {{ bedrooms }} </p>
-                <p>Car spaces: {{ car_spaces }} </p>
-                <p>Area: {{ areaSize }} square meters </p>
-                <br>
-                <h3>Price</h3>
-                <p>Low price: ${{ lower_price }} </p>
-                <p>Mid price: ${{ mid_price }} </p>
-                <p>High price: ${{ upper_price }} </p>
+                <div class="col-lg-3">
+                    <H3>Features</H3>
+                    <p>Bathrooms: {{ property[14] }} </p>
+                    <p>Bedrooms: {{ property[13] }} </p>
+                    <p>Car spaces: {{ property[15] }} </p>
+                    <p>Area: {{ property[16] }} square meters </p>
+                    <br>
+                    <h3>Price</h3>
+                    <p>Low price: ${{ property[6] }} </p>
+                    <p>Mid price: ${{ property[7] }} </p>
+                    <p>High price: ${{ property[8] }} </p>
+                </div>
             </div>
         </div>
     <br>
     </div>
+</div>
+
     <!-- 
         <div style="display: inline-block; height:500px; width: 45%;"  >
         <img style = "height:500px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Lyman_Trumbull_House.jpg/1200px-Lyman_Trumbull_House.jpg">

@@ -143,14 +143,80 @@ print(access_token["access_token"])
 @app.route('/')
 @app.route('/index')
 def index():
-    #property_id = "XJ-5205-DL"
-    #response = requests.request(
-    #    "GET",
-    #    endpoint_url + "properties/" + property_id,
-    #    headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
-    #)
-    #print(response.json())
     return render_template('index.html')
+
+
+@app.route('/<street_num>/<street_name>/<suburb>')
+def address(street_num, street_name, suburb):
+    response = requests.request(
+        "GET",
+        endpoint_url + "properties/_suggest?terms=" + street_num + "+" + street_name + "+St%1C+" + suburb +
+        "&channel=All",
+        headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
+    )
+    full_address = response.json()[0]
+    property_id = full_address.get('id')
+    addressComponents = full_address.get('addressComponents')
+
+    street_name = addressComponents.get('streetName')
+    street_num = addressComponents.get('streetNumber')
+    suburb = addressComponents.get('suburb')
+
+    street_type = addressComponents.get('streetTypeLong')
+    postcode = addressComponents.get('postcode')
+    state = addressComponents.get('state')
+    print(property_id)
+    if property_id == "":
+        return render_template('404.html')
+    else:
+        house_searching.suburb_grab(suburb, street_num, street_name, postcode, state)
+        data_base_test = data_base.findProperty(property_id)
+
+        if not data_base_test:
+            response = requests.request(
+                "GET",
+                endpoint_url + "properties/" + property_id + "/priceEstimate",
+                headers={'Authorization': 'Bearer ' + access_token["access_token"],
+                         'Content-Type': 'application/json'}
+            )
+
+            # BLAH BLAH ENTER CODE HERE ONCE IT WORKS
+            lower_price = "-"
+            upper_price = "-"
+            mid_price = "-"
+            print(response)
+
+            response = requests.request(
+                "GET",
+                endpoint_url + "properties/" + property_id,
+                headers={'Authorization': 'Bearer ' + access_token["access_token"],
+                         'Content-Type': 'application/json'}
+            )
+
+            house = response.json()
+            print(house)
+            coordinate = house.get('addressCoordinate')
+            lat_coordinate = coordinate.get('lat')
+            long_coordinate = coordinate.get('lon')
+            areaSize = house.get('areaSize')
+            property_type = house.get('propertyCategory')
+            bedrooms = house.get('bedrooms')
+            bathrooms = house.get('bathrooms')
+            car_spaces = house.get('carSpaces')
+            images = house.get('photos')
+            if str(images) == '[]':
+                image = 'https://thumbs.dreamstime.com/b/blur-house-background-vintage-style-44768012.jpg'
+            else:
+                image1 = images[0]
+                image = image1.get('fullUrl')
+
+            data_base.addProperty(property_id, street_name, street_num, suburb, street_type, state, lower_price,
+                                  upper_price, mid_price, image, lat_coordinate, long_coordinate, property_type,
+                                  bedrooms, bathrooms, car_spaces, areaSize, postcode)
+        data_base_test = data_base.findProperty(property_id)
+        property = data_base_test[0]
+
+    return render_template("result_of_home_page_search.html", property=property)
 
 
 @app.route("/suburb_search")
@@ -162,7 +228,7 @@ def search_suburb():
 def suburb_search(suburb):
     print(suburb)
     suburb_check = data_base.findSuburb(suburb)
-    
+
     suburb_info = suburb_check[0]
     age_0_to_4 = suburb_info[1]
     age_5_to_19 = suburb_info[2]
@@ -182,25 +248,9 @@ def suburb_search(suburb):
 
 @app.route("/house", methods=['GET', 'POST'])
 def house():
-    message_name = ''
-    street_name = ""
-    street_num = ""
-    suburb = ""
+
     property_id = ""
-    street_type = ""
-    state = ""
-    lower_price = "-"
-    upper_price = "-"
-    mid_price = "-"
-    image = "https://thumbs.dreamstime.com/b/blur-house-background-vintage-style-44768012.jpg"
-    lat_coordinate = ""
-    long_coordinate = ""
-    property_type = ""
-    bedrooms = ""
-    bathrooms = ""
-    car_spaces = ""
-    areaSize = ""
-    postcode = ""
+    message_name = ""
 
     form = house_searching.address_inputs(request.form)
     if request.method == 'POST':
@@ -226,7 +276,7 @@ def house():
         state = addressComponents.get('state')
         print(property_id)
         if property_id == "":
-            message_name = "Please enter a valid property"
+            pass
         else:
             house_searching.suburb_grab(suburb, street_num, street_name, postcode, state)
             data_base_test = data_base.findProperty(property_id)
@@ -240,6 +290,9 @@ def house():
                 )
 
                 # BLAH BLAH ENTER CODE HERE ONCE IT WORKS
+                lower_price = "-"
+                upper_price = "-"
+                mid_price = "-"
                 print(response)
 
                 response = requests.request(
@@ -268,40 +321,27 @@ def house():
 
                 data_base.addProperty(property_id, street_name, street_num, suburb, street_type, state, lower_price,
                                       upper_price, mid_price, image, lat_coordinate, long_coordinate, property_type,
-                                      bedrooms, bathrooms, car_spaces, areaSize, postcode)
-            else:
-                property = data_base_test[0]
-                print(property)
-                street_name = property[1]
-                street_num = property[2]
-                suburb = property[3]
-                street_type = property[4]
-                state = property[5]
-                lower_price = property[6]
-                upper_price = property[7]
-                mid_price = property[8]
-                image = property[9]
-                lat_coordinate = property[10]
-                long_coordinate = property[11]
-                property_type = property[12]
-                bedrooms = property[13]
-                bathrooms = property[14]
-                car_spaces = property[15]
-                areaSize = property[16]
-                postcode = property[17]
 
-    return render_template("generichouse.html", street_name=street_name, street_num=street_num, suburb=suburb,
-                           form=form, street_type=street_type, state=state, lower_price=lower_price,
-                           upper_price=upper_price, mid_price=mid_price, images_of_house=image,
-                           lat_coordinate=lat_coordinate, long_coordinate=long_coordinate, property_type=property_type,
-                           bedrooms=bedrooms, bathrooms=bathrooms, car_spaces=car_spaces, areaSize=areaSize, postcode=
-                           postcode, message_name=message_name)
+                                      bedrooms, bathrooms, car_spaces, areaSize, postcode)
+    if property_id == "":
+        if request.method =="POST":
+            message_name = "Please enter a valid address"
+        property = ['', "", "", "", "", "", "", "-", "-", "-",
+                    "https://thumbs.dreamstime.com/b/blur-house-background-vintage-style-44768012.jpg", "", "", "", "",
+                    "", "", "", ""]
+        print(property)
+
+    else:
+        data_base_test = data_base.findProperty(property_id)
+        property = data_base_test[0]
+        print(property)
+
+    return render_template("generichouse.html", message_name=message_name, property=property, form=form)
 
 
 @app.route("/find_property", methods=['GET', 'POST'])
 def find():
     message = ""
-
     properties = 0
     house_dict = {"listingType": "Sale", }
     location_dict = {}
@@ -344,7 +384,7 @@ def find():
 def test():
     adict = {"type": "line", "title": "test"}
     labels = ["A", "B", "C", "D", "E", "F"]
-    data = [{"label": "1", "data": [120, 130, 139, 162, 153, 149],},
+    data = [{"label": "1", "data": [120, 130, 139, 162, 153, 149], },
             {"label": "2", "data": [238, 254, 279, 289, 291, 305]}]
     send = [adict, labels, data]
     return render_template('charttest.html', nchart=send)
