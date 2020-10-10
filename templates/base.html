@@ -10,6 +10,10 @@
 
 {%  block navbar %}
 <style>
+  .navbarText {
+      color: white;
+  }
+
   .navbar {
       background-color: #2f2f2f;
       padding-top: 15px;
@@ -25,6 +29,9 @@
       color: black;
   }
 
+  .navbar-header {
+      padding-bottom: 4px;
+  }
   .navbar-right  li a:hover {
       color: #1abc9c !important; /* colour : Green with Blue */
   }
@@ -40,16 +47,15 @@
 
 
 <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
+        <div class="container">
             <div class="navbar-header">
-                <a style="font-size:145%;font-weight: inherit;letter-spacing: 3px" href="/">Property Perpetrators</a>
+                <a style="font-size:120%;font-weight: inherit;letter-spacing: 3px;color: white;" href="/">Property Perpetrators</a>
             </div>
             <ul class="nav navbar-right">
-                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/house">Address searching</a> </li>
-                <li class="nav-item"><a class="nav-link" href="/find_property">Property Searching</a> </li>
-                <li class="nav-item"><a class="nav-link" href="/suburb_search">Suburb Searching</a> </li>
-                <li class="nav-item"><a class="nav-link" href="/about">About</a> </li>
+                <li class="nav-item"><a class="nav-link navbarText" href="/house">Address Search</a> </li>
+                <li class="nav-item"><a class="nav-link navbarText" href="/find_property">Property Search</a> </li>
+                <li class="nav-item"><a class="nav-link navbarText" href="/suburb_search">Suburb Search</a> </li>
+                <li class="nav-item"><a class="nav-link navbarText" href="/about">About</a> </li>
                 <!--add extra pages here-->
                 <li class="nav-item"><a class="nav-link" href="/login"><img src="static/Images/loginImage.jpg" alt="login image" style="height: 24px"/></a></li>
 
@@ -59,7 +65,7 @@
 {% endblock %}
 
 {% block footer %}
-    <div class="container-fluid">
+    <div class="container">
         {% block page_content%} {% endblock %}
     </div>
     <footer class="bg-footer container-fluid">
