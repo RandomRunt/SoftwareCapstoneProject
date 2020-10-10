@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% set active_page = "index" %}
 {% block page_title %}Home{% endblock %}
 {% block page_content %}
 <head>
@@ -57,7 +58,6 @@
 
         <div class = "bando">
         </div>
-
             <br>
             <hr>
             <h2>Address searching</h2>
@@ -92,4 +92,6 @@
         </div>
     </div>
 </body>
+
+{{ super() }}
 {% endblock %}
