@@ -324,12 +324,12 @@ def house():
 
                                       bedrooms, bathrooms, car_spaces, areaSize, postcode)
     if property_id == "":
-        if request.method =="POST":
+        if request.method == "POST":
             message_name = "Please enter a valid address"
-        property = ['', "", "", "", "", "", "", "-", "-", "-",
+        property = ['', "", "", "", "", "", "-", "-", "-",
                     "https://thumbs.dreamstime.com/b/blur-house-background-vintage-style-44768012.jpg", "", "", "", "",
                     "", "", "", ""]
-        print(property)
+        print(property[9])
 
     else:
         data_base_test = data_base.findProperty(property_id)
