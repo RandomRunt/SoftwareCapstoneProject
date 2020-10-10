@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request
 import requests, json, urllib.request
 from flask_bootstrap import Bootstrap
+
 import data_base, house_searching
 from wtforms import Form, validators, StringField
 
@@ -364,15 +365,13 @@ def find():
         location_dict["suburb"] = suburb
         location_dict["postCode"] = ""
         location_dict["postCode"] = ""
-        house_dict["includeSurroundingSuburbs"] = 'false'
+        location_dict["postCode"] = ""
+        house_dict["locations"] = [location_dict]
 
-        print(house_dict)
+        print(str(house_dict))
 
-        response = requests.request(
-            "POST",
-            endpoint_url + 'listings/residential/_search' + str(house_dict),
-            headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
-        )
+        response = requests.request('POST '+ endpoint_url + 'listings/commercial/_search{"searchMode": "forSale","parking": {"type": "onSite", "carspaces": 5}, "price": {"max": 1000000, "type": "totalAmount"}}'
+            , headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'})
 
         print(response)
 
