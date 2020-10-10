@@ -354,7 +354,8 @@ def test():
 def about():
     return render_template('about.html')
 
-@app.route('/login', methods=['GET','POST'])
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
@@ -363,6 +364,7 @@ def login():
         else:
             return redirect(url_for('home'))
     return render_template('login.html', error=error)
+
 
 @app.errorhandler(404)
 def page_not_found(e):
