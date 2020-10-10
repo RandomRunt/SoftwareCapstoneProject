@@ -5,8 +5,8 @@ import data_base, house_searching
 from wtforms import Form, validators, StringField
 
 # Domain API variables
-client_id = 'client_0fad4b17db857db49713b047f639a138'
-client_secret = 'secret_df5fd0b77edd1c173aa1f5e6f9b11c2b'
+client_id = 'client_209b71146a72afa869bbf9bc385deefa'
+client_secret = 'secret_31598885c06ef62ddb59f51b84bfba76'
 auth_url = 'https://auth.domain.com.au/v1/connect/token'
 endpoint_url = 'https://api.domain.com.au/v1/'
 
@@ -192,7 +192,7 @@ def house():
     lower_price = "-"
     upper_price = "-"
     mid_price = "-"
-    image = ""
+    image = "https://thumbs.dreamstime.com/b/blur-house-background-vintage-style-44768012.jpg"
     lat_coordinate = ""
     long_coordinate = ""
     property_type = ""
@@ -354,7 +354,8 @@ def test():
 def about():
     return render_template('about.html')
 
-@app.route('/login', methods=['GET','POST'])
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
@@ -363,6 +364,7 @@ def login():
         else:
             return redirect(url_for('home'))
     return render_template('login.html', error=error)
+
 
 @app.errorhandler(404)
 def page_not_found(e):
