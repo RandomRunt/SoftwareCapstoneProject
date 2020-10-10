@@ -1,6 +1,6 @@
-from flask import Flask, render_template, request
-import requests, json
-import urllib.request
+from flask import Flask, render_template, redirect, url_for, request
+import requests, json, urllib.request
+from flask_bootstrap import Bootstrap
 import data_base, house_searching
 from wtforms import Form, validators, StringField
 
