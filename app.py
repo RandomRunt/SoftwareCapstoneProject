@@ -1,4 +1,3 @@
-import plotly
 from flask import Flask, render_template, redirect, url_for, request
 import requests, json, urllib.request
 import data_base, house_searching
@@ -26,7 +25,7 @@ user_queries = {'James Lu':['candomrunt@gmail.com','nice','the property website'
 
 app = Flask(__name__)
 
-
+data_base.createTable()
 def fig_to_base64(fig):
     img = io.BytesIO()
     fig.savefig(img, format='png',
