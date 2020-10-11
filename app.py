@@ -128,6 +128,7 @@ access_token = json.loads(requests.post(
             "api_demographics_read",
             "api_addresslocators_read",
             "api_properties_read",
+            "api_agencies_read",
             "api_suburbperformance_read",
             "api_salesresults_read",
             "api_listings_write",
@@ -144,6 +145,8 @@ print(access_token["access_token"])
 @app.route('/')
 @app.route('/index')
 def index():
+    house_searching.suburb_grab('North Bondi', 'NSW')
+
     return render_template('index.html')
 
 
@@ -270,7 +273,6 @@ def house():
         if property_id == "":
             pass
         else:
-            house_searching.suburb_grab(suburb, street_num, street_name, postcode, state)
             data_base_test = data_base.findProperty(property_id)
 
             if not data_base_test:
@@ -362,8 +364,8 @@ def find():
         print(str(house_dict))
 
         response = requests.request(
-            'POST ', sandbox_url + str(house_dict)
-            , headers={'Authorization': 'Bearer ff91abdba5246f2ad3cd11ca3fc1abcf' + access_token["access_token"],
+            'POST', sandbox_url
+            , headers={'Authorization': 'Bearer ' + access_token["access_token"],
                        'Content-Type': 'application/json'})
 
         print(response)
