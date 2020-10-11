@@ -169,7 +169,6 @@ print(access_token["access_token"])
 @app.route('/index')
 @app.route('/')
 def index():
-    house_searching.suburb_grab('North Bondi', 'NSW')
     return render_template('index.html')
 
 
