@@ -1,5 +1,32 @@
 import sqlite3
 
+def about_queries(name,email,subject,message):
+    conn = sqlite3.connect('properties.db')
+    c = conn.cursor()
+    c.execute("INSERT INTO about_queries (name,email,subject,message) VALUES (?, ?, ?, ?)"
+              , (name,email,subject,message))
+    conn.commit()
+    conn.close()
+
+
+def get_about_queries():
+    conn = sqlite3.connect('properties.db')
+    c = conn.cursor()
+    names = []
+    emails = []
+    subjects = []
+    messages = []
+    length = 0
+    c.execute('SELECT * FROM about_queries')
+    for row in c:
+        length += 1
+        names.append(row[0])
+        emails.append(row[1])
+        subjects.append(row[2])
+        messages.append(row[3])
+    return(names, emails, subjects, messages, length)
+    conn.close()
+
 
 def createTable():
     conn = sqlite3.connect('properties.db')

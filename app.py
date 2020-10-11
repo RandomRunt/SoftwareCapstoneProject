@@ -419,7 +419,7 @@ def about():
             server.sendmail(msg['From'], msg['To'], msg.as_string())
             server.quit()
             print("email sent")
-
+            data_base.about_queries(name,email,subject,message)
             user_queries[name] = [email, subject, message]
             print(user_queries)
             return redirect('/contactFeedback')
@@ -435,18 +435,8 @@ def feedback():
 
 @app.route('/logged_in_page')
 def logged_in_page():
-    names = []
-    emails = []
-    subjects =[]
-    messages = []
-    len = 0
-    for mes in user_queries:
-        len += 1
-        names.append(mes)
-        emails.append(user_queries[mes][0])
-        subjects.append(user_queries[mes][1])
-        messages.append(user_queries[mes][2])
-    return render_template("logged_in_page.html", names = names, emails = emails, subjects = subjects, messages = messages, len = len)
+    names, emails, subjects, messages, length = data_base.get_about_queries()
+    return render_template("logged_in_page.html", names = names, emails = emails, subjects = subjects, messages = messages, len = length)
 
 
 @app.route('/login', methods=['GET', 'POST'])

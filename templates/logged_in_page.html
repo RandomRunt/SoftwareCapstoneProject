@@ -1,7 +1,38 @@
 {% extends "base.html" %}
 {% block page_title %} User Queries {% endblock %}
 {% block page_content %}
+<style>
+  p {font-size: 20px;}
+  .everything {
+      margin-left: 85px;
+      padding-top: 20px;
+  }
 
+table {
+  padding-top: 10px;
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+h1{
+    text-align: center;
+    padding-top: 15px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+
+<div style="padding-bottom: 200px;">
+<h1>About Queries</h1>
 <table>
     <tr>
         <th>Name</th>
@@ -18,4 +49,5 @@
     </tr>
     {% endfor %}
 </table>
+</div>
 {% endblock %}
