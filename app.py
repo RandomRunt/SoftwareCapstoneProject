@@ -13,6 +13,8 @@ auth_url = 'https://auth.domain.com.au/v1/connect/token'
 endpoint_url = 'https://api.domain.com.au/v1/'
 sandbox_url = 'https://api.domain.com.au/sandbox/v1/listings/residential/_search'
 
+user_queries = {'James Lu':['candomrunt@gmail.com','nice','the property website']}
+
 app = Flask(__name__)
 
 
@@ -399,6 +401,9 @@ def about():
             server.sendmail(msg['From'], msg['To'], msg.as_string())
             server.quit()
             print("email sent")
+
+            user_queries[name] = [email, subject, message]
+            print(user_queries)
             return redirect('/contactFeedback')
         else:
             return redirect('index')
@@ -410,6 +415,22 @@ def feedback():
     return render_template("thanksFeedback.html")
 
 
+@app.route('/logged_in_page')
+def logged_in_page():
+    names = []
+    emails = []
+    subjects =[]
+    messages = []
+    len = 0
+    for mes in user_queries:
+        len += 1
+        names.append(mes)
+        emails.append(user_queries[mes][0])
+        subjects.append(user_queries[mes][1])
+        messages.append(user_queries[mes][2])
+    return render_template("logged_in_page.html", names = names, emails = emails, subjects = subjects, messages = messages, len = len)
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
@@ -417,7 +438,7 @@ def login():
     if request.method == 'POST':
         if request.form['username'] in validAccounts:
             if request.form['password'] == validAccounts[request.form['username']]:
-                return redirect(url_for('index'))
+                return redirect(url_for('logged_in_page'))
         else:
             error = 'The username or password is invalid.'
     return render_template('login.html', error=error)

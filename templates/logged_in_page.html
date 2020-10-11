@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block page_title %} User Queries {% endblock %}
+{% block page_content %}
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Subject</th>
+        <th>Message</th>
+    </tr>
+    {% for i in range(0, len)%}
+    <tr>
+        <td>{{ names[i] }}</td>
+        <td>{{ emails[i] }}</td>
+        <td>{{ subjects[i] }}</td>
+        <td>{{ messages[i] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
