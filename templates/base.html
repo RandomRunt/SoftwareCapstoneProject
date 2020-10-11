@@ -21,25 +21,34 @@
             color: white;
         }
 
-        .navbar {
-            background-color: #2f2f2f;
-            padding-top: 15px;
-            padding-bottom: 15px;
-            border: 0;
-            border-radius: 0;
-            margin-bottom: 0;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            font-size: 20px;
-            letter-spacing: 2px;
-        }
+{%  block navbar %}
+<style>
+  p {
+      font-size: 20px;
+  }
+  .navbarText {
+      color: white;
+  }
 
         a {
             color: black;
         }
 
-        .navbar-header {
-            padding-bottom: 4px;
-        }
+  .navbar-header {
+      padding-bottom: 4px;
+  }
+  .navbar-right  li a:hover {
+      color: #1abc9c !important; /* colour : Green with Blue */
+  }
+    /* Footer */
+  .bg-footer {
+      padding-top: 30px;
+      padding-bottom: 30px;
+      background-color: #2f2f2f; /* Black Gray */
+      color: #ffffff;
+  }
+</style>
+    </head>
 
         .navbar-right li a:hover {
             color: #1abc9c !important;
@@ -94,22 +103,19 @@
         <div class="row">
             <div class="col-lg-6" style="width: 60%;">
                 <h3>Property Perpetrators</h3>
-                <p style="color: #d3d3d3">Property Perpetrators was established in 2020 and has proudly served the
-                    people of Sydney for over 0.1 years. Our modern website consist of simple and easy to navigate
-                    search
-                    functions and housing visualisations. We welcome you to use our friendly and reliable service!</p>
+                <p style="color: #d3d3d3">Property Perpetrators was established in 2020 and has proudly served the people of Sydney for over 0.1 years. Our modern website consist of simple and easy to navigate search functions and property visualisations. We welcome you to use our friendly and reliable service!</p>
             </div>
 
             <div class="col-lg-4">
                 <h3>Contact Information</h3>
-                <p>
-                    <span class="glyphicon glyphicon-home"></span>&ensp; Sydney, NSW 2010, AU</p>
-                <p>
-                    <span class="glyphicon glyphicon-envelope"></span>&ensp; enquiries@propertyperpetrators.com</p>
-                <p>
-                    <span class="glyphicon glyphicon-earphone"></span>&ensp; (02) 9876 9876</p>
-                <p>
-                    <span class="glyphicon glyphicon-print"></span>&ensp; (02) 9876 9876</p>
+                    <p>
+                        <span class="glyphicon glyphicon-home"></span>&ensp; Sydney, NSW 2010, AU</p>
+                    <p>
+                        <span class="glyphicon glyphicon-envelope"></span>&ensp; property@perpetrators.com</p>
+                    <p>
+                        <span class="glyphicon glyphicon-earphone"></span>&ensp; (02) 9876 9876</p>
+                    <p>
+                        <span class="glyphicon glyphicon-print"></span>&ensp; (02) 9876 9876</p>
             </div>
         </div>
     </div>
