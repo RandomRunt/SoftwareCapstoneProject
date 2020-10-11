@@ -2,6 +2,10 @@ from flask import Flask, render_template, redirect, url_for, request
 import requests, json, urllib.request
 import data_base, house_searching
 from wtforms import Form, validators, StringField
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import smtplib
+
 
 # Domain API variables
 client_id = 'client_209b71146a72afa869bbf9bc385deefa'
@@ -222,8 +226,8 @@ def suburb_search(suburb):
     print(suburb)
     suburb_check = data_base.findSuburb(suburb)
     suburb_info = suburb_check[0]
-    population = [suburb_info[2], suburb_info[3], suburb_info[4], suburb_info[5], suburb_info[6]]
-    sales = [suburb_info[9], suburb_info[10], suburb_info[11], suburb_info[12]]
+    population = [suburb_info[2],suburb_info[3],suburb_info[4],suburb_info[5],suburb_info[6]]
+    sales = [suburb_info[9],suburb_info[10],suburb_info[11],suburb_info[12]]
     return render_template("suburb.html", suburb=suburb, suburb_info=suburb_info, population=population, sales=sales)
 
 
@@ -369,10 +373,40 @@ def test():
     return render_template('charttest.html', nchart=send)
 
 
-@app.route('/about')
+@app.route('/about', methods=['GET', 'POST'])
 def about():
+    error = None
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        subject = request.form['subject']
+        message = request.form['message']
+        if name or email or subject or message != '':
+            msg = MIMEMultipart()
+            msg['From'] = "propertyperpetrators@gmail.com"
+            password = "strongpassword111"
+            msg['To'] = email
+            print(msg['To'])
+            msg['Subject'] = "Thanks for Contacting Us"
 
-    return render_template('about.html')
+            body = "Thanks you for contacting Property Perpetrators. We will be processing your request and responding very soon!"
+            msg.attach(MIMEText(body, 'html'))
+            print(msg)
+
+            server = smtplib.SMTP("smtp.gmail.com", 587)
+            server.starttls()
+            server.login(msg['From'], password)
+            server.sendmail(msg['From'], msg['To'], msg.as_string())
+            server.quit()
+            print("email sent")
+            return redirect('/contactFeedback')
+        else:
+            return redirect(url_for('index'))
+    return render_template("about.html", error=error)
+
+@app.route('/contactFeedback')
+def feedback():
+    return render_template("thanksFeedback.html")
 
 
 @app.route('/login', methods=['GET', 'POST'])
