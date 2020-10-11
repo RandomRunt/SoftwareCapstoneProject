@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block page_title %} Thank You {% endblock %}
-{% block content %}
+{% block page_content %}
+    <head>
 <style>
     p {font-size: 20px;}
     .bookButton{
@@ -12,15 +13,17 @@
 
     }
 </style>
+    </head>
 
-<div class="bg1 container-fluid" style="text-align: center">
-    <h1 style="font-size: 300%">
-        Thank you for contacting us.
-    </h1>
-    <br>
-    <span class="glyphicon glyphicon-ok-circle" style="color:green; font-size: 750%;">
-    </span>
-</div>
-
+<body>
+    <div class="bg1" style="text-align: center; height: 500px">
+        <h1 style="font-size: 300%">
+            Thank you for contacting us.
+        </h1>
+        <br>
+        <span class="glyphicon glyphicon-ok-circle" style="color:green; font-size: 750%;">
+        </span>
+    </div>
+</body>
 {{ super() }}
 {% endblock %}
