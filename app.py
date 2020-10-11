@@ -222,8 +222,8 @@ def suburb_search(suburb):
     print(suburb)
     suburb_check = data_base.findSuburb(suburb)
     suburb_info = suburb_check[0]
-    population = [suburb_info[2],suburb_info[3],suburb_info[4],suburb_info[5],suburb_info[6]]
-    sales = [suburb_info[9],suburb_info[10],suburb_info[11],suburb_info[12]]
+    population = [suburb_info[2], suburb_info[3], suburb_info[4], suburb_info[5], suburb_info[6]]
+    sales = [suburb_info[9], suburb_info[10], suburb_info[11], suburb_info[12]]
     return render_template("suburb.html", suburb=suburb, suburb_info=suburb_info, population=population, sales=sales)
 
 
@@ -371,6 +371,7 @@ def test():
 
 @app.route('/about')
 def about():
+
     return render_template('about.html')
 
 
