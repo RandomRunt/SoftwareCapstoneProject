@@ -389,7 +389,7 @@ def about():
             print(msg['To'])
             msg['Subject'] = "Thanks for Contacting Us"
 
-            body = "Thanks you for contacting Property Perpetrators. We will be processing your request and responding very soon!"
+            body = "Hey "+name+","+"<br>Thank you for contacting Property Perpetrators. We will be processing your request and responding very soon!"
             msg.attach(MIMEText(body, 'html'))
             print(msg)
 
