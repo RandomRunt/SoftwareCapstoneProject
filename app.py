@@ -27,7 +27,7 @@ sandbox_url = 'https://api.domain.com.au/sandbox/v1/listings/residential/_search
 user_queries = {'James Lu':['candomrunt@gmail.com','nice','the property website']}
 
 valid_users = {'username':{'pw':'password'},
-               'user2':{'pw':'pass2'},
+               'gavinpewpew':{'pw':'gaviniscool'},
                'user3':{'pw':'pass3'}}
 
 login_manager = LoginManager()
