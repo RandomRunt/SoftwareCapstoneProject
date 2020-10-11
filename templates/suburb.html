@@ -7,33 +7,118 @@
         p {
             font-size: 14pt;
         }
-        h2{
-                padding-top: 50px;
-            }
+
+        h2 {
+            padding-top: 50px;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="col-lg-12">
-        <h2>{{ suburb }}</h2>
-        <p>Population: {{ suburb_info[13] }} </p>
-        <p>Postcode: {{ suburb_info[7] }}</p>
-        <p>State: {{ suburb_info[8] }}</p>
-        <hr>
-        <h3>Demographics</h3>
-        <p>Age 0 to 4: {{ suburb_info[2] }} </p>
-        <p>Age 5 to 19: {{ suburb_info[3] }} </p>
-        <p>Age 20 to 39: {{ suburb_info[4] }} </p>
-        <p>Age 40 to 59: {{ suburb_info[5] }} </p>
-        <p>Age 60+: {{ suburb_info[6] }} </p>
-        <hr>
-        <h3>Sales Results</h3>
-        <p>Properties sold: {{ suburb_info[9] }}</p>
-        <p>Clearance rate: {{ suburb_info[10] }}</p>
-        <p>Median sale price: {{ suburb_info[11] }}</p>
-        <p>Total sales: {{ suburb_info[12] }}</p>
+        <div class="row">
+            <div class="col-lg-4">
+                <h2>{{ suburb }}</h2>
+                <p>Population: {{ suburb_info[13] }} </p>
+                <p>Postcode: {{ suburb_info[7] }}</p>
+                <p>State: {{ suburb_info[8] }}</p>
+                <hr>
+                <h3>Demographics</h3>
+                <p>Age 0 to 4: {{ population[0] }} </p>
+                <p>Age 5 to 19: {{ population[1] }} </p>
+                <p>Age 20 to 39: {{ population[2] }} </p>
+                <p>Age 40 to 59: {{ population[3] }} </p>
+                <p>Age 60+: {{ population[4] }} </p>
+                <hr>
+                <h3>Sales Results</h3>
+                <p>Properties sold: {{ suburb_info[9] }}</p>
+                <p>Clearance rate: {{ suburb_info[10] }}</p>
+                <p>Median sale price: {{ suburb_info[11] }}</p>
+                <p>Total sales: {{ suburb_info[12] }}</p>
+            </div>
+            <div class="col-lg-8" style="margin-top: auto; margin-bottom: auto;">
+                <div width="300px" , height="300px">
+                    <div id="BarDiv">
+                        <canvas id="Bar"></canvas>
+                    </div>
+                    <div id="PieDiv">
+                        <canvas id="Pie"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
 </body>
+<script>
+    var populationData = {{ population }};
+    var barctx = document.getElementById("Bar");
+    var PopBarChart = new Chart(barctx, {
+        type: "bar",
+        data: {
+            labels: ["0-4", "5-19", "20-39", "40-59", "60+"],
+            datasets: [{
+                label: "Population",
+                data: populationData,
+                backgroundColor: [
+                    'rgba(236, 98, 98, 0.9)',
+                    'rgba(225, 210, 118, 0.9)',
+                    'rgba(153, 234, 134, 0.9)',
+                    'rgba(131, 214, 183, 0.9)',
+                    'rgba(228, 168, 249, 0.9)'
+                ],
+                borderColor: [
+                    'rgba(236, 98, 98, 1)',
+                    'rgba(225, 210, 118, 1)',
+                    'rgba(153, 234, 134, 1)',
+                    'rgba(131, 214, 183, 1)',
+                    'rgba(228, 168, 249, 1)'
+                ],
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    var piectx = document.getElementById("Pie");
+    var PopPieChart = new Chart(piectx, {
+        type: "pie",
+        data: {
+            labels: ["0-4", "5-19", "20-39", "40-59", "60+"],
+            datasets: [{
+                label: "Population",
+                data: populationData,
+                backgroundColor: [
+                    'rgba(236, 98, 98, 0.9)',
+                    'rgba(225, 210, 118, 0.9)',
+                    'rgba(153, 234, 134, 0.9)',
+                    'rgba(131, 214, 183, 0.9)',
+                    'rgba(228, 168, 249, 0.9)'
+                ],
+                borderColor: [
+                    'rgba(236, 98, 98, 1)',
+                    'rgba(225, 210, 118, 1)',
+                    'rgba(153, 234, 134, 1)',
+                    'rgba(131, 214, 183, 1)',
+                    'rgba(228, 168, 249, 1)'
+                ],
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>
 {% endblock %}

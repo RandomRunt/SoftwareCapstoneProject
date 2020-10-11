@@ -229,22 +229,10 @@ def search_suburb():
 def suburb_search(suburb):
     print(suburb)
     suburb_check = data_base.findSuburb(suburb)
-
     suburb_info = suburb_check[0]
-    age_0_to_4 = suburb_info[1]
-    age_5_to_19 = suburb_info[2]
-    age_20_to_39 = suburb_info[3]
-    age_40_to_59 = suburb_info[4]
-    age_60_plus = suburb_info[5]
-    postcode = suburb_info[6]
-    state = suburb_info[7]
-    properties_sold = suburb_info[8]
-    clearance_rate = suburb_info[9]
-    median_sale = suburb_info[10]
-    total_sale = suburb_info[11]
-    population = suburb_info[12]
-
-    return render_template("suburb.html", suburb=suburb, suburb_info=suburb_info)
+    population = [suburb_info[2],suburb_info[3],suburb_info[4],suburb_info[5],suburb_info[6]]
+    sales = [suburb_info[9],suburb_info[10],suburb_info[11],suburb_info[12]]
+    return render_template("suburb.html", suburb=suburb, suburb_info=suburb_info, population=population, sales=sales)
 
 
 @app.route("/house", methods=['GET', 'POST'])
