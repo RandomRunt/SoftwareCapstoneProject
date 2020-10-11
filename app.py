@@ -352,7 +352,7 @@ def find():
         print(str(house_dict))
 
         response = requests.request(
-            'POST', sandbox_url
+            'POST', endpoint_url + str(house_dict)
             , headers={'Authorization': 'Bearer ' + access_token["access_token"],
                        'Content-Type': 'application/json'})
 
