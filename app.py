@@ -1,7 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, request
 import requests, json, urllib.request
-from flask_bootstrap import Bootstrap
-
 import data_base, house_searching
 from wtforms import Form, validators, StringField
 
@@ -394,4 +392,5 @@ def page_not_found(e):
 
 
 if __name__ == '__main__':
-    app.run()
+    from os import environ
+    app.run(debug=False, port=environ.get("PORT", 5000), processes=2)
