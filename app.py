@@ -174,7 +174,7 @@ def address(street_num, street_name, suburb):
     if property_id == "":
         return render_template('404.html')
     else:
-        house_searching.suburb_grab(suburb, street_num, street_name, postcode, state)
+        house_searching.suburb_grab(suburb, state)
         data_base_test = data_base.findProperty(property_id)
 
         if not data_base_test:
@@ -403,6 +403,7 @@ def about():
         else:
             return redirect('index')
     return render_template("about.html", error=error)
+
 
 @app.route('/contactFeedback')
 def feedback():
