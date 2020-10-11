@@ -25,7 +25,7 @@ user_queries = {'James Lu':['candomrunt@gmail.com','nice','the property website'
 
 app = Flask(__name__)
 
-data_base.createTable()
+
 def fig_to_base64(fig):
     img = io.BytesIO()
     fig.savefig(img, format='png',
