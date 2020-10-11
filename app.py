@@ -377,11 +377,13 @@ def about():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
+    validAccounts = {"username":"password","admin":"admin"}
     if request.method == 'POST':
-        if request.form['username'] != 'username' or request.form['password'] != 'password':
-            error = 'The username or password is invalid.'
+        if request.form['username'] in validAccounts:
+            if request.form['password'] == validAccounts[request.form['username']]:
+                return redirect(url_for('index'))
         else:
-            return redirect(url_for('home'))
+            error = 'The username or password is invalid.'
     return render_template('login.html', error=error)
 
 
