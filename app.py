@@ -1,4 +1,6 @@
 import plotly
+import flask_login as flask_login
+from flask_login import LoginManager, UserMixin
 from flask import Flask, render_template, redirect, url_for, request
 import requests, json, urllib.request
 import data_base, house_searching
@@ -24,8 +26,17 @@ sandbox_url = 'https://api.domain.com.au/sandbox/v1/listings/residential/_search
 
 user_queries = {'James Lu':['candomrunt@gmail.com','nice','the property website']}
 
-app = Flask(__name__)
+valid_users = {'username':{'pw':'password'},
+               'user2':{'pw':'pass2'},
+               'user3':{'pw':'pass3'}}
 
+login_manager = LoginManager()
+
+
+app = Flask(__name__)
+app.secret_key = 'secret'
+
+login_manager.init_app(app)
 
 def fig_to_base64(fig):
     img = io.BytesIO()
@@ -433,24 +444,65 @@ def feedback():
     return render_template("thanksFeedback.html")
 
 
-@app.route('/logged_in_page')
-def logged_in_page():
-    names, emails, subjects, messages, length = data_base.get_about_queries()
-    return render_template("logged_in_page.html", names = names, emails = emails, subjects = subjects, messages = messages, len = length)
+# @app.route('/logged_in_page')
+# def logged_in_page():
+#     names, emails, subjects, messages, length = data_base.get_about_queries()
+#     return render_template("logged_in_page.html", names = names, emails = emails, subjects = subjects, messages = messages, length = length)
 
+class User(UserMixin):
+    pass
+
+
+@login_manager.user_loader
+def user_loader(username):
+     if username not in valid_users:
+         return
+
+     user = User()
+     user.id = username
+     return user
+
+@login_manager.request_loader
+def request_loader(request):
+     username = request.form.get('username')
+     if username not in valid_users:
+         print('death')
+         return
+     user = User()
+     user.id = username
+     user.is_authenticated = request.form['pw'] == valid_users[username]['pw']
+     return user
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    error = None
-    validAccounts = {"username": "password", "admin": "admin"}
+    # error = None
+    # validAccounts = {"username": "password", "admin": "admin"}
+    # if request.method == 'POST':
+    #     if request.form['username'] in validAccounts:
+    #         if request.form['password'] == validAccounts[request.form['username']]:
+    #             return redirect(url_for('logged_in_page'))
+    #     else:
+    #         error = 'The username or password is invalid.'
+    # return render_template('login.html', error=error)
     if request.method == 'POST':
-        if request.form['username'] in validAccounts:
-            if request.form['password'] == validAccounts[request.form['username']]:
-                return redirect(url_for('logged_in_page'))
-        else:
-            error = 'The username or password is invalid.'
-    return render_template('login.html', error=error)
+        username = request.form.get('username')
+        if request.form.get('pw') == valid_users[username]['pw']:
+            user = User()
+            user.id = username
+            flask_login.login_user(user)
+            return redirect(url_for('protect'))
+    return render_template('login.html')
 
+@app.route('/protect')
+@flask_login.login_required
+def protect():
+    names, emails, subjects, messages, length = data_base.get_about_queries()
+    return render_template('logged_in_page.html', names = names, emails = emails, subjects = subjects, messages = messages, length = length)
+
+@app.route('/logout')
+def logout():
+    flask_login.logout_user()
+    return 'Logged out'
 
 @app.errorhandler(404)
 def page_not_found(e):
