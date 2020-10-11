@@ -369,9 +369,40 @@ def test():
     return render_template('charttest.html', nchart=send)
 
 
-@app.route('/about')
+@app.route('/about', methods=['GET', 'POST'])
 def about():
-    return render_template('about.html')
+    error = None
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        subject = request.form['subject']
+        message = request.form['message']
+        if name or email or subject or message != '':
+            msg = MIMEMultipart()
+            msg['From'] = "propertyperpetrators@gmail.com"
+            password = "strongpassword111"
+            msg['To'] = email
+            print(msg['To'])
+            msg['Subject'] = "Thanks for Contacting Us"
+
+            body = "Thanks you for contacting Property Perpetrators. We will be processing your request and responding very soon!"
+            msg.attach(MIMEText(body, 'html'))
+            print(msg)
+
+            server = smtplib.SMTP("smtp.gmail.com", 587)
+            server.starttls()
+            server.login(msg['From'], password)
+            server.sendmail(msg['From'], msg['To'], msg.as_string())
+            server.quit()
+            print("email sent")
+            return redirect('/contactFeedback')
+        else:
+            return redirect(url_for('index'))
+    return render_template("about.html", error=error)
+
+@app.route('/contactFeedback')
+def feedback():
+    return render_template("thanksFeedback.html")
 
 
 @app.route('/login', methods=['GET', 'POST'])
