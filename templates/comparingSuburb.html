@@ -1,9 +1,38 @@
 {% extends "base.html" %}
 {% block page_title %} Compared suburb {% endblock %}
 {% block page_content %}
-    <div class="container" style="text-align: center; padding-top: 280px; padding-bottom: 310px">
-        <h1>
-            Test
-        </h1>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    </head>
+     <body>
+    <div class="container-fluid">
+    <h2 style="padding-top: 50px">{{ year }} of {{ suburb_1 }} and {{ suburb_2 }}</h2>
+    <form  method="POST">
+        <select name="year" placeholder="Year: ">
+            <option disabled selected>Choose Year</option>
+            {% for year in years %}
+                <option value= "{{year}}" SELECTED>{{year}}</option>"
+            {% endfor %}
+        </select>
+        <input class="btn" type="submit" value="submit" style="font-size: 14pt">
+    </form>
+
     </div>
+    <div id= "attack">
+            <script>
+                 var suburb_visualisation = {{suburb_visualisation| safe}};
+                 Plotly.plot('attack',suburb_visualisation.data, suburb_visualisation.layout);
+            </script>
+        </div>
+    <h2>Age demographics of {{ suburb_1 }} and {{ suburb_2 }}</h2>
+    <div id= "demo">
+            <script>
+                 var demographics = {{demographics| safe}};
+                 Plotly.plot('demo',demographics.data, demographics.layout);
+            </script>
+        </div>
+     </body>
+
 {% endblock %}

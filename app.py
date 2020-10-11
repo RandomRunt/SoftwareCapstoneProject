@@ -1,3 +1,4 @@
+import plotly
 from flask import Flask, render_template, redirect, url_for, request
 import requests, json, urllib.request
 import data_base, house_searching
@@ -5,6 +6,14 @@ from wtforms import Form, validators, StringField
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
+
+import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+import numpy as np
+import io
+import base64
+import plotly
+
 
 # Domain API variables
 client_id = 'client_209b71146a72afa869bbf9bc385deefa'
@@ -14,6 +23,15 @@ endpoint_url = 'https://api.domain.com.au/v1/'
 sandbox_url = 'https://api.domain.com.au/sandbox/v1/listings/residential/_search'
 
 app = Flask(__name__)
+
+
+def fig_to_base64(fig):
+    img = io.BytesIO()
+    fig.savefig(img, format='png',
+                bbox_inches='tight')
+    img.seek(0)
+
+    return base64.b64encode(img.getvalue())
 
 
 class suburb_inputs(Form):
@@ -389,7 +407,7 @@ def about():
             print(msg['To'])
             msg['Subject'] = "Thanks for Contacting Us"
 
-            body = "Hey "+name+","+"<br>Thank you for contacting Property Perpetrators. We will be processing your request and responding very soon!"
+            body = "Hey " + name + "," + "<br>Thank you for contacting Property Perpetrators. We will be processing your request and responding very soon!"
             msg.attach(MIMEText(body, 'html'))
             print(msg)
 
@@ -435,12 +453,117 @@ def comparision():
 
 @app.route('/suburb_comparision/<suburb_1>/<suburb_2>', methods=['GET', 'POST'])
 def compare(suburb_1, suburb_2):
+    # some from https://matplotlib.org/gallery/lines_bars_and_markers/barchart.html#sphx-glr-gallery-lines-bars-and-markers-barchart-py
+
+
+    years = ['Median', 'Sold', 'Highest sold', 'Lowest sold', 'Bottom 5% sold', 'Bottom 25% sold', 'Top 25% sold',
+             'Top 5% sold'][::-1]
+
     house_searching.suburb_grab(suburb_1, "NSW")
     house_searching.suburb_grab(suburb_2, "NSW")
-    suburb_check_1 = data_base.findSuburb(suburb_1)
-    suburb_check_2 = data_base.findSuburb(suburb_2)
+    suburb_1_data = data_base.findSuburb(suburb_1)[0]
+    print(suburb_1_data)
+    suburb_2_data = data_base.findSuburb(suburb_2)[0]
+    print(suburb_2_data)
+    labels = ['0 to 4', ' 5 to 19', '20 to 39', '40 to 59', '60+']
+    suburb_1_data_demographics = [int(suburb_1_data[3]), int(suburb_1_data[4]), int(suburb_1_data[5]),
+                                  int(suburb_1_data[6]), int(suburb_1_data[7])]
+    suburb_2_data_demographics = [int(suburb_2_data[3]), int(suburb_2_data[4]), int(suburb_2_data[5]),
+                                  int(suburb_2_data[6]), int(suburb_2_data[7])]
 
-    return render_template('comparingSuburb.html')
+    year = 'Median'
+    suburb_1_value_2018 = suburb_1_data[10]
+    suburb_1_value_2019 = suburb_1_data[18]
+    suburb_1_value_2020 = suburb_1_data[26]
+    suburb_2_value_2018 = suburb_2_data[10]
+    suburb_2_value_2019 = suburb_2_data[18]
+    suburb_2_value_2020 = suburb_2_data[26]
+
+    if request.method == "POST":
+        year = request.form.getlist('year')
+        year = year[0]
+        if year == 'Median':
+            suburb_1_value_2018 = suburb_1_data[10]
+            suburb_1_value_2019 = suburb_1_data[18]
+            suburb_1_value_2020 = suburb_1_data[26]
+            suburb_2_value_2018 = suburb_2_data[10]
+            suburb_2_value_2019 = suburb_2_data[18]
+            suburb_2_value_2020 = suburb_2_data[26]
+        elif year == 'Sold':
+            suburb_1_value_2018 = suburb_1_data[11]
+            suburb_1_value_2019 = suburb_1_data[19]
+            suburb_1_value_2020 = suburb_1_data[27]
+            suburb_2_value_2018 = suburb_2_data[11]
+            suburb_2_value_2019 = suburb_2_data[19]
+            suburb_2_value_2020 = suburb_2_data[27]
+        elif year == 'Highest sold':
+            suburb_1_value_2018 = suburb_1_data[12]
+            suburb_1_value_2019 = suburb_1_data[20]
+            suburb_1_value_2020 = suburb_1_data[28]
+            suburb_2_value_2018 = suburb_2_data[12]
+            suburb_2_value_2019 = suburb_2_data[20]
+            suburb_2_value_2020 = suburb_2_data[28]
+        elif year == 'Lowest sold':
+            suburb_1_value_2018 = suburb_1_data[13]
+            suburb_1_value_2019 = suburb_1_data[21]
+            suburb_1_value_2020 = suburb_1_data[29]
+            suburb_2_value_2018 = suburb_2_data[13]
+            suburb_2_value_2019 = suburb_2_data[21]
+            suburb_2_value_2020 = suburb_2_data[29]
+        elif year == 'Bottom 5% sold':
+            suburb_1_value_2018 = suburb_1_data[14]
+            suburb_1_value_2019 = suburb_1_data[22]
+            suburb_1_value_2020 = suburb_1_data[30]
+            suburb_2_value_2018 = suburb_2_data[14]
+            suburb_2_value_2019 = suburb_2_data[22]
+            suburb_2_value_2020 = suburb_2_data[30]
+        elif year == 'Bottom 25% sold':
+            suburb_1_value_2018 = suburb_1_data[15]
+            suburb_1_value_2019 = suburb_1_data[23]
+            suburb_1_value_2020 = suburb_1_data[31]
+            suburb_2_value_2018 = suburb_2_data[15]
+            suburb_2_value_2019 = suburb_2_data[23]
+            suburb_2_value_2020 = suburb_2_data[31]
+        elif year == 'Top 25% sold':
+            suburb_1_value_2018 = suburb_1_data[16]
+            suburb_1_value_2019 = suburb_1_data[24]
+            suburb_1_value_2020 = suburb_1_data[32]
+            suburb_2_value_2018 = suburb_2_data[16]
+            suburb_2_value_2019 = suburb_2_data[24]
+            suburb_2_value_2020 = suburb_2_data[32]
+        elif year == 'Top 5% sold':
+            suburb_1_value_2018 = suburb_1_data[17]
+            suburb_1_value_2019 = suburb_1_data[25]
+            suburb_1_value_2020 = suburb_1_data[33]
+            suburb_2_value_2018 = suburb_2_data[17]
+            suburb_2_value_2019 = suburb_2_data[25]
+            suburb_2_value_2020 = suburb_2_data[33]
+
+    x = np.array([2018, 2019, 2020])
+    y_1 = np.array([suburb_1_value_2018, suburb_1_value_2019, suburb_1_value_2020])
+    y_2 = np.array([suburb_2_value_2018, suburb_2_value_2019, suburb_2_value_2020])
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=x, y=y_1, name=suburb_1,
+                             line_shape='linear'))
+    fig.add_trace(go.Scatter(x=x, y=y_2, name=suburb_2,
+                             line_shape='linear'))
+
+    suburb_visualisation = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+
+
+
+    fig = go.Figure(data=[
+        go.Bar(name=suburb_1, x=labels, y=suburb_1_data_demographics),
+        go.Bar(name=suburb_2, x=labels, y=suburb_2_data_demographics)
+    ])
+    # Change the bar mode
+    fig.update_layout(barmode='group')
+
+    demographics = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return render_template('comparingSuburb.html', years=years, demographics=demographics, year=year, suburb_1=suburb_1,
+                           suburb_2=suburb_2, suburb_visualisation=suburb_visualisation)
 
 
 if __name__ == '__main__':
