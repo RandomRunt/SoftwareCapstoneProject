@@ -423,6 +423,7 @@ def about():
             server.quit()
             print("email sent")
 
+            data_base.about_queries(name, email, subject, message)
             user_queries[name] = [email, subject, message]
             print(user_queries)
             return redirect('/contactFeedback')
