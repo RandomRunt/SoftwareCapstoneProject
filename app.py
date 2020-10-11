@@ -317,45 +317,45 @@ def house():
 
     return render_template("generichouse.html", message_name=message_name, property=property, form=form)
 
-
-@app.route("/find_property", methods=['GET', 'POST'])
-def find():
-    message = ""
-    properties = 0
-    house_dict = {"listingType": "Sale", }
-    location_dict = {}
-    form = house_searching.feature_inputs()
-    states = house_searching.states[::-1]
-    if request.method == "POST":
-        suburb = request.form['suburb']
-        house_found = request.form.getlist('property_type')
-        bedrooms = request.form['bedrooms']
-        bathrooms = request.form['bathrooms']
-        parking = request.form['parking']
-        state = request.form.getlist('stateDropdown')
-        house_dict['propertyTypes'] = house_found
-        house_dict['minBedrooms'] = bedrooms
-        house_dict['minBathrooms'] = bathrooms
-        house_dict['minCarspaces'] = parking
-        location_dict['state'] = state[0]
-        location_dict['region'] = ""
-        location_dict["area"] = ""
-        location_dict["suburb"] = suburb
-        location_dict["postCode"] = ""
-        location_dict["postCode"] = ""
-        location_dict["postCode"] = ""
-        house_dict["location"] = [location_dict]
-
-        print(str(house_dict))
-
-        response = requests.request(
-            'POST', endpoint_url + str(house_dict)
-            , headers={'Authorization': 'Bearer ' + access_token["access_token"],
-                       'Content-Type': 'application/json'})
-
-        print(response)
-
-    return render_template('found_property.html', form=form, states=states)
+#
+# @app.route("/find_property", methods=['GET', 'POST'])
+# def find():
+#     message = ""
+#     properties = 0
+#     house_dict = {"listingType": "Sale", }
+#     location_dict = {}
+#     form = house_searching.feature_inputs()
+#     states = house_searching.states[::-1]
+#     if request.method == "POST":
+#         suburb = request.form['suburb']
+#         house_found = request.form.getlist('property_type')
+#         bedrooms = request.form['bedrooms']
+#         bathrooms = request.form['bathrooms']
+#         parking = request.form['parking']
+#         state = request.form.getlist('stateDropdown')
+#         house_dict['propertyTypes'] = house_found
+#         house_dict['minBedrooms'] = bedrooms
+#         house_dict['minBathrooms'] = bathrooms
+#         house_dict['minCarspaces'] = parking
+#         location_dict['state'] = state[0]
+#         location_dict['region'] = ""
+#         location_dict["area"] = ""
+#         location_dict["suburb"] = suburb
+#         location_dict["postCode"] = ""
+#         location_dict["postCode"] = ""
+#         location_dict["postCode"] = ""
+#         house_dict["location"] = [location_dict]
+#
+#         print(str(house_dict))
+#
+#         response = requests.request(
+#             'POST', endpoint_url + str(house_dict)
+#             , headers={'Authorization': 'Bearer ' + access_token["access_token"],
+#                        'Content-Type': 'application/json'})
+#
+#         print(response)
+#
+#     return render_template('found_property.html', form=form, states=states)
 
 
 # Testing charting library
