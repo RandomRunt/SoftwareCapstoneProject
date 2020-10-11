@@ -484,6 +484,7 @@ def login():
     #     else:
     #         error = 'The username or password is invalid.'
     # return render_template('login.html', error=error)
+    error = None
     if request.method == 'POST':
         username = request.form.get('username')
         if request.form.get('pw') == valid_users[username]['pw']:
@@ -491,7 +492,9 @@ def login():
             user.id = username
             flask_login.login_user(user)
             return redirect(url_for('protect'))
-    return render_template('login.html')
+        else:
+            error = 'The username or password is invalid.'
+    return render_template('login.html', error = error)
 
 @app.route('/protect')
 @flask_login.login_required
