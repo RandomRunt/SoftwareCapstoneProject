@@ -487,13 +487,16 @@ def login():
     error = None
     if request.method == 'POST':
         username = request.form.get('username')
-        if request.form.get('pw') == valid_users[username]['pw']:
-            user = User()
-            user.id = username
-            flask_login.login_user(user)
-            return redirect(url_for('protect'))
+        if username not in valid_users:
+            error = 'The username or password is invalid.'
         else:
-            error = 'The password is invalid.'
+            if request.form.get('pw') == valid_users[username]['pw']:
+                user = User()
+                user.id = username
+                flask_login.login_user(user)
+                return redirect(url_for('protect'))
+            else:
+                error = 'The password is invalid.'
     return render_template('login.html', error = error)
 
 @app.route('/protect')
