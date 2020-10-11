@@ -493,7 +493,7 @@ def login():
             flask_login.login_user(user)
             return redirect(url_for('protect'))
         else:
-            error = 'The username or password is invalid.'
+            error = 'The password is invalid.'
     return render_template('login.html', error = error)
 
 @app.route('/protect')
