@@ -38,14 +38,6 @@ app.secret_key = 'secret'
 
 login_manager.init_app(app)
 
-def fig_to_base64(fig):
-    img = io.BytesIO()
-    fig.savefig(img, format='png',
-                bbox_inches='tight')
-    img.seek(0)
-
-    return base64.b64encode(img.getvalue())
-
 
 class suburb_inputs(Form):
     suburb_input = StringField('Enter a Sydney Suburb:', validators=[validators.required()])
@@ -444,7 +436,6 @@ def feedback():
     return render_template("thanksFeedback.html")
 
 
-
 class User(UserMixin):
     pass
 
@@ -458,6 +449,7 @@ def user_loader(username):
      user.id = username
      return user
 
+
 @login_manager.request_loader
 def request_loader(request):
      username = request.form.get('username')
@@ -468,6 +460,7 @@ def request_loader(request):
      user.id = username
      user.is_authenticated = request.form['pw'] == valid_users[username]['pw']
      return user
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -495,16 +488,19 @@ def login():
                 error = 'The password is invalid.'
     return render_template('login.html', error = error)
 
+
 @app.route('/protect')
 @flask_login.login_required
 def protect():
     names, emails, subjects, messages, length = data_base.get_about_queries()
     return render_template('logged_in_page.html', names = names, emails = emails, subjects = subjects, messages = messages, length = length)
 
+
 @app.route('/logout')
 def logout():
     flask_login.logout_user()
     return 'Logged out'
+
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -622,7 +618,6 @@ def compare(suburb_1, suburb_2):
         go.Bar(name=suburb_1, x=labels, y=suburb_1_data_demographics),
         go.Bar(name=suburb_2, x=labels, y=suburb_2_data_demographics)
     ])
-    # Change the bar mode
     fig.update_layout(barmode='group')
 
     demographics = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
