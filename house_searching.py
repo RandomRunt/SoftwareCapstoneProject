@@ -76,7 +76,6 @@ def suburb_grab(suburb, state):
         suburb_levels = properties.get('ids')[0]
         suburb_id = suburb_levels.get('id')
 
-
         response_2 = requests.request(
             "GET",
             endpoint_url + "demographics?level=Suburb&id=" + str(suburb_id) + "&types=AgeGroupOfPopulation",
@@ -93,17 +92,73 @@ def suburb_grab(suburb, state):
         age_60_plus = indepth[1].get('value')
         population = age_demographics.get('total')
 
-        response_3 = requests.request(
+        print('done')
+
+        response = requests.request(
             "GET",
-            endpoint_url + "salesResults/Sydney",
+            endpoint_url + "suburbPerformanceStatistics?state=nsw&suburbId=" + str(suburb_id) + "&propertyCategory"
+                                                                                                "=house"
+                                                                                                "&chronologicalSpan=12"
+                                                                                                "&tPlusFrom=1&tPlusTo=3"
+                                                                                                "&values"
+                                                                                                "=HighestSoldPrice"
+                                                                                                "%2CLowestSoldPrice",
             headers={'Authorization': 'Bearer ' + access_token["access_token"],
                      'Content-Type': 'application/json'}
         )
-        properties_sold = response_3.json().get("numberSold")
-        total_sale = response_3.json().get("totalSales")
-        median_sale = response_3.json().get("median")
-        clearance_rate = response_3.json().get("adjClearanceRate")
-        print('done')
+        start = response.json()
+        series = start.get('series')
 
-        data_base.add(suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_to_59, age_60_plus, postcode, state,
-                  properties_sold, clearance_rate, median_sale, total_sale, population)
+        series_info = series.get('seriesInfo')
+
+        values = series_info[0]
+        print(values)
+        values_2018 = values.get('values')
+
+        median_sold_price_2018 = values_2018.get('medianSoldPrice')
+        number_sold_2018 = values_2018.get('numberSold')
+        highest_sold_price_2018 = values_2018.get('highestSoldPrice')
+        lowest_sold_price_2018 = values_2018.get('lowestSoldPrice')
+        percentile_sold_price_5_2018 = values_2018.get('5thPercentileSoldPrice')
+        percentile_sold_price_25_2018 = values_2018.get('25thPercentileSoldPrice')
+        percentile_sold_price_75_2018 = values_2018.get('75thPercentileSoldPrice')
+        percentile_sold_price_95_2018 = values_2018.get('95thPercentileSoldPrice')
+        print(median_sold_price_2018, number_sold_2018, highest_sold_price_2018, lowest_sold_price_2018,
+              percentile_sold_price_5_2018, percentile_sold_price_25_2018, percentile_sold_price_75_2018,
+              percentile_sold_price_95_2018)
+
+        values = series_info[1]
+        print(values)
+        values_2019 = values.get('values')
+        median_sold_price_2019 = values_2019.get('medianSoldPrice')
+        number_sold_2019 = values_2019.get('numberSold')
+        highest_sold_price_2019 = values_2019.get('highestSoldPrice')
+        lowest_sold_price_2019 = values_2019.get('lowestSoldPrice')
+        percentile_sold_price_5_2019 = values_2019.get('5thPercentileSoldPrice')
+        percentile_sold_price_25_2019 = values_2019.get('25thPercentileSoldPrice')
+        percentile_sold_price_75_2019 = values_2019.get('75thPercentileSoldPrice')
+        percentile_sold_price_95_2019 = values_2019.get('95thPercentileSoldPrice')
+
+        values = series_info[2]
+        print(values)
+        values_2020 = values.get('values')
+        median_sold_price_2020 = values_2020.get('medianSoldPrice')
+        number_sold_2020 = values_2020.get('numberSold')
+        highest_sold_price_2020 = values_2020.get('highestSoldPrice')
+        lowest_sold_price_2020 = values_2020.get('lowestSoldPrice')
+        percentile_sold_price_5_2020 = values_2020.get('5thPercentileSoldPrice')
+        percentile_sold_price_25_2020 = values_2020.get('25thPercentileSoldPrice')
+        percentile_sold_price_75_2020 = values_2020.get('75thPercentileSoldPrice')
+        percentile_sold_price_95_2020 = values_2020.get('95thPercentileSoldPrice')
+
+        data_base.addSuburb(suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_to_59, age_60_plus,
+                            postcode,
+                            state, population, median_sold_price_2018, number_sold_2018, highest_sold_price_2018,
+                            lowest_sold_price_2018, percentile_sold_price_5_2018, percentile_sold_price_25_2018,
+                            percentile_sold_price_75_2018, percentile_sold_price_95_2018, median_sold_price_2019,
+                            number_sold_2019, highest_sold_price_2019, lowest_sold_price_2019,
+                            percentile_sold_price_5_2019, percentile_sold_price_25_2019, percentile_sold_price_75_2019,
+                            percentile_sold_price_95_2019, median_sold_price_2020, number_sold_2020,
+                            highest_sold_price_2020,
+                            lowest_sold_price_2020, percentile_sold_price_5_2020, percentile_sold_price_25_2020,
+                            percentile_sold_price_75_2020, percentile_sold_price_95_2020)
