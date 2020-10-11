@@ -29,16 +29,35 @@ def addProperty(property_id, street_name, street_num, suburb, street_type, state
     conn.close()
 
 
-def addSuburb(suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_to_59, age_60_plus, postcode, state,
-              properties_sold, clearance_rate, median_sale, total_sale, population):
+def addSuburb(suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_to_59, age_60_plus, postcode,
+                      state, population, median_sold_price_2018, number_sold_2018, highest_sold_price_2018,
+                      lowest_sold_price_2018, percentile_sold_price_5_2018, percentile_sold_price_25_2018,
+                      percentile_sold_price_75_2018, percentile_sold_price_95_2018, median_sold_price_2019,
+                      number_sold_2019, highest_sold_price_2019, lowest_sold_price_2019,
+                      percentile_sold_price_5_2019, percentile_sold_price_25_2019, percentile_sold_price_75_2019,
+                      percentile_sold_price_95_2019, median_sold_price_2020, number_sold_2020, highest_sold_price_2020,
+                      lowest_sold_price_2020, percentile_sold_price_5_2020, percentile_sold_price_25_2020,
+                      percentile_sold_price_75_2020, percentile_sold_price_95_2020):
     conn = sqlite3.connect('properties.db')
     c = conn.cursor()
-    c.execute(
-        "INSERT INTO suburbs (suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_to_59, age_60_plus, "
-        "postcode, state, properties_sold, clearance_rate, median_sale, total_sale, population) VALUES (?, ?, ?, ?, ?,"
-        " ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    c.execute("INSERT INTO suburbs (suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_to_59, "
+              "age_60_plus, postcode, state, population, median_sold_price_2018, number_sold_2018, "
+              "highest_sold_price_2018, lowest_sold_price_2018, percentile_sold_price_5_2018, "
+              "percentile_sold_price_25_2018, percentile_sold_price_75_2018, percentile_sold_price_95_2018, "
+              "median_sold_price_2019, number_sold_2019, highest_sold_price_2019, lowest_sold_price_2019, "
+              "percentile_sold_price_5_2019, percentile_sold_price_25_2019, percentile_sold_price_75_2019, "
+              "percentile_sold_price_95_2019, median_sold_price_2020, number_sold_2020, highest_sold_price_2020, "
+              "lowest_sold_price_2020, percentile_sold_price_5_2020, percentile_sold_price_25_2020, "
+              "percentile_sold_price_75_2020, percentile_sold_price_95_2020) VALUES (?, ?, ?,?,?,?,?,?,?,?,?,?,?,?,?,"
+              "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
         (suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_to_59, age_60_plus, postcode, state,
-         properties_sold, clearance_rate, median_sale, total_sale, population))
+         population, median_sold_price_2018, number_sold_2018, highest_sold_price_2018, lowest_sold_price_2018,
+         percentile_sold_price_5_2018, percentile_sold_price_25_2018, percentile_sold_price_75_2018,
+         percentile_sold_price_95_2018, median_sold_price_2019, number_sold_2019, highest_sold_price_2019,
+         lowest_sold_price_2019,percentile_sold_price_5_2019, percentile_sold_price_25_2019,
+         percentile_sold_price_75_2019, percentile_sold_price_95_2019, median_sold_price_2020, number_sold_2020,
+         highest_sold_price_2020, lowest_sold_price_2020, percentile_sold_price_5_2020, percentile_sold_price_25_2020,
+         percentile_sold_price_75_2020, percentile_sold_price_95_2020))
     conn.commit()
     conn.close()
 

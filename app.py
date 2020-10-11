@@ -454,74 +454,12 @@ def comparision():
     return render_template('compare.html')
 
 
-@app.route('/suburb_comparision/<suburb_1>/<suburb_2>')
+@app.route('/suburb_comparision/<suburb_1>/<suburb_2>', methods=['GET', 'POST'])
 def compare(suburb_1, suburb_2):
+    house_searching.suburb_grab(suburb_1, "NSW")
+    house_searching.suburb_grab(suburb_2, "NSW")
     suburb_check_1 = data_base.findSuburb(suburb_1)
-    suburb_info_1 = suburb_check_1[0]
     suburb_check_2 = data_base.findSuburb(suburb_2)
-    suburb_info_2 = suburb_check_2[0]
-    response = requests.request(
-        "GET",
-        endpoint_url + "suburbPerformanceStatistics?state=nsw&suburbId=" + suburb_info_1[0] + "&propertyCategory"
-                                                                                              "=house"
-                                                                                              "&chronologicalSpan=12"
-                                                                                              "&tPlusFrom=1&tPlusTo=3"
-                                                                                              "&values"
-                                                                                              "=HighestSoldPrice"
-                                                                                              "%2CLowestSoldPrice",
-        headers={'Authorization': 'Bearer ' + access_token["access_token"],
-                 'Content-Type': 'application/json'}
-    )
-    start = response.json()
-    series = start.get('series')
-
-    series_info = series.get('seriesInfo')
-
-    values = series_info[0]
-    print(values)
-    values_2018 = values.get('values')
-
-    median_sold_price_2018 = values_2018.get('medianSoldPrice')
-    number_sold_2018 = values_2018.get('numberSold')
-    highest_sold_price_2018 = values_2018.get('highestSoldPrice')
-    lowest_sold_price_2018 = values_2018.get('lowestSoldPrice')
-    percentile_sold_price_5_2018 = values_2018.get('5thPercentileSoldPrice')
-    percentile_sold_price_25_2018 = values_2018.get('25thPercentileSoldPrice')
-    percentile_sold_price_75_2018 = values_2018.get('75thPercentileSoldPrice')
-    percentile_sold_price_95_2018 = values_2018.get('95thPercentileSoldPrice')
-    print(median_sold_price_2018, number_sold_2018, highest_sold_price_2018, lowest_sold_price_2018,
-          percentile_sold_price_5_2018, percentile_sold_price_25_2018, percentile_sold_price_75_2018,
-          percentile_sold_price_95_2018)
-
-    values = series_info[1]
-    print(values)
-    values_2019 = values.get('values')
-    median_sold_price_2019 = values_2019.get('medianSoldPrice')
-    number_sold_2019 = values_2019.get('numberSold')
-    highest_sold_price_2019 = values_2019.get('highestSoldPrice')
-    lowest_sold_price_2019 = values_2019.get('lowestSoldPrice')
-    percentile_sold_price_5_2019 = values_2019.get('5thPercentileSoldPrice')
-    percentile_sold_price_25_2019 = values_2019.get('25thPercentileSoldPrice')
-    percentile_sold_price_75_2019 = values_2019.get('75thPercentileSoldPrice')
-    percentile_sold_price_95_2019 = values_2019.get('95thPercentileSoldPrice')
-    print(median_sold_price_2019, number_sold_2019, highest_sold_price_2019, lowest_sold_price_2019,
-          percentile_sold_price_5_2019, percentile_sold_price_25_2019, percentile_sold_price_75_2019,
-          percentile_sold_price_95_2019)
-
-    values = series_info[2]
-    print(values)
-    values_2020 = values.get('values')
-    median_sold_price_2020 = values_2020.get('medianSoldPrice')
-    number_sold_2020 = values_2020.get('numberSold')
-    highest_sold_price_2020 = values_2020.get('highestSoldPrice')
-    lowest_sold_price_2020 = values_2020.get('lowestSoldPrice')
-    percentile_sold_price_5_2020 = values_2020.get('5thPercentileSoldPrice')
-    percentile_sold_price_25_2020 = values_2020.get('25thPercentileSoldPrice')
-    percentile_sold_price_75_2020 = values_2020.get('75thPercentileSoldPrice')
-    percentile_sold_price_95_2020 = values_2020.get('95thPercentileSoldPrice')
-    print(median_sold_price_2020, number_sold_2020, highest_sold_price_2020, lowest_sold_price_2020,
-          percentile_sold_price_5_2020, percentile_sold_price_25_2020, percentile_sold_price_75_2020,
-          percentile_sold_price_95_2020)
 
     return render_template('comparingSuburb.html')
 
