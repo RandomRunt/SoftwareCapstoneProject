@@ -401,7 +401,7 @@ def about():
             print("email sent")
             return redirect('/contactFeedback')
         else:
-            return redirect(url_for('index'))
+            return redirect('index')
     return render_template("about.html", error=error)
 
 
