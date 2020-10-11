@@ -455,7 +455,6 @@ def user_loader(username):
 def request_loader(request):
      username = request.form.get('username')
      if username not in valid_users:
-         print('death')
          return
      user = User()
      user.id = username
