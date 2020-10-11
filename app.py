@@ -10,6 +10,7 @@ client_id = 'client_209b71146a72afa869bbf9bc385deefa'
 client_secret = 'secret_31598885c06ef62ddb59f51b84bfba76'
 auth_url = 'https://auth.domain.com.au/v1/connect/token'
 endpoint_url = 'https://api.domain.com.au/v1/'
+sandbox_url = 'https://api.domain.com.au/sandbox/v1/listings/residential/_search'
 
 app = Flask(__name__)
 
@@ -124,7 +125,6 @@ access_token = json.loads(requests.post(
     data={
         "grant_type": "client_credentials",
         "scope": [" ".join([
-            "api_properties_read",
             "api_demographics_read",
             "api_addresslocators_read",
             "api_properties_read",
@@ -174,18 +174,10 @@ def address(street_num, street_name, suburb):
         data_base_test = data_base.findProperty(property_id)
 
         if not data_base_test:
-            response = requests.request(
-                "GET",
-                endpoint_url + "properties/" + property_id + "/priceEstimate",
-                headers={'Authorization': 'Bearer ' + access_token["access_token"],
-                         'Content-Type': 'application/json'}
-            )
-
             # BLAH BLAH ENTER CODE HERE ONCE IT WORKS
             lower_price = "-"
             upper_price = "-"
             mid_price = "-"
-            print(response)
 
             response = requests.request(
                 "GET",
@@ -249,7 +241,6 @@ def suburb_search(suburb):
 
 @app.route("/house", methods=['GET', 'POST'])
 def house():
-
     property_id = ""
     message_name = ""
 
@@ -366,12 +357,14 @@ def find():
         location_dict["postCode"] = ""
         location_dict["postCode"] = ""
         location_dict["postCode"] = ""
-        house_dict["locations"] = [location_dict]
+        house_dict["location"] = [location_dict]
 
         print(str(house_dict))
 
-        response = requests.request('POST '+ endpoint_url + 'listings/commercial/_search{"searchMode": "forSale","parking": {"type": "onSite", "carspaces": 5}, "price": {"max": 1000000, "type": "totalAmount"}}'
-            , headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'})
+        response = requests.request(
+            'POST ', sandbox_url + str(house_dict)
+            , headers={'Authorization': 'Bearer ff91abdba5246f2ad3cd11ca3fc1abcf' + access_token["access_token"],
+                       'Content-Type': 'application/json'})
 
         print(response)
 
