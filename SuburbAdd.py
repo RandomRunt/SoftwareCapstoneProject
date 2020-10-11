@@ -28,6 +28,7 @@ access_token = json.loads(requests.post(
 
 suburbs = data_base.checkSuburb()
 
+
 def getpostcode(suburb):
     for row in reader:
         if suburb == row[1]:
