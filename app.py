@@ -2,6 +2,10 @@ from flask import Flask, render_template, redirect, url_for, request
 import requests, json, urllib.request
 import data_base, house_searching
 from wtforms import Form, validators, StringField
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import smtplib
+
 
 # Domain API variables
 client_id = 'client_209b71146a72afa869bbf9bc385deefa'
