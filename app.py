@@ -17,7 +17,7 @@ import base64
 import plotly
 
 
-# Domain API variables - also key has limit of requests
+# Domain API variables - also key has limit of requests, suburb database isn't fully filled due to that
 client_id = 'client_209b71146a72afa869bbf9bc385deefa'
 client_secret = 'secret_31598885c06ef62ddb59f51b84bfba76'
 auth_url = 'https://auth.domain.com.au/v1/connect/token'
