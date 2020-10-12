@@ -27,7 +27,7 @@ sandbox_url = 'https://api.domain.com.au/sandbox/v1/listings/residential/_search
 user_queries = {'James Lu':['candomrunt@gmail.com','nice','the property website']}
 
 valid_users = {'username':{'pw':'password'},
-               'user2':{'pw':'pass2'},
+               'gavinpewpew':{'pw':'gaviniscool'},
                'user3':{'pw':'pass3'}}
 
 login_manager = LoginManager()
@@ -422,6 +422,7 @@ def about():
             server.quit()
             print("email sent")
 
+            data_base.about_queries(name, email, subject, message)
             user_queries[name] = [email, subject, message]
             print(user_queries)
             return redirect('/contactFeedback')
@@ -453,7 +454,6 @@ def user_loader(username):
 def request_loader(request):
      username = request.form.get('username')
      if username not in valid_users:
-         print('death')
          return
      user = User()
      user.id = username
