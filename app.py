@@ -14,7 +14,6 @@ import plotly.graph_objects as go
 import numpy as np
 import io
 import base64
-import plotly
 
 
 # Domain API variables - also key has limit of requests, suburb database isn't fully filled due to that
@@ -176,7 +175,7 @@ def index():
 def address(street_num, street_name, suburb):
     response = requests.request(
         "GET",
-        endpoint_url + "properties/_suggest?terms=" + street_num + "+" + street_name + "+St%1C+" + suburb +
+        endpoint_url + "properties/_suggest?terms=" + street_num + "+" + street_name + "+" + suburb +
         "&channel=All",
         headers={'Authorization': 'Bearer ' + access_token["access_token"], 'Content-Type': 'application/json'}
     )
@@ -306,17 +305,17 @@ def house():
                              'Content-Type': 'application/json'}
                 )
 
-                house = response.json()
-                print(house)
-                coordinate = house.get('addressCoordinate')
+                House = response.json()
+                print(House)
+                coordinate = House.get('addressCoordinate')
                 lat_coordinate = coordinate.get('lat')
                 long_coordinate = coordinate.get('lon')
-                areaSize = house.get('areaSize')
-                property_type = house.get('propertyCategory')
-                bedrooms = house.get('bedrooms')
-                bathrooms = house.get('bathrooms')
-                car_spaces = house.get('carSpaces')
-                images = house.get('photos')
+                areaSize = House.get('areaSize')
+                property_type = House.get('propertyCategory')
+                bedrooms = House.get('bedrooms')
+                bathrooms = House.get('bathrooms')
+                car_spaces = House.get('carSpaces')
+                images = House.get('photos')
                 if str(images) == '[]':
                     image = 'https://thumbs.dreamstime.com/b/blur-house-background-vintage-style-44768012.jpg'
                 else:
@@ -626,6 +625,4 @@ def compare(suburb_1, suburb_2):
 
 
 if __name__ == '__main__':
-    from os import environ
-
-    app.run(debug=False, port=environ.get("PORT", 5000), processes=2)
+    app.run()
