@@ -30,12 +30,12 @@ access_token = json.loads(requests.post(
 states = ['NSW', 'VIC', 'WA', 'SA', 'NT', 'CBR', 'QLD', 'TAS']
 
 
-class MultiCheckboxField(SelectMultipleField):
+class MultiCheckboxField(SelectMultipleField): #Nathan Roland
     widget = widgets.ListWidget(prefix_label=False)
     option_widget = widgets.CheckboxInput()
 
 
-class feature_inputs(Form):
+class feature_inputs(Form): #didnt work
     suburb = StringField('Enter a suburb: ', validators=[validators.required()])
 
     property_type = MultiCheckboxField('Property type: ', choices=[('House', 'House'), ('NewApartments', 'Apartment'),
@@ -50,14 +50,14 @@ class feature_inputs(Form):
                            validators=[validators.required()])
 
 
-class address_inputs(Form):
+class address_inputs(Form):  #didnt work
     unit_Number = StringField('Enter a unit number (optional): ')
     street_Num = StringField('Enter the street number: ', validators=[validators.required(int)])
     street_Name = StringField('Enter the street name: ', validators=[validators.required()])
     suburb = StringField('Enter the suburb: ', validators=[validators.required()])
 
 
-def suburb_grab(suburb, state):
+def suburb_grab(suburb, state): #Nathan Roland
     suburb_check = data_base.findSuburb(suburb)
 
     if not suburb_check:

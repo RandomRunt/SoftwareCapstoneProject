@@ -29,7 +29,7 @@ def get_about_queries():  # James Lu
     conn.close()
 
 
-def createTable():
+def createTable():#Nathan Roland
     conn = sqlite3.connect('properties.db')
     c = conn.cursor()
     c.execute('''CREATE TABLE properties_data_base(property_id text, street_name text, street_num integer, suburb text, 
@@ -43,7 +43,7 @@ def createTable():
 
 def addProperty(property_id, street_name, street_num, suburb, street_type, state, lower_price, upper_price, mid_price,
                 image, lat_coordinate, long_coordinate, property_type, bedrooms, bathrooms, car_spaces, areaSize,
-                postcode):
+                postcode): #Nathan Roland
     conn = sqlite3.connect('properties.db')
     c = conn.cursor()
     c.execute("INSERT INTO properties_data_base (property_id, street_name, street_num, suburb, street_type, state, "
@@ -65,7 +65,7 @@ def addSuburb(suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_t
                       percentile_sold_price_5_2019, percentile_sold_price_25_2019, percentile_sold_price_75_2019,
                       percentile_sold_price_95_2019, median_sold_price_2020, number_sold_2020, highest_sold_price_2020,
                       lowest_sold_price_2020, percentile_sold_price_5_2020, percentile_sold_price_25_2020,
-                      percentile_sold_price_75_2020, percentile_sold_price_95_2020):
+                      percentile_sold_price_75_2020, percentile_sold_price_95_2020): #Nathan Roland
     conn = sqlite3.connect('properties.db')
     c = conn.cursor()
     c.execute("INSERT INTO suburbs (suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_to_59, "
@@ -90,7 +90,7 @@ def addSuburb(suburb_id, suburb, age_0_to_4, age_5_to_19, age_20_to_39, age_40_t
     conn.close()
 
 
-def findSuburb(suburb):
+def findSuburb(suburb): #Nathan Roland
     conn = sqlite3.connect('properties.db')
     c = conn.cursor()
     houses_in_suburbs = []
@@ -111,7 +111,7 @@ def checkSuburb():
     
 
 
-def findProperty(property_id):
+def findProperty(property_id): #Nathan Roland
     conn = sqlite3.connect('properties.db')
     c = conn.cursor()
     property = []

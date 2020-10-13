@@ -165,13 +165,13 @@ access_token = json.loads(requests.post(
 print(access_token["access_token"])
 
 
-@app.route('/index')
+@app.route('/index') #Nathan Roland
 @app.route('/')
 def index():
     return render_template('index.html')
 
 
-@app.route('/<street_num>/<street_name>/<suburb>')
+@app.route('/<street_num>/<street_name>/<suburb>') #Nathan Roland
 def address(street_num, street_name, suburb):
     response = requests.request(
         "GET",
@@ -251,7 +251,7 @@ def suburb_search(suburb):
     return render_template("suburb.html", suburb=suburb, suburb_info=suburb_info, population=population, sales=sales)
 
 
-@app.route("/house", methods=['GET', 'POST'])
+@app.route("/house", methods=['GET', 'POST']) #Nathan Roland
 def house():
     property_id = ""
     message_name = ""
@@ -505,12 +505,12 @@ def page_not_found(e):
     return render_template('404.html')
 
 
-@app.route('/suburb_comparision')
+@app.route('/suburb_comparision') #Nathan Roland
 def comparision():
     return render_template('compare.html')
 
 
-@app.route('/suburb_comparision/<suburb_1>/<suburb_2>', methods=['GET', 'POST'])
+@app.route('/suburb_comparision/<suburb_1>/<suburb_2>', methods=['GET', 'POST']) #Nathan Roland
 def compare(suburb_1, suburb_2):
     # some from https://matplotlib.org/gallery/lines_bars_and_markers/barchart.html#sphx-glr-gallery-lines-bars-and-markers-barchart-py
 
