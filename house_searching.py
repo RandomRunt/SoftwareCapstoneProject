@@ -1,9 +1,5 @@
-from flask import Flask, render_template, request
-from flask_wtf import FlaskForm
-from wtforms import Form, validators, StringField, SelectMultipleField, widgets, DecimalField, RadioField
-from wtforms.validators import ValidationError, DataRequired
-from wtforms.widgets import ListWidget, CheckboxInput
-
+from wtforms import Form, validators, StringField, SelectMultipleField, widgets, RadioField
+from wtforms.validators import DataRequired
 import data_base
 import requests, json
 
