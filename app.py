@@ -42,7 +42,8 @@ class suburb_inputs(Form):
     suburb_input = StringField('Enter a Sydney Suburb:', validators=[validators.required()])
 
 
-# Other constants
+# Other constants 
+# Suburb list Collated by James T
 suburblist = ["Abbotsbury", "Abbotsford", "Acacia Gardens", "Agnes Banks", "Airds", "Alexandria", "Alfords Point",
               "Allambie Heights", "Allawah", "Ambarvale", "Annandale", "Annangrove", "Arcadia", "Arncliffe",
               "Arndell Park", "Artarmon", "Ashbury", "Ashcroft", "Ashfield", "Asquith", "Auburn", "Austral",
@@ -243,6 +244,7 @@ def search_suburb():
 
 @app.route('/suburb/<suburb>')
 def suburb_search(suburb):
+    #James T
     print(suburb)
     suburb_check = data_base.findSuburb(suburb)
     suburb_info = suburb_check[0]
