@@ -395,7 +395,7 @@ def test():
     return render_template('charttest.html', nchart=send)
 
 
-@app.route('/about', methods=['GET', 'POST'])
+@app.route('/about', methods=['GET', 'POST'])    # James Lu
 def about():
     error = None
     if request.method == 'POST':
@@ -431,16 +431,16 @@ def about():
     return render_template("about.html", error=error)
 
 
-@app.route('/contactFeedback')
+@app.route('/contactFeedback')    # James Lu
 def feedback():
     return render_template("thanksFeedback.html")
 
 
-class User(UserMixin):
+class User(UserMixin):    # James Lu
     pass
 
 
-@login_manager.user_loader
+@login_manager.user_loader    # James Lu
 def user_loader(username):
      if username not in valid_users:
          return
@@ -450,7 +450,7 @@ def user_loader(username):
      return user
 
 
-@login_manager.request_loader
+@login_manager.request_loader    # James Lu
 def request_loader(request):
      username = request.form.get('username')
      if username not in valid_users:
@@ -461,7 +461,7 @@ def request_loader(request):
      return user
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])    # James Lu
 def login():
     # error = None
     # validAccounts = {"username": "password", "admin": "admin"}
@@ -488,20 +488,20 @@ def login():
     return render_template('login.html', error = error)
 
 
-@app.route('/protect')
+@app.route('/protect')    # James Lu
 @flask_login.login_required
 def protect():
     names, emails, subjects, messages, length = data_base.get_about_queries()
     return render_template('logged_in_page.html', names = names, emails = emails, subjects = subjects, messages = messages, length = length)
 
 
-@app.route('/logout')
+@app.route('/logout')    # James Lu
 def logout():
     flask_login.logout_user()
     return 'Logged out'
 
 
-@app.errorhandler(404)
+@app.errorhandler(404)    # James Lu
 def page_not_found(e):
     return render_template('404.html')
 

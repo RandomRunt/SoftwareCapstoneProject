@@ -1,6 +1,7 @@
 import sqlite3
 
-def about_queries(name,email,subject,message):
+
+def about_queries(name,email,subject,message):  # James Lu
     conn = sqlite3.connect('properties.db')
     c = conn.cursor()
     c.execute("INSERT INTO about_queries (name,email,subject,message) VALUES (?, ?, ?, ?)"
@@ -9,7 +10,7 @@ def about_queries(name,email,subject,message):
     conn.close()
 
 
-def get_about_queries():
+def get_about_queries():  # James Lu
     conn = sqlite3.connect('properties.db')
     c = conn.cursor()
     names = []
