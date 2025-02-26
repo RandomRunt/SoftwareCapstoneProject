@@ -1,9 +1,171 @@
-<!DOCTYPE html>
-    <head>
-        <meta charset="utf-8">
-        <title>Page</title>
-    </head>
-    <body>
-        <h1>Title</h1>
-    </body>
-</html>
+{% extends "base.html" %} <!--Nathan Roland -->
+{% block page_title %} Home {% endblock %}
+{% block page_content %}
+<head>
+    <style>
+        h2{
+            padding-top: 10px;
+            padding-bottom: 15px;
+        }
+        p {
+            font-size: 20px;
+        }
+
+        .input-group-text{
+            height: 40px;
+            font-size: 12pt;
+        }
+        .form-control{
+            height: 40px;
+            font-size: 12pt;
+        }
+
+        .links{
+            padding: 10px 100px;
+            background-color: white;
+            width: 500px;
+        }
+
+        .links:hover{
+            background-color: white;
+            padding: 12px 102px;
+            box-shadow: 3px 3px 6px black;
+            width: 504px;
+        }
+
+        a{
+            color: black;
+            font-size: 16pt;
+            margin: auto;
+        }
+
+        .arrow {
+            border: solid black;
+            border-width: 0 3px 3px 0;
+            display: inline-block;
+            padding: 3px;
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+        }
+
+        .bando{
+            background-image: url("https://www.onkaparingacity.com/files/assets/public/maslin-beach.jpg?w=1920");
+            background-repeat: no-repeat;
+            height: 450px;
+            background-size: cover;
+        }
+
+        .search_feature{
+            padding-top: 150px;
+            vertical-align: middle;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .main_button{
+            padding: 10px 100px;
+            background-color: Lavender;
+            border-radius: 12px;
+            border: 0px;
+
+        }
+
+        .main_button:hover{
+            box-shadow: 3px 3px 6px black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+{#        <div class="col-lg-12">#}
+
+
+        <div class = "bando">
+            <br>
+            <h1 class="text-center" style="font-weight: bold; font-size: 250%; color: white">Search for an Address</h1>
+            <div class="search_feature">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" >Street Number</span>
+                    </div>
+                    <input id="Street_Num" type="text" class="form-control">
+
+                    <div class="input-group-prepend" style="padding-left: 8px">
+                      <span class="input-group-text">Street Name</span>
+                    </div>
+                    <input id="Street_Name" type="text" class="form-control">
+
+                    <div class="input-group-prepend" style="padding-left: 8px">
+                      <span class="input-group-text" >Suburb</span>
+                    </div>
+                    <input id="Suburb_Check" type="text" class="form-control">
+                  </div>
+                <br>
+                <div style="text-align: center;">
+                    <button type="button" id="SubmitButton" class="main_button">
+                        Search <i class="arrow right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <br>
+            <hr>
+            <h2>Address searching</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ullamcorper sem eget massa vestibulum,
+                et consectetur eros porttitor. Proin elit ante, aliquet at facilisis nec, tristique vulputate metus.
+                Sed luctus sit amet quam ac lacinia. Nulla dignissim tortor ullamcorper suscipit rhoncus. Vivamus
+                suscipit mauris in leo euismod lacinia sed id dui. Etiam arcu enim, ultricies vitae volutpat eget,
+                luctus ac tellus. Curabitur dictum interdum finibus. Curabitur gravida scelerisque mauris nec pulvinar.
+                Nullam placerat quam a nisl ultrices venenatis. Aliquam condimentum leo auctor mauris sollicitudin, nec
+                consequat elit aliquet. Aliquam risus turpis, tincidunt at consectetur quis, vehicula id quam.
+                Morbi et porta massa, sed placerat purus. Curabitur eget gravida quam, ac posuere dui. Maecenas sodales
+                lorem est, non bibendum mauris tincidunt ut.</p>
+            <div class="row align-items-center">
+                <a href="/house"><button class="links">Search for address<i class="arrow right"></i></button></a>
+            </div>
+            <hr>
+
+            <h2>Searching for properties</h2>
+            <p>Etiam tempor odio id nunc congue mattis. Cras non augue non ligula pellentesque venenatis vitae eget
+                magna. Ut mi nulla, scelerisque id orci euismod, finibus placerat augue. Fusce sed aliquet arcu.
+                Pellentesque at neque vel enim congue tincidunt vitae eget tellus. Aliquam imperdiet enim sem, eget
+                laoreet dui maximus eu. Sed ullamcorper mi et nulla dapibus, id gravida libero hendrerit.</p>
+            <div class="row align-items-center">
+                <a href="/find_property"><button class="links">Search for specific properties<i class="arrow right"></i></button></a>
+            </div>
+            <hr>
+
+            <h2>Suburb Search</h2>
+            <p>Cras nec ex sagittis, blandit velit sed, ultricies est. Aliquam sit amet erat in lorem suscipit
+                fringilla. Donec facilisis dignissim egestas. Aenean faucibus orci in est placerat, sed tincidunt mi
+                vehicula. Nunc semper ipsum nec placerat pellentesque. Pellentesque ut magna purus. Nullam rutrum,
+                lorem a euismod blandit, ligula urna vestibulum erat, ut lacinia augue ligula sit amet justo. Fusce
+                sed tellus nec arcu venenatis sagittis. Vestibulum lobortis arcu ut augue mollis tristique. Vestibulum
+                et libero pharetra, porttitor diam vel, feugiat dui. Sed sagittis justo a elit volutpat elementum.
+                Phasellus at metus sit amet magna interdum pharetra ut sagittis ante. Quisque sed diam vel odio
+                gravida fringilla vel id purus. Donec vel nunc aliquet, porta dolor sed, aliquet eros. Morbi id turpis
+                et dui ullamcorper placerat non ac turpis. Vestibulum non metus mi.</p>
+            <div class="row align-items-center">
+                <a href="/suburb_search"><button class="links">Search for suburb<i class="arrow right"></i></button></a>
+            </div>
+            <br>
+        </div>
+        </div>
+    </div>
+<script>
+    function GetAddress() {
+            let street_name = document.getElementById("Street_Num").value;
+            let street_num = document.getElementById("Street_Name").value;
+            let suburb = document.getElementById("Suburb_Check").value;
+            window.location.href = "/"+street_num+"/"+street_name+"/"+suburb
+    }
+
+    SubmitButton.onclick = GetAddress;
+
+</script>
+</body>
+
+{{ super() }}
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends "base.html" %} <!--Nathan Roland -->
+{% block page_title %}House Search{% endblock %}
+{% block page_content %}
+    <style>
+        p {
+            font-size: 20px;
+        }
+        h1{
+                    padding-top: 15px;
+                }
+    </style>
+
+
+
+<div style="margin-left: auto; margin-right: auto;", class="col-lg-12">
+    <h1>Address searching</h1>
+    <div>
+        <br>
+        <form action="" method="POST">
+            {{ form.street_Num.label }}
+            {{ form.street_Num }}
+
+            {{ form.street_Name.label }}
+            {{ form.street_Name }}
+
+            {{ form.suburb.label }}
+            {{ form.suburb }}
+            <input class="btn btn-primary" type="submit" value="Submit">
+            {% if message_name %}
+                <p style="color: red">{{ message_name }}</p>
+            {% endif %}
+        </form>
+
+        <hr>
+        <div style="margin-left: auto; margin-right: auto;", class="col-lg-12">
+        <h2>{{ property[2] }} {{ property[1] }} {{ property[4] }}</h2>
+            <h3>{{ property[3] }} {{ property[5] }} {{ property[17] }}</h3>
+            <div class="row">
+                <div class="col-lg-8">
+                    <img alt="image of house" src= {{ property[9] }} style="width:100%">
+                </div>
+
+                <div class="col-lg-3">
+                    <H3>Features</H3>
+                    <p>Bathrooms: {{ property[14] }} </p>
+                    <p>Bedrooms: {{ property[13] }} </p>
+                    <p>Car spaces: {{ property[15] }} </p>
+                    <p>Area: {{ property[16] }} square meters </p>
+                    <br>
+                    <h3>Price</h3>
+                    <p>Low price: ${{ property[6] }} </p>
+                    <p>Mid price: ${{ property[7] }} </p>
+                    <p>High price: ${{ property[8] }} </p>
+                </div>
+            </div>
+        </div>
+    <br>
+    </div>
+</div>
+
+    <!-- 
+        <div style="display: inline-block; height:500px; width: 45%;"  >
+        <img style = "height:500px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Lyman_Trumbull_House.jpg/1200px-Lyman_Trumbull_House.jpg">
+    </div>
+    <div style="display: inline-block">
+        <h3>Price: $750,000</h3>
+        <p>
+            Bedrooms 2 <br>
+            Bathrooms 1 <br>
+            Carspot 1 <br>
+            Property description.<br>
+            Blah.<br>
+            Blah.<br>
+        </p>
+    </div> -->
+</div>
+
+{% endblock %}

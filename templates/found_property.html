@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block page_title %} Property Search {% endblock %}
+{% block page_content %}
+
+<head>
+    <style>
+        h1{
+                padding-top: 15px;
+            }
+        p {
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div style="margin-left: auto; margin-right: auto;" class="col-lg-12">
+        <h1>Property searching</h1>
+        <br>
+        <form method="POST" list-style-type: none>
+            <div class="row">
+                <div class="col-lg-8">
+                    <h3>Enter a suburb: {{ form.suburb }}</h3>
+                </div>
+                <div class="col-lg-4">
+
+                    <h3>Select a state</h3><select name="stateDropdown" placeholder="Select a state">
+                        <option disabled selected>Select a state</option>
+                            {% for state in states %}
+                                <option value= "{{state}}" SELECTED>{{state}}</option>"
+                            {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <h3>Price</h3>
+            <div class="slidecontainer">
+                <br>
+                <input type="range" min="0" max="13" name="Price" style = "width: 700px;"/>
+            </div>
+        <br>
+
+            <div class="row">
+                <div class="col-lg-3">
+                    {{ form.property_type.label(size=20) }}
+                    {{ form.property_type() }}
+                </div>
+
+                <div class="col-lg-3">
+                    {{ form.bedrooms.label(size=20) }}
+                    {{ form.bedrooms() }}
+                </div>
+
+                <div class="col-lg-3">
+                    {{ form.bathrooms.label(size=20) }}
+                    {{ form.bathrooms() }}
+                </div>
+
+                <div class="col-lg-3">
+                    {{ form.parking.label(size=20) }}
+                    {{ form.parking() }}
+                </div>
+            </div>
+
+            <input class="btn btn-primary" type="submit" value="Submit">
+        </form>
+    <br>
+        <!--<select class="property" type="text"  name="property_type" placeholder="Select a player">-->
+
+        </select>
+        <!-- modify this div class and add any about information-->
+
+    </div>
+
+</body>
+{% endblock %}

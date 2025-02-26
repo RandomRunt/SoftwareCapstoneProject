@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block page_title %}Suburb Search{% endblock %}
+{% block page_content %}
+
+<head>
+    <style>
+        p {
+            font-size: 20px;
+        }
+
+        h1 {
+            padding-top: 15px;
+        }
+
+        .search_feature {
+            padding-bottom: 470px;
+        }
+
+        .input-group-text {
+            height: 40px;
+            font-size: 12pt;
+        }
+
+        .form-control {
+            height: 40px;
+            font-size: 12pt;
+        }
+    </style>
+</head>
+<div class="col-lg-12">
+    <!-- James T Functionality not css-->
+    <h1>Search a Suburb</h1>
+    <br>
+    <div class="search_feature">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Suburb</span>
+            </div>
+            <input id="Suburb" type="text" class="form-control">
+        </div>
+        <button type="button" id="SubmitButton" class="btn btn-primary" style="font-size: 12pt">Submit</button>
+    </div>
+    <script>
+        function EnterSuburb() {
+            //James T
+            let suburbs = ["Bankstown", "Banksia", "Pyrmont", "Bondi", "Bronte", "Allambie Heights", "Annandale", "Ashfield", "Hurstville", "Greenfield Park", "Surry Hills", "Strathfield", "Coogee", "Moama", "Culcairn", "Bondi Beach", "Abbotsbury", "Abbotsford", "Uralla", "Acacia Gardens", "Agnes Banks", "Airds", "Alexandria", "Auburn", "Bass Hill", "Baulkham Hills", "Bella Vista", "Belmore", "Birchgrove", "Blacktown", "Blakehurst", "Bonnyrigg Heights", "Bossley Park", "Cabramatta", "Casula", "Cheltenham", "Clovelly", "Como", "Cromer", "Crows Nest", "Denistone", "Glebe", "Bega", "Moore Creek", "Moore Park", "Kingsgrove", "North Bondi"];
+            let suburb = document.getElementById("Suburb").value;
+            if (suburbs.includes(suburb)) {
+                window.location.href = "/suburb/" + suburb;
+            } else {
+                alert("Suburb is either in valid, or we have no information on it as of this time, please choose a different suburb.");
+            }
+        }
+        SubmitButton.onclick = EnterSuburb;
+    </script>
+</div>
+{% endblock %}

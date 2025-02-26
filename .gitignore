@@ -2,4 +2,8 @@
 .gitignore
 .idea
 .vscode
+.vs
+Capstone.pyproj
+Capstone.sln
+.DS_Store
 __pycache__
